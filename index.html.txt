@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AmirCraft | مسابقه بزرگ ماینکرافت</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:Vazirmatn,Tahoma,sans-serif;
+    background:#07130d;
+    color:#fff;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+/* BACKGROUND */
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:
+      radial-gradient(circle at 20% 20%,rgba(43,255,107,.15),transparent 25%),
+      radial-gradient(circle at 80% 70%,rgba(0,190,255,.12),transparent 25%),
+      linear-gradient(135deg,#07130d,#0b2115 45%,#06100a);
+}
+.scanlines{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:999;
+    opacity:.05;
+    background:repeating-linear-gradient(
+        0deg,transparent 0,transparent 3px,#fff 4px
+    );
+}
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    opacity:.07;
+    background-image:
+      linear-gradient(#62ff8b 1px,transparent 1px),
+      linear-gradient(90deg,#62ff8b 1px,transparent 1px);
+    background-size:45px 45px;
+    animation:gridMove 18s linear infinite;
+}
+@keyframes gridMove{
+    from{transform:translate(0,0)}
+    to{transform:translate(45px,45px)}
+}
+
+/* PARTICLES */
+.particle{
+    position:fixed;
+    width:5px;
+    height:5px;
+    background:#54ff7b;
+    box-shadow:0 0 12px #54ff7b;
+    pointer-events:none;
+    z-index:-1;
+    animation:float 8s linear infinite;
+}
+@keyframes float{
+    0%{transform:translateY(110vh) rotate(0);opacity:0}
+    15%{opacity:1}
+    100%{transform:translateY(-20vh) rotate(720deg);opacity:0}
+}
+
+/* HEADER */
+header{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+}
+.hero{
+    width:min(950px,95%);
+    position:relative;
+    animation:heroIn 1.2s cubic-bezier(.17,.67,.24,1.2);
+}
+@keyframes heroIn{
+    from{opacity:0;transform:translateY(80px) scale(.7)}
+    to{opacity:1;transform:none}
+}
+.minecraft-logo{
+    display:inline-block;
+    padding:20px 35px;
+    background:linear-gradient(145deg,#2d963d,#155923);
+    border:5px solid #071b0b;
+    box-shadow:
+      inset 0 5px 0 rgba(255,255,255,.18),
+      inset 0 -8px 0 rgba(0,0,0,.3),
+      0 0 0 5px #46c958,
+      0 0 40px rgba(58,255,88,.5);
+    transform:skew(-2deg);
+    animation:logoFloat 3s ease-in-out infinite;
+}
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0) rotate(-1deg)}
+    50%{transform:translateY(-12px) rotate(1deg)}
+}
+.minecraft-logo h1{
+    font-size:clamp(42px,10vw,100px);
+    font-weight:900;
+    color:#fff;
+    text-shadow:
+      5px 5px 0 #123717,
+      8px 8px 0 #061407,
+      0 0 25px #55ff70;
+    letter-spacing:2px;
+}
+.minecraft-logo span{
+    font-size:clamp(15px,3vw,25px);
+    font-weight:900;
+    color:#d8ffdd;
+}
+.hero h2{
+    margin:35px 0 15px;
+    font-size:clamp(25px,5vw,48px);
+    color:#62ff7c;
+    text-shadow:0 0 20px #20ff4d;
+}
+.hero p{
+    color:#c5e8cc;
+    font-size:17px;
+    line-height:2;
+}
+.start-btn{
+    margin-top:30px;
+    border:0;
+    padding:18px 40px;
+    font-family:inherit;
+    font-size:20px;
+    font-weight:900;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(135deg,#2ecb4e,#11802b);
+    box-shadow:0 0 25px #25ff4d,0 8px 0 #075719;
+    transition:.2s;
+}
+.start-btn:hover{
+    transform:translateY(-5px) scale(1.04);
+    box-shadow:0 0 45px #25ff4d,0 12px 0 #075719;
+}
+.start-btn:active{transform:translateY(5px);box-shadow:0 0 15px #25ff4d,0 2px 0 #075719}
+
+/* CARDS */
+.container{
+    width:min(1050px,94%);
+    margin:auto;
+}
+section{padding:70px 0}
+.card{
+    background:rgba(7,25,13,.88);
+    border:2px solid rgba(76,255,111,.3);
+    box-shadow:
+      0 0 30px rgba(0,255,70,.08),
+      inset 0 0 30px rgba(0,255,70,.025);
+    padding:30px;
+    position:relative;
+    overflow:hidden;
+}
+.card:before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:3px;
+    top:0;
+    right:-100%;
+    background:linear-gradient(90deg,transparent,#5dff77,transparent);
+    animation:shine 3s linear infinite;
+}
+@keyframes shine{to{right:100%}}
+
+.section-title{
+    text-align:center;
+    font-size:35px;
+    color:#5cff78;
+    margin-bottom:30px;
+    text-shadow:0 0 18px #21ff48;
+}
+
+/* PRIZES */
+.prizes{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+.prize{
+    padding:28px 18px;
+    text-align:center;
+    border:2px solid #2d9c44;
+    background:rgba(11,44,20,.7);
+    transition:.35s;
+}
+.prize:hover{
+    transform:translateY(-12px) rotateX(6deg);
+    box-shadow:0 0 35px rgba(55,255,88,.3);
+}
+.prize .num{
+    font-size:55px;
+    font-weight:900;
+    margin-bottom:10px;
+}
+.prize h3{font-size:22px;margin-bottom:12px;color:#71ff88}
+.prize p{line-height:2;color:#d0e9d5}
+
+/* REGISTER */
+.form{
+    display:grid;
+    gap:18px;
+}
+.input{
+    width:100%;
+    padding:17px;
+    border:2px solid #286c37;
+    outline:none;
+    background:#06140a;
+    color:#fff;
+    font-family:inherit;
+    font-size:16px;
+    transition:.3s;
+}
+.input:focus{
+    border-color:#54ff73;
+    box-shadow:0 0 20px rgba(84,255,115,.2);
+    transform:scale(1.01);
+}
+.file-box{
+    border:2px dashed #42d65d;
+    padding:30px;
+    text-align:center;
+    cursor:pointer;
+    background:#06140a;
+    transition:.3s;
+}
+.file-box:hover{
+    background:#0b2411;
+    box-shadow:0 0 25px rgba(65,255,90,.2);
+}
+.file-box input{display:none}
+.preview{
+    display:none;
+    max-width:100%;
+    max-height:280px;
+    margin:20px auto 0;
+    border:3px solid #52ff71;
+}
+.checkbox{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    line-height:1.8;
+    color:#cfe7d2;
+}
+.checkbox input{margin-top:7px;accent-color:#35ed56}
+.submit{
+    border:0;
+    padding:17px;
+    background:linear-gradient(135deg,#42e85e,#16822b);
+    color:#fff;
+    font-family:inherit;
+    font-weight:900;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 7px 0 #075517,0 0 25px rgba(55,255,90,.25);
+}
+.submit:hover{filter:brightness(1.15);transform:translateY(-3px)}
+
+/* QUIZ */
+#quizSection{display:none}
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+.progress-wrap{
+    height:14px;
+    background:#031007;
+    border:1px solid #225e2e;
+    overflow:hidden;
+    flex:1;
+}
+.progress{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#23bc41,#8cff9d);
+    box-shadow:0 0 15px #4eff69;
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+}
+.score{
+    padding:10px 18px;
+    background:#0c2b14;
+    border:1px solid #3ab94f;
+    font-weight:900;
+    color:#7cff8e;
+}
+.question-number{
+    color:#73ff87;
+    font-weight:900;
+    margin-bottom:14px;
+}
+.question{
+    font-size:clamp(20px,4vw,31px);
+    line-height:1.8;
+    font-weight:900;
+    min-height:100px;
+}
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:25px;
+}
+.option{
+    min-height:70px;
+    padding:17px;
+    border:2px solid #286c37;
+    background:linear-gradient(135deg,#081b0c,#0b2811);
+    color:#fff;
+    font-family:inherit;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.18s;
+    position:relative;
+    overflow:hidden;
+}
+.option:before{
+    content:"";
+    position:absolute;
+    width:0;
+    height:100%;
+    top:0;
+    right:0;
+    background:rgba(90,255,113,.12);
+    transition:.3s;
+}
+.option:hover{
+    transform:translateY(-5px) scale(1.015);
+    border-color:#66ff7e;
+    box-shadow:0 0 25px rgba(68,255,93,.25);
+}
+.option:hover:before{width:100%}
+.option.correct{
+    background:#0d5720;
+    border-color:#6cff82;
+    box-shadow:0 0 35px rgba(70,255,90,.45);
+}
+.option.wrong{
+    background:#591010;
+    border-color:#ff5757;
+    box-shadow:0 0 35px rgba(255,50,50,.35);
+}
+.option.disabled{pointer-events:none}
+.feedback{
+    min-height:55px;
+    margin-top:20px;
+    text-align:center;
+    font-size:19px;
+    font-weight:900;
+}
+.next{
+    display:none;
+    margin:15px auto 0;
+    padding:14px 35px;
+    background:#159934;
+    color:#fff;
+    border:0;
+    font-family:inherit;
+    font-weight:900;
+    cursor:pointer;
+}
+.next.show{display:block}
+
+/* RESULT */
+#resultSection{display:none}
+.result{
+    text-align:center;
+    padding:45px 25px;
+}
+.trophy{
+    font-size:90px;
+    animation:trophy 1s ease-in-out infinite alternate;
+}
+@keyframes trophy{
+    from{transform:rotate(-8deg) scale(1)}
+    to{transform:rotate(8deg) scale(1.12)}
+}
+.final-score{
+    font-size:65px;
+    font-weight:900;
+    color:#75ff88;
+    text-shadow:0 0 25px #32ff50;
+    margin:15px;
+}
+.result-message{
+    line-height:2;
+    color:#d1ebd5;
+}
+.rubika{
+    margin-top:30px;
+    padding:20px;
+    border:2px solid #4de868;
+    background:#071b0b;
+    line-height:2;
+}
+.copy{
+    display:inline-block;
+    margin-top:12px;
+    padding:9px 18px;
+    border:0;
+    background:#24b63f;
+    color:#fff;
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* SHAKE */
+.shake{animation:shake .45s ease}
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    15%{transform:translateX(12px) rotate(1deg)}
+    30%{transform:translateX(-12px) rotate(-1deg)}
+    45%{transform:translateX(9px)}
+    60%{transform:translateX(-9px)}
+    75%{transform:translateX(5px)}
+}
+.correctFlash{animation:correctFlash .65s}
+@keyframes correctFlash{
+    0%{box-shadow:0 0 0 #62ff7c}
+    50%{box-shadow:0 0 100px 30px rgba(80,255,110,.6)}
+    100%{box-shadow:0 0 0 #62ff7c}
+}
+
+/* POPUP */
+.popup{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+    z-index:500;
+    padding:20px;
+}
+.popup.show{display:flex}
+.popup-box{
+    width:min(550px,95%);
+    padding:35px;
+    background:#07180b;
+    border:3px solid #48ef63;
+    text-align:center;
+    box-shadow:0 0 70px rgba(55,255,80,.35);
+    animation:popupIn .45s cubic-bezier(.17,.67,.24,1.3);
+}
+@keyframes popupIn{
+    from{transform:scale(.4) rotate(-10deg);opacity:0}
+    to{transform:none;opacity:1}
+}
+.popup h2{color:#68ff7c;margin-bottom:15px}
+.popup p{line-height:2;color:#d0e7d3}
+.popup button{
+    margin-top:20px;
+    border:0;
+    background:#25b943;
+    color:#fff;
+    padding:12px 35px;
+    font-family:inherit;
+    font-weight:900;
+    cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:40px 20px;
+    border-top:1px solid #1e4b27;
+    color:#a6c6ab;
+    line-height:2;
+}
+footer a{color:#64ff7a;text-decoration:none;font-weight:900}
+
+@media(max-width:700px){
+    .prizes{grid-template-columns:1fr}
+    .options{grid-template-columns:1fr}
+    .card{padding:20px}
+    .minecraft-logo{padding:15px 20px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="scanlines"></div>
+<div class="grid"></div>
+
+<script>
+for(let i=0;i<55;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDelay=(Math.random()*8)+"s";
+    p.style.animationDuration=(5+Math.random()*8)+"s";
+    p.style.width=p.style.height=(2+Math.random()*5)+"px";
+    document.body.appendChild(p);
+}
+</script>
+
+<header>
+<div class="hero">
+    <div class="minecraft-logo">
+        <h1>AMIRCRAFT</h1>
+        <span>مسابقه بزرگ ماینکرافتی امیرکرفت</span>
+    </div>
+
+    <h2>🟩 ۱۰۰ سؤال ماینکرافتی 🟩</h2>
+    <p>
+        آیا واقعاً ماینکرافت را بلدی؟<br>
+        در ۱۰۰ سؤال چالش‌برانگیز شرکت کن، امتیاز بگیر و برای جوایز ویژه رقابت کن!
+    </p>
+
+    <button class="start-btn" onclick="goRegister()">شروع مسابقه ⚡</button>
+</div>
+</header>
+
+<section id="registerSection">
+<div class="container">
+    <h2 class="section-title">🏆 ثبت‌نام مسابقه</h2>
+
+    <div class="card">
+
+        <div class="form">
+
+            <input id="playerName"
+                   class="input"
+                   type="text"
+                   maxlength="40"
+                   placeholder="نام و نام خانوادگی">
+
+            <input id="playerId"
+                   class="input"
+                   type="text"
+                   maxlength="40"
+                   placeholder="آیدی روبیکا">
+
+            <label class="file-box">
+                📸
+                <br>
+                <strong>اسکرین‌شات موردنظر را انتخاب کنید</strong>
+                <br>
+                <small>برای ثبت‌نام تصویر انتخابی در همین مرورگر نمایش داده می‌شود.</small>
+                <input id="proofImage" type="file" accept="image/*">
+                <img id="preview" class="preview">
+            </label>
+
+            <label class="checkbox">
+                <input type="checkbox" id="rules">
+                <span>
+                    قوانین را می‌پذیرم. می‌دانم که هر نفر فقط یک‌بار می‌تواند
+                    مسابقه را شروع و نتیجه نهایی خود را ثبت کند.
+                </span>
+            </label>
+
+            <button class="submit" onclick="startQuiz()">
+                ⚔️ ورود به مسابقه
+            </button>
+
+        </div>
+
+    </div>
+</div>
+</section>
+
+<section>
+<div class="container">
+    <h2 class="section-title">🎁 جوایز</h2>
+
+    <div class="prizes">
+
+        <div class="prize">
+            <div class="num">🥇</div>
+            <h3>نفر اول</h3>
+            <p>
+                ۲ تامنیل رایگان<br>
+                + یک پروفایل رایگان
+            </p>
+        </div>
+
+        <div class="prize">
+            <div class="num">🥈</div>
+            <h3>نفر دوم</h3>
+            <p>
+                ابزار و بکگراند ماینکرافتی<br>
+                + تبلیغ در کانال
+            </p>
+        </div>
+
+        <div class="prize">
+            <div class="num">🥉</div>
+            <h3>نفر سوم</h3>
+            <p>
+                تبلیغ در کانال
+            </p>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<section id="quizSection">
+<div class="container">
+
+    <div class="card" id="quizCard">
+
+        <div class="quiz-top">
+            <div class="progress-wrap">
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <div class="score">
+                امتیاز: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="question-number" id="questionNumber"></div>
+
+        <div class="question" id="question">
+            در حال آماده‌سازی سؤال...
+        </div>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next" id="nextButton" onclick="nextQuestion()">
+            سؤال بعدی ➜
+        </button>
+
+    </div>
+
+</div>
+</section>
+
+<section id="resultSection">
+<div class="container">
+    <div class="card result">
+
+        <div class="trophy">🏆</div>
+
+        <h2 class="section-title">مسابقه تمام شد!</h2>
+
+        <div class="final-score">
+            <span id="finalScore">0</span> / 100
+        </div>
+
+        <p class="result-message" id="resultMessage"></p>
+
+        <div class="rubika">
+            📱 برای ارسال نتیجه نهایی به برگزارکننده:
+            <br>
+            <strong style="font-size:25px;color:#67ff7c">
+                @amirtbpedit
+            </strong>
+            <br>
+            <small>
+                نام، امتیاز و اسکرین‌شات نتیجه را برای برگزارکننده در روبیکا ارسال کنید.
+            </small>
+            <br>
+            <button class="copy" onclick="copyRubika()">
+                کپی آیدی
+            </button>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<footer>
+    <strong>AMIRCRAFT</strong>
+    <br>
+    برگزارکننده: <a href="#">@amirtbpedit</a>
+    <br>
+    کانال: <a href="#">@tbpartwork</a>
+    <br>
+    © 2026 AmirCraft
+</footer>
+
+<div class="popup" id="popup">
+    <div class="popup-box">
+        <h2 id="popupTitle">🎉 آماده‌ای؟</h2>
+        <p id="popupText"></p>
+        <button onclick="closePopup()">باشه، بزن بریم!</button>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   AMIRCRAFT
+   100 MINECRAFT QUESTIONS
+========================================================= */
+
+const questions = [
+
+{
+q:"در نسخه‌های جدید ماینکرافت، Ancient City معمولاً در کدام بیوم قرار دارد؟",
+o:["Deep Dark","Dripstone Caves","Lush Caves","Mushroom Fields"],
+a:0
+},
+{
+q:"کدام موجود Warden را احضار نمی‌کند؟",
+o:["Sculk Shrieker","Sculk Sensor","Zombie","هیچ‌کدام"],
+a:2
+},
+{
+q:"برای ساخت Enchanting Table چند الماس لازم است؟",
+o:["۲","۳","۴","۵"],
+a:0
+},
+{
+q:"حداکثر سطح Fortune چند است؟",
+o:["II","III","IV","V"],
+a:1
+},
+{
+q:"کدام ابزار برای استخراج Obsidian مناسب است؟",
+o:["کلنگ الماسی یا بهتر","تبر آهنی","بیل الماسی","شمشیر ندرایتی"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Nether Portal استفاده می‌شود؟",
+o:["Obsidian","Basalt","Crying Obsidian","Blackstone"],
+a:0
+},
+{
+q:"کدام موجود می‌تواند از درهای چوبی عبور کند؟",
+o:["Zombie","Skeleton","Creeper","Iron Golem"],
+a:0
+},
+{
+q:"برای ساخت Beacon به چند Nether Star نیاز است؟",
+o:["۱","۲","۳","۵"],
+a:0
+},
+{
+q:"Nether Star معمولاً از کدام باس به دست می‌آید؟",
+o:["Ender Dragon","Wither","Warden","Elder Guardian"],
+a:1
+},
+{
+q:"کدام آیتم برای فعال کردن End Portal استفاده می‌شود؟",
+o:["Eye of Ender","Ender Pearl","Nether Star","Dragon Breath"],
+a:0
+},
+{
+q:"کدام موجود در حالت عادی در آب نمی‌تواند غرق شود؟",
+o:["Drowned","Zombie","Skeleton","Guardian"],
+a:3
+},
+{
+q:"کدام Enchantment باعث برگشت سریع‌تر Trident می‌شود؟",
+o:["Loyalty","Riptide","Channeling","Impaling"],
+a:0
+},
+{
+q:"Riptide روی چه چیزی قابل استفاده است؟",
+o:["Trident","Bow","Crossbow","Shield"],
+a:0
+},
+{
+q:"کدام Enchantment با Riptide روی یک Trident ناسازگار است؟",
+o:["Loyalty","Unbreaking","Mending","Impaling"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Netherite Upgrade Smithing Template لازم است؟",
+o:["Smithing Table","Anvil","Stonecutter","Grindstone"],
+a:0
+},
+{
+q:"برای ساخت کامل یک Beacon چند لایه می‌توان ساخت؟",
+o:["۲","۳","۴","۵"],
+a:2
+},
+{
+q:"کدام موجود در End City پیدا می‌شود؟",
+o:["Shulker","Warden","Ravager","Vex"],
+a:0
+},
+{
+q:"برای ساخت Shulker Box به چه چیزی نیاز داریم؟",
+o:["Shulker Shell","Ender Pearl","Purpur Crystal","Dragon Egg"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Eye of Ender استفاده می‌شود؟",
+o:["Ender Pearl + Blaze Powder","Ender Pearl + Gold","Amethyst + Blaze Powder","Diamond + Ender Pearl"],
+a:0
+},
+{
+q:"کدام موجود Blaze Rod می‌اندازد؟",
+o:["Blaze","Ghast","Piglin","Magma Cube"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Potion Stand استفاده می‌شود؟",
+o:["Blaze Rod","Iron Ingot","Nether Brick","Gold Ingot"],
+a:0
+},
+{
+q:"کدام Potion با استفاده از Nether Wart به عنوان ماده اولیه ساخته می‌شود؟",
+o:["Awkward Potion","Strength","Swiftness","Night Vision"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Potion of Night Vision لازم است؟",
+o:["Golden Carrot","Spider Eye","Rabbit Foot","Blaze Powder"],
+a:0
+},
+{
+q:"کدام ماده Potion of Invisibility را می‌سازد؟",
+o:["Fermented Spider Eye روی Night Vision","Golden Carrot","Sugar","Magma Cream"],
+a:0
+},
+{
+q:"کدام موجود معمولاً در اقیانوس‌ها دیده می‌شود؟",
+o:["Guardian","Pillager","Witch","Vindicator"],
+a:0
+},
+{
+q:"Elder Guardian بیشتر در کجا پیدا می‌شود؟",
+o:["Ocean Monument","Woodland Mansion","Stronghold","Ancient City"],
+a:0
+},
+{
+q:"کدام آیتم برای تنفس زیر آب استفاده می‌شود؟",
+o:["Potion of Water Breathing","Potion of Harming","Potion of Slow Falling","Potion of Strength"],
+a:0
+},
+{
+q:"کدام Enchantment به کلاه کمک می‌کند زمان بیشتری زیر آب بمانید؟",
+o:["Respiration","Aqua Affinity","Depth Strider","Feather Falling"],
+a:0
+},
+{
+q:"Aqua Affinity روی کدام قطعه زره قرار می‌گیرد؟",
+o:["Helmet","Chestplate","Leggings","Boots"],
+a:0
+},
+{
+q:"Depth Strider چه کاری انجام می‌دهد؟",
+o:["حرکت سریع‌تر در آب","پرش بلندتر","مقاومت در برابر آتش","افزایش آسیب"],
+a:0
+},
+{
+q:"Feather Falling روی کدام قطعه قرار می‌گیرد؟",
+o:["Boots","Helmet","Chestplate","Leggings"],
+a:0
+},
+{
+q:"کدام Enchantment آسیب سقوط را کاهش می‌دهد؟",
+o:["Feather Falling","Protection","Thorns","Blast Protection"],
+a:0
+},
+{
+q:"کدام Enchantment برای کاهش آسیب انفجار تخصصی‌تر است؟",
+o:["Blast Protection","Fire Protection","Projectile Protection","Power"],
+a:0
+},
+{
+q:"کدام Enchantment برای آسیب تیر تخصصی‌تر است؟",
+o:["Projectile Protection","Blast Protection","Sharpness","Knockback"],
+a:0
+},
+{
+q:"حداکثر سطح Sharpness در Survival معمولاً چند است؟",
+o:["III","IV","V","VI"],
+a:2
+},
+{
+q:"کدام Enchantment باعث آتش گرفتن دشمن با شمشیر می‌شود؟",
+o:["Fire Aspect","Flame","Fire Protection","Burning"],
+a:0
+},
+{
+q:"Flame روی چه سلاحی استفاده می‌شود؟",
+o:["Bow","Sword","Shield","Trident"],
+a:0
+},
+{
+q:"Power روی چه چیزی استفاده می‌شود؟",
+o:["Bow","Pickaxe","Axe","Trident"],
+a:0
+},
+{
+q:"Quick Charge مربوط به کدام سلاح است؟",
+o:["Crossbow","Bow","Trident","Sword"],
+a:0
+},
+{
+q:"Multishot مربوط به کدام سلاح است؟",
+o:["Crossbow","Bow","Trident","Shield"],
+a:0
+},
+{
+q:"Piercing روی چه چیزی قابل استفاده است؟",
+o:["Crossbow","Bow","Sword","Axe"],
+a:0
+},
+{
+q:"کدام ماده برای ساخت Netherite Ingot لازم است؟",
+o:["Netherite Scrap + Gold Ingots","Diamond + Gold","Ancient Debris + Iron","Gold + Quartz"],
+a:0
+},
+{
+q:"Ancient Debris بیشتر در کدام بُعد پیدا می‌شود؟",
+o:["Nether","Overworld","End","Deep Dark"],
+a:0
+},
+{
+q:"کدام ماده برای ساخت Netherite Scrap در کوره استفاده می‌شود؟",
+o:["Ancient Debris","Nether Quartz","Blackstone","Crying Obsidian"],
+a:0
+},
+{
+q:"کدام بلوک در برابر انفجار بسیار مقاوم است؟",
+o:["Obsidian","Dirt","Wood","Glass"],
+a:0
+},
+{
+q:"کدام بلوک نور زیادی تولید می‌کند؟",
+o:["Glowstone","Stone","Dirt","Clay"],
+a:0
+},
+{
+q:"برای ساخت Lantern چه چیزی لازم است؟",
+o:["Iron Nugget + Torch","Gold Nugget + Torch","Iron Ingot + Coal","Stick + Glowstone"],
+a:0
+},
+{
+q:"کدام آیتم از ترکیب ۹ Iron Nugget ساخته می‌شود؟",
+o:["Iron Ingot","Iron Block","Chain","Anvil"],
+a:0
+},
+{
+q:"کدام بلوک برای تبدیل Villager به Librarian استفاده می‌شود؟",
+o:["Lectern","Composter","Grindstone","Smithing Table"],
+a:0
+},
+{
+q:"Villager کشاورز با کدام بلوک مرتبط است؟",
+o:["Composter","Lectern","Barrel","Stonecutter"],
+a:0
+},
+{
+q:"Villager آهنگر ابزار با کدام بلوک مرتبط است؟",
+o:["Smithing Table","Anvil","Grindstone","Furnace"],
+a:0
+},
+{
+q:"Villager زره‌ساز با کدام بلوک مرتبط است؟",
+o:["Blast Furnace","Smithing Table","Anvil","Stonecutter"],
+a:0
+},
+{
+q:"Villager قصاب با کدام بلوک مرتبط است؟",
+o:["Smoker","Barrel","Furnace","Campfire"],
+a:0
+},
+{
+q:"کدام Villager معمولاً Emerald در ازای کاغذ می‌دهد؟",
+o:["Librarian","Farmer","Butcher","Fisherman"],
+a:0
+},
+{
+q:"کدام بلوک برای تبدیل Villager به Fisherman استفاده می‌شود؟",
+o:["Barrel","Lectern","Composter","Cauldron"],
+a:0
+},
+{
+q:"کدام موجود می‌تواند در حالت طبیعی تبدیل به Drowned شود؟",
+o:["Zombie","Skeleton","Creeper","Spider"],
+a:0
+},
+{
+q:"کدام موجود در نور روز می‌تواند آتش بگیرد؟",
+o:["Zombie","Creeper","Spider","Enderman"],
+a:0
+},
+{
+q:"کدام موجود هنگام منفجر شدن آسیب زیادی ایجاد می‌کند؟",
+o:["Creeper","Spider","Slime","Bat"],
+a:0
+},
+{
+q:"کدام موجود می‌تواند از دیوارها بالا برود؟",
+o:["Spider","Zombie","Skeleton","Creeper"],
+a:0
+},
+{
+q:"کدام موجود با نگاه کردن به چشم‌هایش عصبانی می‌شود؟",
+o:["Enderman","Creeper","Ghast","Slime"],
+a:0
+},
+{
+q:"Enderman معمولاً چه بلوک‌هایی را می‌تواند بردارد؟",
+o:["برخی بلوک‌های قابل جابه‌جایی","Obsidian","Bedrock","End Portal Frame"],
+a:0
+},
+{
+q:"کدام موجود در Nether پرواز می‌کند و گلوله آتشین شلیک می‌کند؟",
+o:["Ghast","Blaze","Phantom","Vex"],
+a:0
+},
+{
+q:"کدام موجود در Nether می‌تواند سوار Strider شود؟",
+o:["Zombie Piglin","Piglin","Skeleton","همه موارد"],
+a:1
+},
+{
+q:"برای کنترل Strider در حرکت چه آیتمی کاربرد دارد؟",
+o:["Warped Fungus on a Stick","Carrot on a Stick","Fishing Rod","Lead"],
+a:0
+},
+{
+q:"کدام موجود را می‌توان با Warped Fungus جذب کرد؟",
+o:["Strider","Piglin","Hoglin","Ghast"],
+a:0
+},
+{
+q:"کدام موجود با Crimson Fungus مرتبط است؟",
+o:["Hoglin","Strider","Allay","Warden"],
+a:0
+},
+{
+q:"کدام موجود از Soul Sand Valley به عنوان دشمن رایج شناخته می‌شود؟",
+o:["Ghast","Cow","Pig","Axolotl"],
+a:0
+},
+{
+q:"کدام بلوک باعث کند شدن حرکت می‌شود؟",
+o:["Soul Sand","Stone","Glass","Ice"],
+a:0
+},
+{
+q:"Soul Speed روی چه چیزی اعمال می‌شود؟",
+o:["Boots","Helmet","Sword","Pickaxe"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Portal به End استفاده نمی‌شود؟",
+o:["Obsidian","End Portal Frame","هیچ‌کدام","هیچ بلوک معمولی"],
+a:0
+},
+{
+q:"Ender Dragon در کدام بُعد قرار دارد؟",
+o:["The End","Nether","Overworld","Deep Dark"],
+a:0
+},
+{
+q:"پس از شکست Ender Dragon چه چیزی در مرکز جزیره ظاهر می‌شود؟",
+o:["End Gateway","Nether Portal","Stronghold","Village"],
+a:0
+},
+{
+q:"کدام آیتم از Ender Dragon برای ساخت Potion استفاده می‌شود؟",
+o:["Dragon's Breath","Dragon Scale","Dragon Eye","End Crystal"],
+a:0
+},
+{
+q:"End Crystal برای چه چیزی کاربرد دارد؟",
+o:["احیای Ender Dragon","ساخت Nether Portal","ساخت Beacon","ساخت Elytra"],
+a:0
+},
+{
+q:"Elytra معمولاً در کجا پیدا می‌شود؟",
+o:["End City Ship","Stronghold","Village","Ancient City"],
+a:0
+},
+{
+q:"برای تعمیر Elytra در Anvil چه چیزی کاربرد دارد؟",
+o:["Phantom Membrane","Leather","Feather","String"],
+a:0
+},
+{
+q:"Phantom معمولاً چه زمانی ظاهر می‌شود؟",
+o:["وقتی بازیکن چند شب نخوابد","در روز","داخل Nether","هنگام باران"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Conduit استفاده می‌شود؟",
+o:["Heart of the Sea","Nether Star","Dragon Egg","Echo Shard"],
+a:0
+},
+{
+q:"Heart of the Sea معمولاً از کجا به دست می‌آید؟",
+o:["Buried Treasure","End City","Stronghold","Woodland Mansion"],
+a:0
+},
+{
+q:"کدام آیتم برای پیدا کردن Buried Treasure کمک می‌کند؟",
+o:["Treasure Map","Eye of Ender","Compass","Spyglass"],
+a:0
+},
+{
+q:"کدام ابزار برای ساخت مسیر سریع روی یخ کاربرد زیادی دارد؟",
+o:["Boat","Minecart","Horse","Elytra"],
+a:0
+},
+{
+q:"کدام حیوان را می‌توان با Carrot پرورش داد؟",
+o:["Pig","Cow","Sheep","Chicken"],
+a:0
+},
+{
+q:"کدام حیوان با Wheat پرورش پیدا می‌کند؟",
+o:["Cow","Pig","Chicken","Rabbit"],
+a:0
+},
+{
+q:"کدام حیوان با Seeds پرورش پیدا می‌کند؟",
+o:["Chicken","Cow","Pig","Horse"],
+a:0
+},
+{
+q:"کدام حیوان با Sugar و Wheat و Apple قابل اهلی‌سازی/پرورش است؟",
+o:["Horse","Wolf","Cat","Fox"],
+a:0
+},
+{
+q:"کدام حیوان را می‌توان با Bone به Wolf تبدیل به حیوان خانگی کرد؟",
+o:["Wolf","Fox","Cat","Horse"],
+a:0
+},
+{
+q:"کدام آیتم برای اهلی کردن Cat استفاده می‌شود؟",
+o:["Raw Cod یا Raw Salmon","Bone","Wheat","Apple"],
+a:0
+},
+{
+q:"کدام موجود از سقوط از ارتفاع زیاد آسیب نمی‌بیند؟",
+o:["Chicken","Cow","Pig","Sheep"],
+a:0
+},
+{
+q:"کدام موجود می‌تواند از دیوارها بالا برود و در ارتفاعات خطرناک باشد؟",
+o:["Goat","Spider","Cat","Rabbit"],
+a:1
+},
+{
+q:"کدام موجود با حمله به بازیکن می‌تواند او را به هوا پرتاب کند؟",
+o:["Goat","Cow","Pig","Sheep"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Shield لازم است؟",
+o:["Iron Ingot + Planks","Iron Block + Wood","Diamond + Wood","Gold + Planks"],
+a:0
+},
+{
+q:"کدام آیتم می‌تواند با استفاده از Shield بلاک شود؟",
+o:["برخی حملات","هیچ حمله‌ای","فقط تیر","فقط انفجار"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Furnace استفاده می‌شود؟",
+o:["Cobblestone","Stone Bricks","Dirt","Iron Block"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Blast Furnace لازم است؟",
+o:["Iron Ingots + Furnace + Smooth Stone","Gold + Furnace","Diamond + Furnace","Nether Brick + Furnace"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Smoker لازم است؟",
+o:["Furnace + Logs","Furnace + Iron","Furnace + Coal","Furnace + Stone"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Anvil استفاده می‌شود؟",
+o:["Iron Blocks + Iron Ingots","Iron + Stone","Diamond + Iron","Iron + Coal"],
+a:0
+},
+{
+q:"کدام بلوک برای ساخت Cartography Table لازم است؟",
+o:["Paper + Planks","Paper + Iron","Leather + Paper","Map + Wood"],
+a:0
+},
+{
+q:"کدام آیتم می‌تواند روی نقشه علامت مکان بازیکن را نشان دهد؟",
+o:["Banner در نسخه‌های مناسب","Torch","Chest","Compass"],
+a:0
+},
+{
+q:"کدام آیتم در Nether برای پیدا کردن جهت تقریبی Overworld کاربرد مستقیم ندارد؟",
+o:["Compass معمولی","Lodestone Compass","Map","F3"],
+a:0
+},
+{
+q:"Lodestone Compass به چه چیزی متصل می‌شود؟",
+o:["Lodestone","Beacon","End Crystal","Respawn Anchor"],
+a:0
+},
+{
+q:"Respawn Anchor در کدام بُعد کاربرد اصلی دارد؟",
+o:["Nether","Overworld","End","Deep Dark"],
+a:0
+},
+{
+q:"برای شارژ Respawn Anchor چه چیزی استفاده می‌شود؟",
+o:["Glowstone","Redstone","Coal","Quartz"],
+a:0
+},
+{
+q:"کدام بلوک با Redstone Signal کار می‌کند؟",
+o:["Redstone Lamp","Dirt","Glass","Sand"],
+a:0
+},
+{
+q:"کدام ماده پایه Redstone Repeater است؟",
+o:["Redstone Dust + Stone + Torches","Iron + Redstone","Quartz + Stone","Diamond + Redstone"],
+a:0
+},
+{
+q:"حداکثر Delay یک Redstone Repeater در هر تکرار چند Tick است؟",
+o:["۴","۸","۱۰","۲۰"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Piston لازم است؟",
+o:["Wood + Cobblestone + Iron + Redstone","Iron + Diamond","Stone + Gold","Wood + Quartz"],
+a:0
+},
+{
+q:"کدام بلوک می‌تواند آیتم‌ها را به داخل خود جمع کند؟",
+o:["Hopper","Piston","Dropper","Observer"],
+a:0
+},
+{
+q:"کدام بلوک تغییرات بلوک مقابل خود را تشخیص می‌دهد؟",
+o:["Observer","Repeater","Comparator","Hopper"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Observer لازم است؟",
+o:["Quartz","Diamond","Emerald","Nether Star"],
+a:0
+},
+{
+q:"کدام آیتم برای ساخت Comparator استفاده می‌شود؟",
+o:["Quartz","Diamond","Emerald","Echo Shard"],
+a:0
+},
+{
+q:"کدام موجود می‌تواند یک وسیله خاص را در صورت استفاده صحیح به بازیکن برگرداند؟",
+o:["Allay","Cow","Pig","Bat"],
+a:0
+},
+{
+q:"Allay با چه چیزی می‌تواند آیتم مشابه را جمع کند؟",
+o:["آیتمی که به آن داده شده","Emerald","Diamond","هیچ‌چیز"],
+a:0
+},
+{
+q:"کدام موجود به بازیکن در مبارزه با دشمنان کمک می‌کند و در Woodland Mansion نیز دیده می‌شود؟",
+o:["Vex","Cow","Pig","Fish"],
+a:0
+},
+{
+q:"کدام دشمن با Evoker مرتبط است؟",
+o:["Vex","Creeper","Ghast","Blaze"],
+a:0
+},
+{
+q:"کدام آیتم از Evoker می‌تواند برای ساخت Totem of Undying به دست آید؟",
+o:["Totem of Undying","Emerald","Evoker Staff","Vex Wing"],
+a:0
+},
+{
+q:"Totem of Undying معمولاً چه زمانی فعال می‌شود؟",
+o:["وقتی بازیکن با آن در دست بمیرد","وقتی روی زمین بیفتد","وقتی آب بخورد","وقتی بخوابد"],
+a:0
+},
+{
+q:"کدام سازه معمولاً محل پیدا شدن Totem of Undying است؟",
+o:["Woodland Mansion","Village","Stronghold","Desert Temple"],
+a:0
+},
+{
+q:"کدام سازه برای پیدا کردن End Portal بسیار مهم است؟",
+o:["Stronghold","Village","Mansion","Monument"],
+a:0
+},
+{
+q:"کدام آیتم برای پیدا کردن Stronghold استفاده می‌شود؟",
+o:["Eye of Ender","Compass","Clock","Spyglass"],
+a:0
+},
+{
+q:"کدام سازه معمولاً دارای کتابخانه است؟",
+o:["Stronghold","Village","Desert Temple","Ocean Monument"],
+a:0
+},
+{
+q:"کدام بلوک در Stronghold برای ساخت End Portal Frame دیده می‌شود؟",
+o:["End Portal Frame","Obsidian","Purpur","Bedrock"],
+a:0
+},
+{
+q:"کدام آیتم می‌تواند زمان روز را نشان دهد؟",
+o:["Clock","Compass","Spyglass","Map"],
+a:0
+},
+{
+q:"کدام آیتم جهت شمال را نشان می‌دهد؟",
+o:["Compass","Clock","Map","Spyglass"],
+a:0
+},
+{
+q:"کدام ابزار برای نزدیک‌بینی در ماینکرافت اضافه شده است؟",
+o:["Spyglass","Telescope","Binoculars","Scope"],
+a:0
+},
+{
+q:"Spyglass با چه ماده‌ای ساخته می‌شود؟",
+o:["Copper + Amethyst Shard","Iron + Glass","Gold + Quartz","Diamond + Glass"],
+a:0
+},
+{
+q:"کدام سنگ در ساخت Spyglass استفاده می‌شود؟",
+o:["Amethyst","Quartz","Diamond","Emerald"],
+a:0
+},
+{
+q:"کدام بلوک در Amethyst Geode پیدا می‌شود؟",
+o:["Amethyst","Ancient Debris","Sculk","Purpur"],
+a:0
+},
+{
+q:"کدام آیتم از Amethyst Cluster به دست می‌آید؟",
+o:["Amethyst Shard","Echo Shard","Quartz","Crystal"],
+a:0
+},
+{
+q:"Echo Shard در کجا پیدا می‌شود؟",
+o:["Ancient City","Village","Nether Fortress","Ocean Monument"],
+a:0
+},
+{
+q:"Recovery Compass با چه چیزی ساخته می‌شود؟",
+o:["Echo Shards + Compass","Echo Shard + Diamond","Amethyst + Compass","Sculk + Compass"],
+a:0
+},
+{
+q:"Recovery Compass چه چیزی را پیدا می‌کند؟",
+o:["محل آخرین مرگ بازیکن","Stronghold","Village","End Portal"],
+a:0
+}
+
+];
+
+/* اطمینان از دقیقاً 100 سؤال */
+let quizQuestions = questions.slice(0,100);
+
+/* قاطی کردن گزینه‌ها برای هر سؤال */
+function shuffleQuestionOptions(q){
+    const arr=q.o.map((text,index)=>({
+        text,
+        correct:index===q.a
+    }));
+
+    for(let i=arr.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+
+    return {
+        q:q.q,
+        options:arr.map(x=>x.text),
+        answer:arr.findIndex(x=>x.correct)
+    };
+}
+
+quizQuestions=quizQuestions.map(shuffleQuestionOptions);
+
+/* STATE */
+let current=0;
+let score=0;
+let answered=false;
+
+const registerSection=document.getElementById("registerSection");
+const quizSection=document.getElementById("quizSection");
+const resultSection=document.getElementById("resultSection");
+
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const feedbackEl=document.getElementById("feedback");
+const scoreEl=document.getElementById("score");
+const progressEl=document.getElementById("progress");
+const questionNumberEl=document.getElementById("questionNumber");
+const nextButton=document.getElementById("nextButton");
+const quizCard=document.getElementById("quizCard");
+
+/* CHECK ONE-TIME PARTICIPATION */
+function alreadyPlayed(){
+    return localStorage.getItem("amircraft_finished")==="true";
+}
+
+function goRegister(){
+
+    if(alreadyPlayed()){
+        showPopup(
+            "⛔ قبلاً شرکت کرده‌ای!",
+            "این مرورگر قبلاً یک نتیجه نهایی برای مسابقه امیرکرفت ثبت کرده است. طبق قوانین، هر نفر فقط یک‌بار می‌تواند شرکت کند."
+        );
+        return;
+    }
+
+    registerSection.scrollIntoView({behavior:"smooth"});
+}
+
+/* IMAGE PREVIEW */
+document.getElementById("proofImage").addEventListener("change",function(){
+
+    const file=this.files[0];
+    const preview=document.getElementById("preview");
+
+    if(!file)return;
+
+    if(!file.type.startsWith("image/")){
+        showPopup("⚠️ فایل نامعتبر","لطفاً یک تصویر انتخاب کنید.");
+        this.value="";
+        return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+        preview.src=e.target.result;
+        preview.style.display="block";
+    };
+
+    reader.readAsDataURL(file);
+});
+
+/* START */
+function startQuiz(){
+
+    if(alreadyPlayed()){
+        showPopup(
+            "⛔ امکان شرکت دوباره نیست",
+            "این دستگاه قبلاً مسابقه را به پایان رسانده است."
+        );
+        return;
+    }
+
+    const name=document.getElementById("playerName").value.trim();
+    const id=document.getElementById("playerId").value.trim();
+    const rules=document.getElementById("rules").checked;
+
+    if(name.length<2){
+        showPopup("⚠️ نام را وارد کن","لطفاً نام خود را وارد کنید.");
+        return;
+    }
+
+    if(id.length<2){
+        showPopup("⚠️ آیدی روبیکا را وارد کن","آیدی روبیکا برای ارسال نتیجه لازم است.");
+        return;
+    }
+
+    if(!rules){
+        showPopup("⚠️ قوانین","برای شروع باید قوانین مسابقه را بپذیرید.");
+        return;
+    }
+
+    localStorage.setItem("amircraft_name",name);
+    localStorage.setItem("amircraft_id",id);
+
+    current=0;
+    score=0;
+    answered=false;
+
+    registerSection.style.display="none";
+
+    quizSection.style.display="block";
+    quizSection.scrollIntoView({behavior:"smooth"});
+
+    loadQuestion();
+
+    showPopup(
+        "⚔️ مسابقه شروع شد!",
+        "۱۰۰ سؤال پیش روی توست. گزینه‌ها در هر سؤال به صورت تصادفی جابه‌جا شده‌اند."
+    );
+}
+
+/* LOAD QUESTION */
+function loadQuestion(){
+
+    answered=false;
+    nextButton.classList.remove("show");
+    feedbackEl.innerHTML="";
+
+    const item=quizQuestions[current];
+
+    questionNumberEl.textContent=
+        `سؤال ${current+1} از ${quizQuestions.length}`;
+
+    questionEl.textContent=item.q;
+
+    progressEl.style.width=
+        ((current)/quizQuestions.length*100)+"%";
+
+    optionsEl.innerHTML="";
+
+    item.options.forEach((option,index)=>{
+
+        const btn=document.createElement("button");
+
+        btn.className="option";
+        btn.textContent=
+            `${String.fromCharCode(65+index)}) ${option}`;
+
+        btn.onclick=()=>answerQuestion(index,btn);
+
+        optionsEl.appendChild(btn);
+    });
+
+    scoreEl.textContent=score;
+
+    quizCard.classList.remove("correctFlash","shake");
+}
+
+/* ANSWER */
+function answerQuestion(index,clicked){
+
+    if(answered)return;
+
+    answered=true;
+
+    const item=quizQuestions[current];
+    const buttons=[...document.querySelectorAll(".option")];
+
+    buttons.forEach(b=>b.classList.add("disabled"));
+
+    if(index===item.answer){
+
+        score++;
+
+        clicked.classList.add("correct");
+
+        feedbackEl.innerHTML=
+            "✅ درست بود! +۱ امتیاز";
+
+        feedbackEl.style.color="#6cff81";
+
+        quizCard.classList.add("correctFlash");
+
+        createExplosion("good");
+
+    }else{
+
+        clicked.classList.add("wrong");
+
+        buttons[item.answer].classList.add("correct");
+
+        feedbackEl.innerHTML=
+            "❌ اشتباه! جواب درست مشخص شد.";
+
+        feedbackEl.style.color="#ff6b6b";
+
+        quizCard.classList.add("shake");
+
+        createExplosion("bad");
+    }
+
+    scoreEl.textContent=score;
+
+    progressEl.style.width=
+        (((current+1)/quizQuestions.length)*100)+"%";
+
+    nextButton.classList.add("show");
+
+    if(current===quizQuestions.length-1){
+        nextButton.textContent="🏆 مشاهده نتیجه";
+    }
+}
+
+/* NEXT */
+function nextQuestion(){
+
+    if(!answered)return;
+
+    if(current>=quizQuestions.length-1){
+        finishQuiz();
+        return;
+    }
+
+    current++;
+
+    loadQuestion();
+
+    window.scrollTo({
+        top:quizSection.offsetTop-20,
+        behavior:"smooth"
+    });
+}
+
+/* FINISH */
+function finishQuiz(){
+
+    localStorage.setItem("amircraft_finished","true");
+    localStorage.setItem("amircraft_score",score);
+    localStorage.setItem("amircraft_finished_at",Date.now());
+
+    quizSection.style.display="none";
+    resultSection.style.display="block";
+
+    document.getElementById("finalScore").textContent=score;
+
+    let message="";
+
+    if(score>=90){
+        message=
+        "🔥 فوق‌العاده! تو واقعاً یک ماینکرافت پلیر حرفه‌ای هستی!";
+    }else if(score>=75){
+        message=
+        "💎 عالی بود! اطلاعات ماینکرافتی خیلی خوبی داری.";
+    }else if(score>=60){
+        message=
+        "🟩 خوب بود! کمی تمرین بیشتر و می‌توانی حرفه‌ای‌تر شوی.";
+    }else if(score>=40){
+        message=
+        "⛏️ بد نبود! ولی هنوز رازهای زیادی از ماینکرافت باقی مانده.";
+    }else{
+        message=
+        "🌱 تازه اول راهی! ماینکرافت را بیشتر بازی کن و دوباره دانش خودت را امتحان کن.";
+    }
+
+    document.getElementById("resultMessage").innerHTML=
+        `${message}<br><br>
+        امتیاز نهایی تو: <strong>${score} از 100</strong><br>
+        نتیجه را از صفحه اسکرین‌شات بگیر و برای <strong>@amirtbpedit</strong> در روبیکا بفرست.`;
+
+    createExplosion("finish");
+
+    resultSection.scrollIntoView({behavior:"smooth"});
+}
+
+/* POPUP */
+function showPopup(title,text){
+
+    document.getElementById("popupTitle").textContent=title;
+    document.getElementById("popupText").textContent=text;
+    document.getElementById("popup").classList.add("show");
+}
+
+function closePopup(){
+    document.getElementById("popup").classList.remove("show");
+}
+
+/* COPY */
+function copyRubika(){
+
+    navigator.clipboard.writeText("@amirtbpedit")
+    .then(()=>{
+        showPopup(
+            "📋 کپی شد!",
+            "آیدی @amirtbpedit در کلیپ‌بورد کپی شد."
+        );
+    })
+    .catch(()=>{
+        showPopup(
+            "📱 آیدی برگزارکننده",
+            "@amirtbpedit"
+        );
+    });
+}
+
+/* EFFECT PARTICLES */
+function createExplosion(type){
+
+    let symbols=[];
+
+    if(type==="good"){
+        symbols=["✨","⭐","🟩","💚","⚡"];
+    }else if(type==="bad"){
+        symbols=["💥","❌","🔴","⚠️"];
+    }else{
+        symbols=["🏆","⭐","💎","🟩","✨","🔥"];
+    }
+
+    for(let i=0;i<30;i++){
+
+        const el=document.createElement("div");
+
+        el.textContent=
+            symbols[Math.floor(Math.random()*symbols.length)];
+
+        el.style.position="fixed";
+        el.style.left="50%";
+        el.style.top="50%";
+        el.style.zIndex="1000";
+        el.style.pointerEvents="none";
+        el.style.fontSize=(15+Math.random()*25)+"px";
+
+        document.body.appendChild(el);
+
+        const angle=Math.random()*Math.PI*2;
+        const distance=100+Math.random()*400;
+
+        const x=Math.cos(angle)*distance;
+        const y=Math.sin(angle)*distance;
+
+        el.animate(
+            [
+                {
+                    transform:"translate(-50%,-50%) scale(.3)",
+                    opacity:1
+                },
+                {
+                    transform:
+                      `translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(1.5) rotate(${Math.random()*720}deg)`,
+                    opacity:0
+                }
+            ],
+            {
+                duration:700+Math.random()*700,
+                easing:"cubic-bezier(.1,.8,.2,1)"
+            }
+        ).onfinish=()=>el.remove();
+    }
+}
+
+/* KEYBOARD SUPPORT */
+document.addEventListener("keydown",e=>{
+
+    if(quizSection.style.display!=="block")return;
+
+    if(!answered){
+
+        const keys={
+            "1":0,
+            "2":1,
+            "3":2,
+            "4":3
+        };
+
+        if(keys[e.key]!==undefined){
+
+            const buttons=document.querySelectorAll(".option");
+
+            if(buttons[keys[e.key]]){
+                buttons[keys[e.key]].click();
+            }
+        }
+    }else if(e.key==="Enter"){
+
+        nextQuestion();
+    }
+});
+
+/* ESC POPUP */
+document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){
+        document.getElementById("popup").classList.remove("show");
+    }
+});
+
+/* PREVENT ACCIDENTAL REFRESH DURING QUIZ */
+window.addEventListener("beforeunload",e=>{
+
+    if(
+        quizSection.style.display==="block" &&
+        !localStorage.getItem("amircraft_finished")
+    ){
+        e.preventDefault();
+        e.returnValue="";
+    }
+});
+</script>
+
+</body>
+</html>
