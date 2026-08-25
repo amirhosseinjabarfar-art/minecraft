@@ -3,173 +3,287 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AmirCraft | مسابقه بزرگ ماینکرافت</title>
+<title>AMIRCRAFT | چالش هفتگی ماینکرافت</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
 html{scroll-behavior:smooth}
+
 body{
     font-family:Vazirmatn,Tahoma,sans-serif;
-    background:#07130d;
+    background:#06100a;
     color:#fff;
     overflow-x:hidden;
     min-height:100vh;
 }
 
-/* BACKGROUND */
+/* ================= BACKGROUND ================= */
+
 body:before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
+    z-index:-10;
     background:
-      radial-gradient(circle at 20% 20%,rgba(43,255,107,.15),transparent 25%),
-      radial-gradient(circle at 80% 70%,rgba(0,190,255,.12),transparent 25%),
-      linear-gradient(135deg,#07130d,#0b2115 45%,#06100a);
+    radial-gradient(circle at 10% 10%,rgba(35,255,75,.16),transparent 25%),
+    radial-gradient(circle at 90% 20%,rgba(0,210,255,.12),transparent 25%),
+    radial-gradient(circle at 50% 90%,rgba(150,50,255,.10),transparent 30%),
+    linear-gradient(135deg,#040b06,#0a1d0d 45%,#030906);
 }
+
+.grid{
+    position:fixed;
+    inset:-100px;
+    z-index:-8;
+    opacity:.075;
+    background-image:
+    linear-gradient(#51ff6e 1px,transparent 1px),
+    linear-gradient(90deg,#51ff6e 1px,transparent 1px);
+    background-size:45px 45px;
+    transform:perspective(500px) rotateX(55deg) scale(1.5);
+    animation:gridMove 15s linear infinite;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0}
+    to{background-position:90px 90px}
+}
+
 .scanlines{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:999;
-    opacity:.05;
+    z-index:9999;
+    opacity:.045;
     background:repeating-linear-gradient(
-        0deg,transparent 0,transparent 3px,#fff 4px
+        0deg,
+        transparent 0,
+        transparent 3px,
+        #fff 4px
     );
 }
-.grid{
+
+.vignette{
     position:fixed;
     inset:0;
-    z-index:-4;
-    opacity:.07;
-    background-image:
-      linear-gradient(#62ff8b 1px,transparent 1px),
-      linear-gradient(90deg,#62ff8b 1px,transparent 1px);
-    background-size:45px 45px;
-    animation:gridMove 18s linear infinite;
-}
-@keyframes gridMove{
-    from{transform:translate(0,0)}
-    to{transform:translate(45px,45px)}
+    pointer-events:none;
+    z-index:9998;
+    box-shadow:inset 0 0 180px rgba(0,0,0,.85);
 }
 
-/* PARTICLES */
 .particle{
     position:fixed;
     width:5px;
     height:5px;
-    background:#54ff7b;
-    box-shadow:0 0 12px #54ff7b;
+    background:#5cff78;
+    box-shadow:0 0 15px #5cff78;
     pointer-events:none;
     z-index:-1;
-    animation:float 8s linear infinite;
-}
-@keyframes float{
-    0%{transform:translateY(110vh) rotate(0);opacity:0}
-    15%{opacity:1}
-    100%{transform:translateY(-20vh) rotate(720deg);opacity:0}
+    animation:particleFloat linear infinite;
 }
 
-/* HEADER */
+@keyframes particleFloat{
+    0%{
+        transform:translateY(110vh) rotate(0) scale(.3);
+        opacity:0;
+    }
+    10%{opacity:1}
+    90%{opacity:1}
+    100%{
+        transform:translateY(-20vh) rotate(720deg) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* ================= HEADER ================= */
+
 header{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:25px;
     position:relative;
     overflow:hidden;
+    padding:30px 15px;
 }
+
 .hero{
-    width:min(950px,95%);
-    position:relative;
-    animation:heroIn 1.2s cubic-bezier(.17,.67,.24,1.2);
+    width:min(1000px,95%);
+    animation:heroEnter 1.3s cubic-bezier(.17,.67,.24,1.25);
 }
-@keyframes heroIn{
-    from{opacity:0;transform:translateY(80px) scale(.7)}
-    to{opacity:1;transform:none}
+
+@keyframes heroEnter{
+    0%{
+        opacity:0;
+        transform:translateY(100px) scale(.65) rotateX(20deg);
+    }
+    70%{
+        opacity:1;
+        transform:translateY(-10px) scale(1.03);
+    }
+    100%{
+        transform:none;
+    }
 }
-.minecraft-logo{
+
+.logo{
     display:inline-block;
     padding:20px 35px;
-    background:linear-gradient(145deg,#2d963d,#155923);
-    border:5px solid #071b0b;
+    background:
+    linear-gradient(145deg,#39b94e,#14591f);
+    border:5px solid #061609;
     box-shadow:
-      inset 0 5px 0 rgba(255,255,255,.18),
-      inset 0 -8px 0 rgba(0,0,0,.3),
-      0 0 0 5px #46c958,
-      0 0 40px rgba(58,255,88,.5);
-    transform:skew(-2deg);
+    inset 0 6px rgba(255,255,255,.18),
+    inset 0 -9px rgba(0,0,0,.35),
+    0 0 0 5px #4be861,
+    0 0 50px rgba(58,255,88,.55);
     animation:logoFloat 3s ease-in-out infinite;
 }
+
 @keyframes logoFloat{
     0%,100%{transform:translateY(0) rotate(-1deg)}
-    50%{transform:translateY(-12px) rotate(1deg)}
+    50%{transform:translateY(-13px) rotate(1deg)}
 }
-.minecraft-logo h1{
+
+.logo h1{
     font-size:clamp(42px,10vw,100px);
     font-weight:900;
-    color:#fff;
+    letter-spacing:3px;
     text-shadow:
-      5px 5px 0 #123717,
-      8px 8px 0 #061407,
-      0 0 25px #55ff70;
-    letter-spacing:2px;
+    5px 5px 0 #153b19,
+    9px 9px 0 #061007,
+    0 0 30px #59ff70;
 }
-.minecraft-logo span{
-    font-size:clamp(15px,3vw,25px);
+
+.logo span{
+    font-size:clamp(14px,3vw,24px);
     font-weight:900;
-    color:#d8ffdd;
+    color:#d7ffdd;
 }
+
 .hero h2{
-    margin:35px 0 15px;
+    margin-top:35px;
+    color:#6aff80;
     font-size:clamp(25px,5vw,48px);
-    color:#62ff7c;
-    text-shadow:0 0 20px #20ff4d;
+    text-shadow:0 0 25px #22ff48;
+    animation:titlePulse 2s ease-in-out infinite;
 }
+
+@keyframes titlePulse{
+    0%,100%{text-shadow:0 0 15px #22ff48}
+    50%{text-shadow:0 0 45px #22ff48,0 0 80px rgba(34,255,72,.4)}
+}
+
 .hero p{
-    color:#c5e8cc;
-    font-size:17px;
+    margin-top:15px;
     line-height:2;
+    color:#c9e9ce;
 }
-.start-btn{
-    margin-top:30px;
-    border:0;
-    padding:18px 40px;
-    font-family:inherit;
-    font-size:20px;
+
+.status{
+    margin:25px auto;
+    width:min(650px,95%);
+    padding:16px 20px;
+    border:2px solid #43e95e;
+    background:rgba(4,25,10,.8);
+    box-shadow:0 0 25px rgba(45,255,74,.15);
+}
+
+.status.open{
+    animation:statusGlow 1.5s infinite alternate;
+}
+
+@keyframes statusGlow{
+    from{box-shadow:0 0 10px rgba(45,255,74,.15)}
+    to{box-shadow:0 0 35px rgba(45,255,74,.4)}
+}
+
+.status.closed{
+    border-color:#ff5353;
+}
+
+.status.saturday{
+    border-color:#ffd34d;
+}
+
+.status-title{
+    font-size:21px;
     font-weight:900;
+}
+
+.countdown{
+    margin-top:8px;
+    color:#72ff87;
+    font-weight:900;
+    font-size:18px;
+}
+
+.start-btn{
+    margin-top:15px;
+    border:0;
+    padding:18px 42px;
+    color:#fff;
+    font-family:inherit;
+    font-weight:900;
+    font-size:20px;
     cursor:pointer;
-    color:white;
-    background:linear-gradient(135deg,#2ecb4e,#11802b);
-    box-shadow:0 0 25px #25ff4d,0 8px 0 #075719;
+    background:linear-gradient(135deg,#36dc52,#117928);
+    box-shadow:
+    0 8px 0 #064b15,
+    0 0 30px rgba(50,255,77,.35);
     transition:.2s;
 }
-.start-btn:hover{
-    transform:translateY(-5px) scale(1.04);
-    box-shadow:0 0 45px #25ff4d,0 12px 0 #075719;
-}
-.start-btn:active{transform:translateY(5px);box-shadow:0 0 15px #25ff4d,0 2px 0 #075719}
 
-/* CARDS */
+.start-btn:hover{
+    transform:translateY(-6px) scale(1.04);
+    box-shadow:
+    0 13px 0 #064b15,
+    0 0 55px rgba(50,255,77,.6);
+}
+
+.start-btn:active{
+    transform:translateY(5px);
+    box-shadow:0 2px 0 #064b15;
+}
+
+/* ================= GENERAL ================= */
+
 .container{
     width:min(1050px,94%);
     margin:auto;
 }
-section{padding:70px 0}
+
+section{
+    padding:70px 0;
+}
+
+.section-title{
+    text-align:center;
+    font-size:35px;
+    color:#63ff7b;
+    margin-bottom:30px;
+    text-shadow:0 0 20px #27ff4e;
+}
+
 .card{
-    background:rgba(7,25,13,.88);
-    border:2px solid rgba(76,255,111,.3);
-    box-shadow:
-      0 0 30px rgba(0,255,70,.08),
-      inset 0 0 30px rgba(0,255,70,.025);
-    padding:30px;
     position:relative;
     overflow:hidden;
+    padding:30px;
+    background:rgba(5,23,10,.91);
+    border:2px solid rgba(74,255,100,.3);
+    box-shadow:
+    0 0 40px rgba(0,255,65,.07),
+    inset 0 0 35px rgba(0,255,65,.025);
 }
+
 .card:before{
     content:"";
     position:absolute;
@@ -177,78 +291,248 @@ section{padding:70px 0}
     height:3px;
     top:0;
     right:-100%;
-    background:linear-gradient(90deg,transparent,#5dff77,transparent);
-    animation:shine 3s linear infinite;
-}
-@keyframes shine{to{right:100%}}
-
-.section-title{
-    text-align:center;
-    font-size:35px;
-    color:#5cff78;
-    margin-bottom:30px;
-    text-shadow:0 0 18px #21ff48;
+    background:linear-gradient(90deg,transparent,#65ff7e,transparent);
+    animation:shine 2.8s linear infinite;
 }
 
-/* PRIZES */
+@keyframes shine{
+    to{right:100%}
+}
+
+/* ================= WEEK BOX ================= */
+
+.week-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.info-box{
+    padding:25px;
+    background:linear-gradient(145deg,#092312,#061309);
+    border:2px solid #276e35;
+    transition:.35s;
+}
+
+.info-box:hover{
+    transform:translateY(-8px) rotateX(4deg);
+    border-color:#64ff7b;
+    box-shadow:0 0 30px rgba(70,255,95,.2);
+}
+
+.info-box h3{
+    color:#6aff81;
+    margin-bottom:12px;
+    font-size:22px;
+}
+
+.info-box p{
+    line-height:2;
+    color:#c9e3cd;
+}
+
+/* ================= PRIZES ================= */
+
 .prizes{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:20px;
 }
-.prize{
-    padding:28px 18px;
-    text-align:center;
-    border:2px solid #2d9c44;
-    background:rgba(11,44,20,.7);
-    transition:.35s;
-}
-.prize:hover{
-    transform:translateY(-12px) rotateX(6deg);
-    box-shadow:0 0 35px rgba(55,255,88,.3);
-}
-.prize .num{
-    font-size:55px;
-    font-weight:900;
-    margin-bottom:10px;
-}
-.prize h3{font-size:22px;margin-bottom:12px;color:#71ff88}
-.prize p{line-height:2;color:#d0e9d5}
 
-/* REGISTER */
+.prize{
+    text-align:center;
+    padding:30px 18px;
+    background:linear-gradient(145deg,#0b2c14,#07160b);
+    border:2px solid #2e9442;
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.prize:after{
+    content:"";
+    position:absolute;
+    width:180%;
+    height:100%;
+    top:0;
+    left:-220%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.12),
+        transparent
+    );
+    transform:skewX(-20deg);
+    animation:prizeShine 4s infinite;
+}
+
+@keyframes prizeShine{
+    0%,60%{left:-220%}
+    100%{left:130%}
+}
+
+.prize:hover{
+    transform:translateY(-13px) scale(1.025);
+    box-shadow:0 0 40px rgba(65,255,91,.3);
+}
+
+.prize .num{
+    font-size:65px;
+    animation:medalFloat 2s ease-in-out infinite;
+}
+
+@keyframes medalFloat{
+    0%,100%{transform:translateY(0) rotate(-3deg)}
+    50%{transform:translateY(-10px) rotate(3deg)}
+}
+
+.prize h3{
+    color:#6cff81;
+    font-size:23px;
+    margin:10px 0;
+}
+
+.prize p{
+    line-height:2;
+    color:#d0e7d4;
+}
+
+/* ================= WINNERS ================= */
+
+#winnersSection{
+    display:block;
+}
+
+.winners-status{
+    text-align:center;
+    padding:25px;
+    border:2px dashed #315e38;
+    color:#a9c8ae;
+    background:rgba(5,20,9,.7);
+}
+
+.winner-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:25px;
+}
+
+.winner{
+    min-height:230px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:25px;
+    background:linear-gradient(145deg,#0b2912,#051108);
+    border:2px solid #376e40;
+    position:relative;
+    overflow:hidden;
+}
+
+.winner:before{
+    content:"";
+    position:absolute;
+    inset:-100%;
+    background:conic-gradient(
+        transparent,
+        rgba(95,255,120,.3),
+        transparent 25%
+    );
+    animation:spinBorder 4s linear infinite;
+}
+
+@keyframes spinBorder{
+    to{transform:rotate(360deg)}
+}
+
+.winner>*{
+    position:relative;
+    z-index:2;
+}
+
+.winner.first{
+    border-color:#ffd34d;
+    box-shadow:0 0 45px rgba(255,211,77,.2);
+}
+
+.winner.second{
+    border-color:#d8d8d8;
+}
+
+.winner.third{
+    border-color:#d17b42;
+}
+
+.winner-medal{
+    font-size:65px;
+    animation:winnerBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes winnerBounce{
+    0%,100%{transform:translateY(0) rotate(-4deg)}
+    50%{transform:translateY(-12px) rotate(4deg)}
+}
+
+.winner-name{
+    margin-top:10px;
+    font-size:22px;
+    font-weight:900;
+    color:#fff;
+}
+
+.winner-score{
+    color:#68ff7d;
+    margin-top:7px;
+    font-weight:900;
+}
+
+/* ================= REGISTER ================= */
+
 .form{
     display:grid;
     gap:18px;
 }
+
 .input{
     width:100%;
     padding:17px;
     border:2px solid #286c37;
     outline:none;
-    background:#06140a;
+    background:#041008;
     color:#fff;
     font-family:inherit;
     font-size:16px;
     transition:.3s;
 }
+
 .input:focus{
-    border-color:#54ff73;
-    box-shadow:0 0 20px rgba(84,255,115,.2);
+    border-color:#59ff74;
+    box-shadow:0 0 25px rgba(75,255,99,.2);
     transform:scale(1.01);
 }
+
 .file-box{
-    border:2px dashed #42d65d;
+    display:block;
     padding:30px;
     text-align:center;
+    border:2px dashed #42d65d;
+    background:#051309;
     cursor:pointer;
-    background:#06140a;
     transition:.3s;
 }
+
 .file-box:hover{
-    background:#0b2411;
-    box-shadow:0 0 25px rgba(65,255,90,.2);
+    transform:scale(1.01);
+    box-shadow:0 0 30px rgba(70,255,95,.18);
 }
-.file-box input{display:none}
+
+.file-box input{
+    display:none;
+}
+
 .preview{
     display:none;
     max-width:100%;
@@ -256,77 +540,98 @@ section{padding:70px 0}
     margin:20px auto 0;
     border:3px solid #52ff71;
 }
+
 .checkbox{
     display:flex;
-    gap:10px;
     align-items:flex-start;
+    gap:10px;
     line-height:1.8;
-    color:#cfe7d2;
+    color:#cce3d0;
 }
-.checkbox input{margin-top:7px;accent-color:#35ed56}
+
+.checkbox input{
+    margin-top:7px;
+    accent-color:#36e653;
+}
+
 .submit{
     border:0;
     padding:17px;
     background:linear-gradient(135deg,#42e85e,#16822b);
     color:#fff;
     font-family:inherit;
-    font-weight:900;
     font-size:18px;
+    font-weight:900;
     cursor:pointer;
-    box-shadow:0 7px 0 #075517,0 0 25px rgba(55,255,90,.25);
+    box-shadow:0 7px 0 #075517,0 0 30px rgba(55,255,90,.2);
+    transition:.2s;
 }
-.submit:hover{filter:brightness(1.15);transform:translateY(-3px)}
 
-/* QUIZ */
-#quizSection{display:none}
+.submit:hover{
+    transform:translateY(-4px);
+    box-shadow:0 11px 0 #075517,0 0 45px rgba(55,255,90,.35);
+}
+
+/* ================= QUIZ ================= */
+
+#quizSection{
+    display:none;
+}
+
 .quiz-top{
     display:flex;
-    justify-content:space-between;
     align-items:center;
     gap:15px;
     flex-wrap:wrap;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
+
 .progress-wrap{
-    height:14px;
-    background:#031007;
+    height:15px;
+    background:#020b04;
     border:1px solid #225e2e;
     overflow:hidden;
     flex:1;
 }
+
 .progress{
     width:0%;
     height:100%;
-    background:linear-gradient(90deg,#23bc41,#8cff9d);
-    box-shadow:0 0 15px #4eff69;
+    background:linear-gradient(90deg,#1fc23e,#91ff9f);
+    box-shadow:0 0 18px #4eff69;
     transition:width .5s cubic-bezier(.2,.8,.2,1);
 }
+
 .score{
     padding:10px 18px;
     background:#0c2b14;
     border:1px solid #3ab94f;
-    font-weight:900;
     color:#7cff8e;
+    font-weight:900;
 }
+
 .question-number{
     color:#73ff87;
     font-weight:900;
-    margin-bottom:14px;
+    margin-bottom:12px;
 }
+
 .question{
+    min-height:105px;
     font-size:clamp(20px,4vw,31px);
     line-height:1.8;
     font-weight:900;
-    min-height:100px;
 }
+
 .options{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:16px;
-    margin-top:25px;
+    margin-top:20px;
 }
+
 .option{
-    min-height:70px;
+    min-height:72px;
     padding:17px;
     border:2px solid #286c37;
     background:linear-gradient(135deg,#081b0c,#0b2811);
@@ -339,78 +644,94 @@ section{padding:70px 0}
     position:relative;
     overflow:hidden;
 }
-.option:before{
-    content:"";
-    position:absolute;
-    width:0;
-    height:100%;
-    top:0;
-    right:0;
-    background:rgba(90,255,113,.12);
-    transition:.3s;
-}
+
 .option:hover{
     transform:translateY(-5px) scale(1.015);
     border-color:#66ff7e;
-    box-shadow:0 0 25px rgba(68,255,93,.25);
+    box-shadow:0 0 28px rgba(68,255,93,.25);
 }
-.option:hover:before{width:100%}
+
 .option.correct{
     background:#0d5720;
     border-color:#6cff82;
-    box-shadow:0 0 35px rgba(70,255,90,.45);
+    box-shadow:0 0 35px rgba(70,255,90,.5);
 }
+
 .option.wrong{
     background:#591010;
     border-color:#ff5757;
-    box-shadow:0 0 35px rgba(255,50,50,.35);
+    box-shadow:0 0 35px rgba(255,50,50,.4);
 }
-.option.disabled{pointer-events:none}
+
+.option.disabled{
+    pointer-events:none;
+}
+
 .feedback{
     min-height:55px;
-    margin-top:20px;
+    margin-top:18px;
     text-align:center;
     font-size:19px;
     font-weight:900;
 }
+
 .next{
     display:none;
     margin:15px auto 0;
     padding:14px 35px;
+    border:0;
     background:#159934;
     color:#fff;
-    border:0;
     font-family:inherit;
     font-weight:900;
     cursor:pointer;
+    box-shadow:0 0 20px rgba(45,255,73,.2);
 }
-.next.show{display:block}
 
-/* RESULT */
-#resultSection{display:none}
+.next.show{
+    display:block;
+    animation:nextAppear .35s;
+}
+
+@keyframes nextAppear{
+    from{opacity:0;transform:scale(.7)}
+    to{opacity:1;transform:none}
+}
+
+/* ================= RESULT ================= */
+
+#resultSection{
+    display:none;
+}
+
 .result{
     text-align:center;
     padding:45px 25px;
 }
+
 .trophy{
     font-size:90px;
     animation:trophy 1s ease-in-out infinite alternate;
 }
+
 @keyframes trophy{
     from{transform:rotate(-8deg) scale(1)}
     to{transform:rotate(8deg) scale(1.12)}
 }
+
 .final-score{
     font-size:65px;
     font-weight:900;
     color:#75ff88;
-    text-shadow:0 0 25px #32ff50;
+    text-shadow:0 0 30px #32ff50;
     margin:15px;
 }
+
 .result-message{
     line-height:2;
     color:#d1ebd5;
 }
+
 .rubika{
     margin-top:30px;
     padding:20px;
@@ -418,8 +739,8 @@ section{padding:70px 0}
     background:#071b0b;
     line-height:2;
 }
+
 .copy{
-    display:inline-block;
     margin-top:12px;
     padding:9px 18px;
     border:0;
@@ -429,51 +750,55 @@ section{padding:70px 0}
     cursor:pointer;
 }
 
-/* SHAKE */
-.shake{animation:shake .45s ease}
-@keyframes shake{
-    0%,100%{transform:translateX(0)}
-    15%{transform:translateX(12px) rotate(1deg)}
-    30%{transform:translateX(-12px) rotate(-1deg)}
-    45%{transform:translateX(9px)}
-    60%{transform:translateX(-9px)}
-    75%{transform:translateX(5px)}
-}
-.correctFlash{animation:correctFlash .65s}
-@keyframes correctFlash{
-    0%{box-shadow:0 0 0 #62ff7c}
-    50%{box-shadow:0 0 100px 30px rgba(80,255,110,.6)}
-    100%{box-shadow:0 0 0 #62ff7c}
-}
+/* ================= POPUP ================= */
 
-/* POPUP */
 .popup{
     position:fixed;
     inset:0;
     display:none;
     align-items:center;
     justify-content:center;
-    background:rgba(0,0,0,.82);
-    backdrop-filter:blur(8px);
-    z-index:500;
+    background:rgba(0,0,0,.84);
+    backdrop-filter:blur(9px);
+    z-index:5000;
     padding:20px;
 }
-.popup.show{display:flex}
+
+.popup.show{
+    display:flex;
+}
+
 .popup-box{
-    width:min(550px,95%);
+    width:min(570px,95%);
     padding:35px;
     background:#07180b;
     border:3px solid #48ef63;
     text-align:center;
-    box-shadow:0 0 70px rgba(55,255,80,.35);
+    box-shadow:0 0 80px rgba(55,255,80,.4);
     animation:popupIn .45s cubic-bezier(.17,.67,.24,1.3);
 }
+
 @keyframes popupIn{
-    from{transform:scale(.4) rotate(-10deg);opacity:0}
-    to{transform:none;opacity:1}
+    from{
+        transform:scale(.3) rotate(-12deg);
+        opacity:0;
+    }
+    to{
+        transform:none;
+        opacity:1;
+    }
 }
-.popup h2{color:#68ff7c;margin-bottom:15px}
-.popup p{line-height:2;color:#d0e7d3}
+
+.popup h2{
+    color:#68ff7c;
+    margin-bottom:15px;
+}
+
+.popup p{
+    line-height:2;
+    color:#d0e7d3;
+}
+
 .popup button{
     margin-top:20px;
     border:0;
@@ -485,21 +810,72 @@ section{padding:70px 0}
     cursor:pointer;
 }
 
-/* FOOTER */
+/* ================= SHAKE ================= */
+
+.shake{
+    animation:shake .45s ease;
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    15%{transform:translateX(14px) rotate(1deg)}
+    30%{transform:translateX(-14px) rotate(-1deg)}
+    45%{transform:translateX(10px)}
+    60%{transform:translateX(-10px)}
+    75%{transform:translateX(5px)}
+}
+
+.correctFlash{
+    animation:correctFlash .65s;
+}
+
+@keyframes correctFlash{
+    0%{box-shadow:0 0 0 #62ff7c}
+    50%{box-shadow:0 0 110px 35px rgba(80,255,110,.65)}
+    100%{box-shadow:0 0 0 #62ff7c}
+}
+
+/* ================= FOOTER ================= */
+
 footer{
     text-align:center;
-    padding:40px 20px;
+    padding:45px 20px;
     border-top:1px solid #1e4b27;
     color:#a6c6ab;
     line-height:2;
 }
-footer a{color:#64ff7a;text-decoration:none;font-weight:900}
+
+footer a{
+    color:#64ff7a;
+    text-decoration:none;
+    font-weight:900;
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
-    .prizes{grid-template-columns:1fr}
-    .options{grid-template-columns:1fr}
-    .card{padding:20px}
-    .minecraft-logo{padding:15px 20px}
+
+    .prizes,
+    .winner-grid,
+    .week-box{
+        grid-template-columns:1fr;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .logo{
+        padding:15px 20px;
+    }
+
+    .final-score{
+        font-size:50px;
+    }
 }
 </style>
 </head>
@@ -507,898 +883,2339 @@ footer a{color:#64ff7a;text-decoration:none;font-weight:900}
 <body>
 
 <div class="scanlines"></div>
+<div class="vignette"></div>
 <div class="grid"></div>
 
 <script>
-for(let i=0;i<55;i++){
+for(let i=0;i<70;i++){
     const p=document.createElement("div");
     p.className="particle";
     p.style.left=Math.random()*100+"%";
-    p.style.animationDelay=(Math.random()*8)+"s";
-    p.style.animationDuration=(5+Math.random()*8)+"s";
+    p.style.animationDelay=(Math.random()*10)+"s";
+    p.style.animationDuration=(5+Math.random()*10)+"s";
     p.style.width=p.style.height=(2+Math.random()*5)+"px";
     document.body.appendChild(p);
 }
 </script>
 
+<!-- ================= HERO ================= -->
+
 <header>
+
 <div class="hero">
-    <div class="minecraft-logo">
+
+    <div class="logo">
         <h1>AMIRCRAFT</h1>
-        <span>مسابقه بزرگ ماینکرافتی امیرکرفت</span>
+        <span>چالش هفتگی بزرگ ماینکرافت</span>
     </div>
 
-    <h2>🟩 ۱۰۰ سؤال ماینکرافتی 🟩</h2>
+    <h2>⛏️ ۱۰۰ سؤال ماینکرافتی ⛏️</h2>
+
     <p>
-        آیا واقعاً ماینکرافت را بلدی؟<br>
-        در ۱۰۰ سؤال چالش‌برانگیز شرکت کن، امتیاز بگیر و برای جوایز ویژه رقابت کن!
+        هر هفته یک چالش جدید!<br>
+        تا پنج‌شنبه فرصت داری رکورد بزنی و برای سه جایزه ویژه رقابت کنی.
     </p>
 
-    <button class="start-btn" onclick="goRegister()">شروع مسابقه ⚡</button>
+    <div id="statusBox" class="status open">
+        <div id="statusTitle" class="status-title">
+            🟢 ثبت‌نام این هفته باز است
+        </div>
+        <div id="countdown" class="countdown">
+            در حال محاسبه...
+        </div>
+    </div>
+
+    <button class="start-btn" onclick="goRegister()">
+        ⚡ شرکت در چالش این هفته
+    </button>
+
 </div>
+
 </header>
 
-<section id="registerSection">
-<div class="container">
-    <h2 class="section-title">🏆 ثبت‌نام مسابقه</h2>
 
-    <div class="card">
-
-        <div class="form">
-
-            <input id="playerName"
-                   class="input"
-                   type="text"
-                   maxlength="40"
-                   placeholder="نام و نام خانوادگی">
-
-            <input id="playerId"
-                   class="input"
-                   type="text"
-                   maxlength="40"
-                   placeholder="آیدی روبیکا">
-
-            <label class="file-box">
-                📸
-                <br>
-                <strong>اسکرین‌شات موردنظر را انتخاب کنید</strong>
-                <br>
-                <small>برای ثبت‌نام تصویر انتخابی در همین مرورگر نمایش داده می‌شود.</small>
-                <input id="proofImage" type="file" accept="image/*">
-                <img id="preview" class="preview">
-            </label>
-
-            <label class="checkbox">
-                <input type="checkbox" id="rules">
-                <span>
-                    قوانین را می‌پذیرم. می‌دانم که هر نفر فقط یک‌بار می‌تواند
-                    مسابقه را شروع و نتیجه نهایی خود را ثبت کند.
-                </span>
-            </label>
-
-            <button class="submit" onclick="startQuiz()">
-                ⚔️ ورود به مسابقه
-            </button>
-
-        </div>
-
-    </div>
-</div>
-</section>
+<!-- ================= WEEK INFO ================= -->
 
 <section>
+
 <div class="container">
-    <h2 class="section-title">🎁 جوایز</h2>
 
-    <div class="prizes">
+<h2 class="section-title">📅 برنامه هفتگی امیرکرفت</h2>
 
-        <div class="prize">
-            <div class="num">🥇</div>
-            <h3>نفر اول</h3>
-            <p>
-                ۲ تامنیل رایگان<br>
-                + یک پروفایل رایگان
-            </p>
-        </div>
+<div class="card">
 
-        <div class="prize">
-            <div class="num">🥈</div>
-            <h3>نفر دوم</h3>
-            <p>
-                ابزار و بکگراند ماینکرافتی<br>
-                + تبلیغ در کانال
-            </p>
-        </div>
+<div class="week-box">
 
-        <div class="prize">
-            <div class="num">🥉</div>
-            <h3>نفر سوم</h3>
-            <p>
-                تبلیغ در کانال
-            </p>
-        </div>
+<div class="info-box">
+<h3>🟢 تا پنج‌شنبه</h3>
+<p>
+ثبت‌نام و شرکت در چالش فعال است.
+<br>
+هر شرکت‌کننده فقط یک بار می‌تواند مسابقه را انجام دهد.
+<br>
+۱۰۰ سؤال ماینکرافتی در انتظار توست.
+</p>
+</div>
 
-    </div>
+<div class="info-box">
+<h3>🔴 پنج‌شنبه شب</h3>
+<p>
+ثبت‌نام بسته می‌شود و دیگر امکان شروع چالش این هفته وجود ندارد.
+<br>
+نتایج برای بررسی آماده می‌شوند.
+</p>
+</div>
+
+<div class="info-box">
+<h3>🏆 شنبه</h3>
+<p>
+برندگان هفته در سایت اعلام می‌شوند.
+<br>
+نفرات اول، دوم و سوم در بخش برندگان نمایش داده خواهند شد.
+</p>
+</div>
+
+<div class="info-box">
+<h3>🔄 هر هفته</h3>
+<p>
+یک چالش جدید برگزار می‌شود.
+<br>
+سؤال‌ها و رقابت هفته بعد می‌توانند متفاوت باشند.
+</p>
+</div>
+
+</div>
+
+</div>
 </div>
 </section>
+
+
+<!-- ================= PRIZES ================= -->
+
+<section>
+
+<div class="container">
+
+<h2 class="section-title">🎁 جوایز این هفته</h2>
+
+<div class="prizes">
+
+<div class="prize">
+<div class="num">🥇</div>
+<h3>نفر اول</h3>
+<p>
+۲ تامنیل رایگان
+<br>
++
+<br>
+۱ پروفایل رایگان
+</p>
+</div>
+
+<div class="prize">
+<div class="num">🥈</div>
+<h3>نفر دوم</h3>
+<p>
+ابزار و بکگراند ماینکرافتی
+<br>
++
+<br>
+تبلیغ در کانال
+</p>
+</div>
+
+<div class="prize">
+<div class="num">🥉</div>
+<h3>نفر سوم</h3>
+<p>
+تبلیغ در کانال
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- ================= WINNERS ================= -->
+
+<section id="winnersSection">
+
+<div class="container">
+
+<h2 class="section-title">🏆 برندگان هفته</h2>
+
+<div id="winnerStatus" class="winners-status">
+🔒 برندگان شنبه اعلام می‌شوند.
+</div>
+
+<div id="winnerGrid" class="winner-grid">
+
+<div class="winner first">
+<div class="winner-medal">🥇</div>
+<div class="winner-name">هنوز اعلام نشده</div>
+<div class="winner-score">—</div>
+</div>
+
+<div class="winner second">
+<div class="winner-medal">🥈</div>
+<div class="winner-name">هنوز اعلام نشده</div>
+<div class="winner-score">—</div>
+</div>
+
+<div class="winner third">
+<div class="winner-medal">🥉</div>
+<div class="winner-name">هنوز اعلام نشده</div>
+<div class="winner-score">—</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= REGISTER ================= -->
+
+<section id="registerSection">
+
+<div class="container">
+
+<h2 class="section-title">⚔️ ثبت‌نام چالش</h2>
+
+<div class="card">
+
+<div class="form">
+
+<input
+id="playerName"
+class="input"
+type="text"
+maxlength="40"
+placeholder="نام و نام خانوادگی">
+
+<input
+id="playerId"
+class="input"
+type="text"
+maxlength="40"
+placeholder="آیدی روبیکا">
+
+<label class="file-box">
+
+📸
+<br>
+
+<strong>
+تصویر موردنظر را انتخاب کنید
+</strong>
+
+<br>
+
+<small>
+اسکرین‌شات نتیجه نهایی را بعد از مسابقه برای برگزارکننده بفرستید.
+</small>
+
+<input id="proofImage" type="file" accept="image/*">
+
+<img id="preview" class="preview">
+
+</label>
+
+<label class="checkbox">
+
+<input type="checkbox" id="rules">
+
+<span>
+قوانین را می‌پذیرم.
+می‌دانم هر نفر فقط یک بار می‌تواند در چالش این هفته شرکت کند
+و بعد از پایان زمان مسابقه امکان شرکت مجدد وجود ندارد.
+</span>
+
+</label>
+
+<button class="submit" onclick="startQuiz()">
+🚀 شروع ۱۰۰ سؤال
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= QUIZ ================= -->
 
 <section id="quizSection">
+
 <div class="container">
 
-    <div class="card" id="quizCard">
+<div class="card" id="quizCard">
 
-        <div class="quiz-top">
-            <div class="progress-wrap">
-                <div class="progress" id="progress"></div>
-            </div>
+<div class="quiz-top">
 
-            <div class="score">
-                امتیاز: <span id="score">0</span>
-            </div>
-        </div>
+<div class="progress-wrap">
+<div class="progress" id="progress"></div>
+</div>
 
-        <div class="question-number" id="questionNumber"></div>
-
-        <div class="question" id="question">
-            در حال آماده‌سازی سؤال...
-        </div>
-
-        <div class="options" id="options"></div>
-
-        <div class="feedback" id="feedback"></div>
-
-        <button class="next" id="nextButton" onclick="nextQuestion()">
-            سؤال بعدی ➜
-        </button>
-
-    </div>
+<div class="score">
+امتیاز:
+<span id="score">0</span>
+</div>
 
 </div>
+
+<div class="question-number" id="questionNumber"></div>
+
+<div class="question" id="question"></div>
+
+<div class="options" id="options"></div>
+
+<div class="feedback" id="feedback"></div>
+
+<button
+class="next"
+id="nextButton"
+onclick="nextQuestion()">
+سؤال بعدی ➜
+</button>
+
+</div>
+
+</div>
+
 </section>
+
+
+<!-- ================= RESULT ================= -->
 
 <section id="resultSection">
+
 <div class="container">
-    <div class="card result">
 
-        <div class="trophy">🏆</div>
+<div class="card result">
 
-        <h2 class="section-title">مسابقه تمام شد!</h2>
+<div class="trophy">🏆</div>
 
-        <div class="final-score">
-            <span id="finalScore">0</span> / 100
-        </div>
+<h2 class="section-title">
+چالش به پایان رسید!
+</h2>
 
-        <p class="result-message" id="resultMessage"></p>
-
-        <div class="rubika">
-            📱 برای ارسال نتیجه نهایی به برگزارکننده:
-            <br>
-            <strong style="font-size:25px;color:#67ff7c">
-                @amirtbpedit
-            </strong>
-            <br>
-            <small>
-                نام، امتیاز و اسکرین‌شات نتیجه را برای برگزارکننده در روبیکا ارسال کنید.
-            </small>
-            <br>
-            <button class="copy" onclick="copyRubika()">
-                کپی آیدی
-            </button>
-        </div>
-
-    </div>
+<div class="final-score">
+<span id="finalScore">0</span> / 100
 </div>
+
+<p class="result-message" id="resultMessage"></p>
+
+<div class="rubika">
+
+📱 ارسال نتیجه به برگزارکننده:
+
+<br>
+
+<strong style="font-size:25px;color:#67ff7c">
+@amirtbpedit
+</strong>
+
+<br>
+
+نام، امتیاز و اسکرین‌شات نتیجه را در روبیکا ارسال کنید.
+
+<br>
+
+<button class="copy" onclick="copyRubika()">
+کپی آیدی
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
+
 <footer>
-    <strong>AMIRCRAFT</strong>
-    <br>
-    برگزارکننده: <a href="#">@amirtbpedit</a>
-    <br>
-    کانال: <a href="#">@tbpartwork</a>
-    <br>
-    © 2026 AmirCraft
+
+<strong>AMIRCRAFT</strong>
+
+<br>
+
+چالش هفتگی ماینکرافت
+
+<br>
+
+برگزارکننده:
+<a href="#">@amirtbpedit</a>
+
+<br>
+
+کانال:
+<a href="#">@tbpartwork</a>
+
+<br>
+
+© 2026 AmirCraft
+
 </footer>
 
+
+<!-- ================= POPUP ================= -->
+
 <div class="popup" id="popup">
-    <div class="popup-box">
-        <h2 id="popupTitle">🎉 آماده‌ای؟</h2>
-        <p id="popupText"></p>
-        <button onclick="closePopup()">باشه، بزن بریم!</button>
-    </div>
+
+<div class="popup-box">
+
+<h2 id="popupTitle">
+🎉 آماده‌ای؟
+</h2>
+
+<p id="popupText"></p>
+
+<button onclick="closePopup()">
+باشه!
+</button>
+
 </div>
 
+</div>
+
+
 <script>
+
 /* =========================================================
-   AMIRCRAFT
-   100 MINECRAFT QUESTIONS
+   تنظیمات زمان‌بندی
 ========================================================= */
 
-const questions = [
+const CONTEST_END_DAY = 4;
+/*
+0 = یکشنبه
+1 = دوشنبه
+2 = سه‌شنبه
+3 = چهارشنبه
+4 = پنج‌شنبه
+5 = جمعه
+6 = شنبه
+*/
 
-{
-q:"در نسخه‌های جدید ماینکرافت، Ancient City معمولاً در کدام بیوم قرار دارد؟",
-o:["Deep Dark","Dripstone Caves","Lush Caves","Mushroom Fields"],
-a:0
-},
-{
-q:"کدام موجود Warden را احضار نمی‌کند؟",
-o:["Sculk Shrieker","Sculk Sensor","Zombie","هیچ‌کدام"],
-a:2
-},
-{
-q:"برای ساخت Enchanting Table چند الماس لازم است؟",
-o:["۲","۳","۴","۵"],
-a:0
-},
-{
-q:"حداکثر سطح Fortune چند است؟",
-o:["II","III","IV","V"],
-a:1
-},
-{
-q:"کدام ابزار برای استخراج Obsidian مناسب است؟",
-o:["کلنگ الماسی یا بهتر","تبر آهنی","بیل الماسی","شمشیر ندرایتی"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Nether Portal استفاده می‌شود؟",
-o:["Obsidian","Basalt","Crying Obsidian","Blackstone"],
-a:0
-},
-{
-q:"کدام موجود می‌تواند از درهای چوبی عبور کند؟",
-o:["Zombie","Skeleton","Creeper","Iron Golem"],
-a:0
-},
-{
-q:"برای ساخت Beacon به چند Nether Star نیاز است؟",
-o:["۱","۲","۳","۵"],
-a:0
-},
-{
-q:"Nether Star معمولاً از کدام باس به دست می‌آید؟",
-o:["Ender Dragon","Wither","Warden","Elder Guardian"],
-a:1
-},
-{
-q:"کدام آیتم برای فعال کردن End Portal استفاده می‌شود؟",
-o:["Eye of Ender","Ender Pearl","Nether Star","Dragon Breath"],
-a:0
-},
-{
-q:"کدام موجود در حالت عادی در آب نمی‌تواند غرق شود؟",
-o:["Drowned","Zombie","Skeleton","Guardian"],
-a:3
-},
-{
-q:"کدام Enchantment باعث برگشت سریع‌تر Trident می‌شود؟",
-o:["Loyalty","Riptide","Channeling","Impaling"],
-a:0
-},
-{
-q:"Riptide روی چه چیزی قابل استفاده است؟",
-o:["Trident","Bow","Crossbow","Shield"],
-a:0
-},
-{
-q:"کدام Enchantment با Riptide روی یک Trident ناسازگار است؟",
-o:["Loyalty","Unbreaking","Mending","Impaling"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Netherite Upgrade Smithing Template لازم است؟",
-o:["Smithing Table","Anvil","Stonecutter","Grindstone"],
-a:0
-},
-{
-q:"برای ساخت کامل یک Beacon چند لایه می‌توان ساخت؟",
-o:["۲","۳","۴","۵"],
-a:2
-},
-{
-q:"کدام موجود در End City پیدا می‌شود؟",
-o:["Shulker","Warden","Ravager","Vex"],
-a:0
-},
-{
-q:"برای ساخت Shulker Box به چه چیزی نیاز داریم؟",
-o:["Shulker Shell","Ender Pearl","Purpur Crystal","Dragon Egg"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Eye of Ender استفاده می‌شود؟",
-o:["Ender Pearl + Blaze Powder","Ender Pearl + Gold","Amethyst + Blaze Powder","Diamond + Ender Pearl"],
-a:0
-},
-{
-q:"کدام موجود Blaze Rod می‌اندازد؟",
-o:["Blaze","Ghast","Piglin","Magma Cube"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Potion Stand استفاده می‌شود؟",
-o:["Blaze Rod","Iron Ingot","Nether Brick","Gold Ingot"],
-a:0
-},
-{
-q:"کدام Potion با استفاده از Nether Wart به عنوان ماده اولیه ساخته می‌شود؟",
-o:["Awkward Potion","Strength","Swiftness","Night Vision"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Potion of Night Vision لازم است؟",
-o:["Golden Carrot","Spider Eye","Rabbit Foot","Blaze Powder"],
-a:0
-},
-{
-q:"کدام ماده Potion of Invisibility را می‌سازد؟",
-o:["Fermented Spider Eye روی Night Vision","Golden Carrot","Sugar","Magma Cream"],
-a:0
-},
-{
-q:"کدام موجود معمولاً در اقیانوس‌ها دیده می‌شود؟",
-o:["Guardian","Pillager","Witch","Vindicator"],
-a:0
-},
-{
-q:"Elder Guardian بیشتر در کجا پیدا می‌شود؟",
-o:["Ocean Monument","Woodland Mansion","Stronghold","Ancient City"],
-a:0
-},
-{
-q:"کدام آیتم برای تنفس زیر آب استفاده می‌شود؟",
-o:["Potion of Water Breathing","Potion of Harming","Potion of Slow Falling","Potion of Strength"],
-a:0
-},
-{
-q:"کدام Enchantment به کلاه کمک می‌کند زمان بیشتری زیر آب بمانید؟",
-o:["Respiration","Aqua Affinity","Depth Strider","Feather Falling"],
-a:0
-},
-{
-q:"Aqua Affinity روی کدام قطعه زره قرار می‌گیرد؟",
-o:["Helmet","Chestplate","Leggings","Boots"],
-a:0
-},
-{
-q:"Depth Strider چه کاری انجام می‌دهد؟",
-o:["حرکت سریع‌تر در آب","پرش بلندتر","مقاومت در برابر آتش","افزایش آسیب"],
-a:0
-},
-{
-q:"Feather Falling روی کدام قطعه قرار می‌گیرد؟",
-o:["Boots","Helmet","Chestplate","Leggings"],
-a:0
-},
-{
-q:"کدام Enchantment آسیب سقوط را کاهش می‌دهد؟",
-o:["Feather Falling","Protection","Thorns","Blast Protection"],
-a:0
-},
-{
-q:"کدام Enchantment برای کاهش آسیب انفجار تخصصی‌تر است؟",
-o:["Blast Protection","Fire Protection","Projectile Protection","Power"],
-a:0
-},
-{
-q:"کدام Enchantment برای آسیب تیر تخصصی‌تر است؟",
-o:["Projectile Protection","Blast Protection","Sharpness","Knockback"],
-a:0
-},
-{
-q:"حداکثر سطح Sharpness در Survival معمولاً چند است؟",
-o:["III","IV","V","VI"],
-a:2
-},
-{
-q:"کدام Enchantment باعث آتش گرفتن دشمن با شمشیر می‌شود؟",
-o:["Fire Aspect","Flame","Fire Protection","Burning"],
-a:0
-},
-{
-q:"Flame روی چه سلاحی استفاده می‌شود؟",
-o:["Bow","Sword","Shield","Trident"],
-a:0
-},
-{
-q:"Power روی چه چیزی استفاده می‌شود؟",
-o:["Bow","Pickaxe","Axe","Trident"],
-a:0
-},
-{
-q:"Quick Charge مربوط به کدام سلاح است؟",
-o:["Crossbow","Bow","Trident","Sword"],
-a:0
-},
-{
-q:"Multishot مربوط به کدام سلاح است؟",
-o:["Crossbow","Bow","Trident","Shield"],
-a:0
-},
-{
-q:"Piercing روی چه چیزی قابل استفاده است؟",
-o:["Crossbow","Bow","Sword","Axe"],
-a:0
-},
-{
-q:"کدام ماده برای ساخت Netherite Ingot لازم است؟",
-o:["Netherite Scrap + Gold Ingots","Diamond + Gold","Ancient Debris + Iron","Gold + Quartz"],
-a:0
-},
-{
-q:"Ancient Debris بیشتر در کدام بُعد پیدا می‌شود؟",
-o:["Nether","Overworld","End","Deep Dark"],
-a:0
-},
-{
-q:"کدام ماده برای ساخت Netherite Scrap در کوره استفاده می‌شود؟",
-o:["Ancient Debris","Nether Quartz","Blackstone","Crying Obsidian"],
-a:0
-},
-{
-q:"کدام بلوک در برابر انفجار بسیار مقاوم است؟",
-o:["Obsidian","Dirt","Wood","Glass"],
-a:0
-},
-{
-q:"کدام بلوک نور زیادی تولید می‌کند؟",
-o:["Glowstone","Stone","Dirt","Clay"],
-a:0
-},
-{
-q:"برای ساخت Lantern چه چیزی لازم است؟",
-o:["Iron Nugget + Torch","Gold Nugget + Torch","Iron Ingot + Coal","Stick + Glowstone"],
-a:0
-},
-{
-q:"کدام آیتم از ترکیب ۹ Iron Nugget ساخته می‌شود؟",
-o:["Iron Ingot","Iron Block","Chain","Anvil"],
-a:0
-},
-{
-q:"کدام بلوک برای تبدیل Villager به Librarian استفاده می‌شود؟",
-o:["Lectern","Composter","Grindstone","Smithing Table"],
-a:0
-},
-{
-q:"Villager کشاورز با کدام بلوک مرتبط است؟",
-o:["Composter","Lectern","Barrel","Stonecutter"],
-a:0
-},
-{
-q:"Villager آهنگر ابزار با کدام بلوک مرتبط است؟",
-o:["Smithing Table","Anvil","Grindstone","Furnace"],
-a:0
-},
-{
-q:"Villager زره‌ساز با کدام بلوک مرتبط است؟",
-o:["Blast Furnace","Smithing Table","Anvil","Stonecutter"],
-a:0
-},
-{
-q:"Villager قصاب با کدام بلوک مرتبط است؟",
-o:["Smoker","Barrel","Furnace","Campfire"],
-a:0
-},
-{
-q:"کدام Villager معمولاً Emerald در ازای کاغذ می‌دهد؟",
-o:["Librarian","Farmer","Butcher","Fisherman"],
-a:0
-},
-{
-q:"کدام بلوک برای تبدیل Villager به Fisherman استفاده می‌شود؟",
-o:["Barrel","Lectern","Composter","Cauldron"],
-a:0
-},
-{
-q:"کدام موجود می‌تواند در حالت طبیعی تبدیل به Drowned شود؟",
-o:["Zombie","Skeleton","Creeper","Spider"],
-a:0
-},
-{
-q:"کدام موجود در نور روز می‌تواند آتش بگیرد؟",
-o:["Zombie","Creeper","Spider","Enderman"],
-a:0
-},
-{
-q:"کدام موجود هنگام منفجر شدن آسیب زیادی ایجاد می‌کند؟",
-o:["Creeper","Spider","Slime","Bat"],
-a:0
-},
-{
-q:"کدام موجود می‌تواند از دیوارها بالا برود؟",
-o:["Spider","Zombie","Skeleton","Creeper"],
-a:0
-},
-{
-q:"کدام موجود با نگاه کردن به چشم‌هایش عصبانی می‌شود؟",
-o:["Enderman","Creeper","Ghast","Slime"],
-a:0
-},
-{
-q:"Enderman معمولاً چه بلوک‌هایی را می‌تواند بردارد؟",
-o:["برخی بلوک‌های قابل جابه‌جایی","Obsidian","Bedrock","End Portal Frame"],
-a:0
-},
-{
-q:"کدام موجود در Nether پرواز می‌کند و گلوله آتشین شلیک می‌کند؟",
-o:["Ghast","Blaze","Phantom","Vex"],
-a:0
-},
-{
-q:"کدام موجود در Nether می‌تواند سوار Strider شود؟",
-o:["Zombie Piglin","Piglin","Skeleton","همه موارد"],
-a:1
-},
-{
-q:"برای کنترل Strider در حرکت چه آیتمی کاربرد دارد؟",
-o:["Warped Fungus on a Stick","Carrot on a Stick","Fishing Rod","Lead"],
-a:0
-},
-{
-q:"کدام موجود را می‌توان با Warped Fungus جذب کرد؟",
-o:["Strider","Piglin","Hoglin","Ghast"],
-a:0
-},
-{
-q:"کدام موجود با Crimson Fungus مرتبط است؟",
-o:["Hoglin","Strider","Allay","Warden"],
-a:0
-},
-{
-q:"کدام موجود از Soul Sand Valley به عنوان دشمن رایج شناخته می‌شود؟",
-o:["Ghast","Cow","Pig","Axolotl"],
-a:0
-},
-{
-q:"کدام بلوک باعث کند شدن حرکت می‌شود؟",
-o:["Soul Sand","Stone","Glass","Ice"],
-a:0
-},
-{
-q:"Soul Speed روی چه چیزی اعمال می‌شود؟",
-o:["Boots","Helmet","Sword","Pickaxe"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Portal به End استفاده نمی‌شود؟",
-o:["Obsidian","End Portal Frame","هیچ‌کدام","هیچ بلوک معمولی"],
-a:0
-},
-{
-q:"Ender Dragon در کدام بُعد قرار دارد؟",
-o:["The End","Nether","Overworld","Deep Dark"],
-a:0
-},
-{
-q:"پس از شکست Ender Dragon چه چیزی در مرکز جزیره ظاهر می‌شود؟",
-o:["End Gateway","Nether Portal","Stronghold","Village"],
-a:0
-},
-{
-q:"کدام آیتم از Ender Dragon برای ساخت Potion استفاده می‌شود؟",
-o:["Dragon's Breath","Dragon Scale","Dragon Eye","End Crystal"],
-a:0
-},
-{
-q:"End Crystal برای چه چیزی کاربرد دارد؟",
-o:["احیای Ender Dragon","ساخت Nether Portal","ساخت Beacon","ساخت Elytra"],
-a:0
-},
-{
-q:"Elytra معمولاً در کجا پیدا می‌شود؟",
-o:["End City Ship","Stronghold","Village","Ancient City"],
-a:0
-},
-{
-q:"برای تعمیر Elytra در Anvil چه چیزی کاربرد دارد؟",
-o:["Phantom Membrane","Leather","Feather","String"],
-a:0
-},
-{
-q:"Phantom معمولاً چه زمانی ظاهر می‌شود؟",
-o:["وقتی بازیکن چند شب نخوابد","در روز","داخل Nether","هنگام باران"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Conduit استفاده می‌شود؟",
-o:["Heart of the Sea","Nether Star","Dragon Egg","Echo Shard"],
-a:0
-},
-{
-q:"Heart of the Sea معمولاً از کجا به دست می‌آید؟",
-o:["Buried Treasure","End City","Stronghold","Woodland Mansion"],
-a:0
-},
-{
-q:"کدام آیتم برای پیدا کردن Buried Treasure کمک می‌کند؟",
-o:["Treasure Map","Eye of Ender","Compass","Spyglass"],
-a:0
-},
-{
-q:"کدام ابزار برای ساخت مسیر سریع روی یخ کاربرد زیادی دارد؟",
-o:["Boat","Minecart","Horse","Elytra"],
-a:0
-},
-{
-q:"کدام حیوان را می‌توان با Carrot پرورش داد؟",
-o:["Pig","Cow","Sheep","Chicken"],
-a:0
-},
-{
-q:"کدام حیوان با Wheat پرورش پیدا می‌کند؟",
-o:["Cow","Pig","Chicken","Rabbit"],
-a:0
-},
-{
-q:"کدام حیوان با Seeds پرورش پیدا می‌کند؟",
-o:["Chicken","Cow","Pig","Horse"],
-a:0
-},
-{
-q:"کدام حیوان با Sugar و Wheat و Apple قابل اهلی‌سازی/پرورش است؟",
-o:["Horse","Wolf","Cat","Fox"],
-a:0
-},
-{
-q:"کدام حیوان را می‌توان با Bone به Wolf تبدیل به حیوان خانگی کرد؟",
-o:["Wolf","Fox","Cat","Horse"],
-a:0
-},
-{
-q:"کدام آیتم برای اهلی کردن Cat استفاده می‌شود؟",
-o:["Raw Cod یا Raw Salmon","Bone","Wheat","Apple"],
-a:0
-},
-{
-q:"کدام موجود از سقوط از ارتفاع زیاد آسیب نمی‌بیند؟",
-o:["Chicken","Cow","Pig","Sheep"],
-a:0
-},
-{
-q:"کدام موجود می‌تواند از دیوارها بالا برود و در ارتفاعات خطرناک باشد؟",
-o:["Goat","Spider","Cat","Rabbit"],
-a:1
-},
-{
-q:"کدام موجود با حمله به بازیکن می‌تواند او را به هوا پرتاب کند؟",
-o:["Goat","Cow","Pig","Sheep"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Shield لازم است؟",
-o:["Iron Ingot + Planks","Iron Block + Wood","Diamond + Wood","Gold + Planks"],
-a:0
-},
-{
-q:"کدام آیتم می‌تواند با استفاده از Shield بلاک شود؟",
-o:["برخی حملات","هیچ حمله‌ای","فقط تیر","فقط انفجار"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Furnace استفاده می‌شود؟",
-o:["Cobblestone","Stone Bricks","Dirt","Iron Block"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Blast Furnace لازم است؟",
-o:["Iron Ingots + Furnace + Smooth Stone","Gold + Furnace","Diamond + Furnace","Nether Brick + Furnace"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Smoker لازم است؟",
-o:["Furnace + Logs","Furnace + Iron","Furnace + Coal","Furnace + Stone"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Anvil استفاده می‌شود؟",
-o:["Iron Blocks + Iron Ingots","Iron + Stone","Diamond + Iron","Iron + Coal"],
-a:0
-},
-{
-q:"کدام بلوک برای ساخت Cartography Table لازم است؟",
-o:["Paper + Planks","Paper + Iron","Leather + Paper","Map + Wood"],
-a:0
-},
-{
-q:"کدام آیتم می‌تواند روی نقشه علامت مکان بازیکن را نشان دهد؟",
-o:["Banner در نسخه‌های مناسب","Torch","Chest","Compass"],
-a:0
-},
-{
-q:"کدام آیتم در Nether برای پیدا کردن جهت تقریبی Overworld کاربرد مستقیم ندارد؟",
-o:["Compass معمولی","Lodestone Compass","Map","F3"],
-a:0
-},
-{
-q:"Lodestone Compass به چه چیزی متصل می‌شود؟",
-o:["Lodestone","Beacon","End Crystal","Respawn Anchor"],
-a:0
-},
-{
-q:"Respawn Anchor در کدام بُعد کاربرد اصلی دارد؟",
-o:["Nether","Overworld","End","Deep Dark"],
-a:0
-},
-{
-q:"برای شارژ Respawn Anchor چه چیزی استفاده می‌شود؟",
-o:["Glowstone","Redstone","Coal","Quartz"],
-a:0
-},
-{
-q:"کدام بلوک با Redstone Signal کار می‌کند؟",
-o:["Redstone Lamp","Dirt","Glass","Sand"],
-a:0
-},
-{
-q:"کدام ماده پایه Redstone Repeater است؟",
-o:["Redstone Dust + Stone + Torches","Iron + Redstone","Quartz + Stone","Diamond + Redstone"],
-a:0
-},
-{
-q:"حداکثر Delay یک Redstone Repeater در هر تکرار چند Tick است؟",
-o:["۴","۸","۱۰","۲۰"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Piston لازم است؟",
-o:["Wood + Cobblestone + Iron + Redstone","Iron + Diamond","Stone + Gold","Wood + Quartz"],
-a:0
-},
-{
-q:"کدام بلوک می‌تواند آیتم‌ها را به داخل خود جمع کند؟",
-o:["Hopper","Piston","Dropper","Observer"],
-a:0
-},
-{
-q:"کدام بلوک تغییرات بلوک مقابل خود را تشخیص می‌دهد؟",
-o:["Observer","Repeater","Comparator","Hopper"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Observer لازم است؟",
-o:["Quartz","Diamond","Emerald","Nether Star"],
-a:0
-},
-{
-q:"کدام آیتم برای ساخت Comparator استفاده می‌شود؟",
-o:["Quartz","Diamond","Emerald","Echo Shard"],
-a:0
-},
-{
-q:"کدام موجود می‌تواند یک وسیله خاص را در صورت استفاده صحیح به بازیکن برگرداند؟",
-o:["Allay","Cow","Pig","Bat"],
-a:0
-},
-{
-q:"Allay با چه چیزی می‌تواند آیتم مشابه را جمع کند؟",
-o:["آیتمی که به آن داده شده","Emerald","Diamond","هیچ‌چیز"],
-a:0
-},
-{
-q:"کدام موجود به بازیکن در مبارزه با دشمنان کمک می‌کند و در Woodland Mansion نیز دیده می‌شود؟",
-o:["Vex","Cow","Pig","Fish"],
-a:0
-},
-{
-q:"کدام دشمن با Evoker مرتبط است؟",
-o:["Vex","Creeper","Ghast","Blaze"],
-a:0
-},
-{
-q:"کدام آیتم از Evoker می‌تواند برای ساخت Totem of Undying به دست آید؟",
-o:["Totem of Undying","Emerald","Evoker Staff","Vex Wing"],
-a:0
-},
-{
-q:"Totem of Undying معمولاً چه زمانی فعال می‌شود؟",
-o:["وقتی بازیکن با آن در دست بمیرد","وقتی روی زمین بیفتد","وقتی آب بخورد","وقتی بخوابد"],
-a:0
-},
-{
-q:"کدام سازه معمولاً محل پیدا شدن Totem of Undying است؟",
-o:["Woodland Mansion","Village","Stronghold","Desert Temple"],
-a:0
-},
-{
-q:"کدام سازه برای پیدا کردن End Portal بسیار مهم است؟",
-o:["Stronghold","Village","Mansion","Monument"],
-a:0
-},
-{
-q:"کدام آیتم برای پیدا کردن Stronghold استفاده می‌شود؟",
-o:["Eye of Ender","Compass","Clock","Spyglass"],
-a:0
-},
-{
-q:"کدام سازه معمولاً دارای کتابخانه است؟",
-o:["Stronghold","Village","Desert Temple","Ocean Monument"],
-a:0
-},
-{
-q:"کدام بلوک در Stronghold برای ساخت End Portal Frame دیده می‌شود؟",
-o:["End Portal Frame","Obsidian","Purpur","Bedrock"],
-a:0
-},
-{
-q:"کدام آیتم می‌تواند زمان روز را نشان دهد؟",
-o:["Clock","Compass","Spyglass","Map"],
-a:0
-},
-{
-q:"کدام آیتم جهت شمال را نشان می‌دهد؟",
-o:["Compass","Clock","Map","Spyglass"],
-a:0
-},
-{
-q:"کدام ابزار برای نزدیک‌بینی در ماینکرافت اضافه شده است؟",
-o:["Spyglass","Telescope","Binoculars","Scope"],
-a:0
-},
-{
-q:"Spyglass با چه ماده‌ای ساخته می‌شود؟",
-o:["Copper + Amethyst Shard","Iron + Glass","Gold + Quartz","Diamond + Glass"],
-a:0
-},
-{
-q:"کدام سنگ در ساخت Spyglass استفاده می‌شود؟",
-o:["Amethyst","Quartz","Diamond","Emerald"],
-a:0
-},
-{
-q:"کدام بلوک در Amethyst Geode پیدا می‌شود؟",
-o:["Amethyst","Ancient Debris","Sculk","Purpur"],
-a:0
-},
-{
-q:"کدام آیتم از Amethyst Cluster به دست می‌آید؟",
-o:["Amethyst Shard","Echo Shard","Quartz","Crystal"],
-a:0
-},
-{
-q:"Echo Shard در کجا پیدا می‌شود؟",
-o:["Ancient City","Village","Nether Fortress","Ocean Monument"],
-a:0
-},
-{
-q:"Recovery Compass با چه چیزی ساخته می‌شود؟",
-o:["Echo Shards + Compass","Echo Shard + Diamond","Amethyst + Compass","Sculk + Compass"],
-a:0
-},
-{
-q:"Recovery Compass چه چیزی را پیدا می‌کند؟",
-o:["محل آخرین مرگ بازیکن","Stronghold","Village","End Portal"],
-a:0
+const WINNER_DAY = 6;
+
+
+/* =========================================================
+   وضعیت هفته
+========================================================= */
+
+function getContestStatus(){
+
+    const now = new Date();
+    const day = now.getDay();
+
+    /*
+    پنج‌شنبه تا پایان روز مسابقه فعال است.
+    جمعه بسته است.
+    شنبه اعلام برندگان.
+    یکشنبه دوباره هفته جدید.
+    */
+
+    if(day === 4){
+
+        return "thursday";
+    }
+
+    if(day === 5){
+
+        return "friday";
+    }
+
+    if(day === 6){
+
+        return "saturday";
+    }
+
+    return "open";
 }
+
+
+/* =========================================================
+   STATUS UI
+========================================================= */
+
+function updateStatus(){
+
+    const status=getContestStatus();
+
+    const box=document.getElementById("statusBox");
+    const title=document.getElementById("statusTitle");
+    const countdown=document.getElementById("countdown");
+
+    box.classList.remove("open","closed","saturday");
+
+    if(status==="open"){
+
+        box.classList.add("open");
+
+        title.innerHTML=
+        "🟢 ثبت‌نام این هفته باز است";
+
+        countdown.textContent=
+        "تا پایان فرصت شرکت: "+getTimeUntilThursday();
+
+    }
+
+    else if(status==="thursday"){
+
+        box.classList.add("open");
+
+        title.innerHTML=
+        "⚡ آخرین فرصت شرکت در چالش!";
+
+        countdown.textContent=
+        "زمان باقی‌مانده: "+getTimeUntilFriday();
+
+    }
+
+    else if(status==="friday"){
+
+        box.classList.add("closed");
+
+        title.innerHTML=
+        "🔴 ثبت‌نام بسته شده است";
+
+        countdown.textContent=
+        "امروز نتایج در حال بررسی هستند.";
+
+    }
+
+    else if(status==="saturday"){
+
+        box.classList.add("saturday");
+
+        title.innerHTML=
+        "🏆 امروز روز اعلام برندگان است!";
+
+        countdown.textContent=
+        "برندگان این هفته در بخش برندگان اعلام می‌شوند.";
+
+    }
+
+    updateWinnerSection(status);
+
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function getNextThursday(){
+
+    const now=new Date();
+    const result=new Date(now);
+
+    let diff=(4-now.getDay()+7)%7;
+
+    if(diff===0 && now.getHours()>=23){
+        diff=7;
+    }
+
+    result.setDate(now.getDate()+diff);
+
+    result.setHours(23,59,59,999);
+
+    return result;
+}
+
+
+function getTimeUntilThursday(){
+
+    const now=new Date();
+    const target=getNextThursday();
+
+    let diff=target-now;
+
+    if(diff<0) diff=0;
+
+    return formatTime(diff);
+}
+
+
+function getTimeUntilFriday(){
+
+    const now=new Date();
+    const target=new Date(now);
+
+    target.setDate(now.getDate()+1);
+    target.setHours(0,0,0,0);
+
+    return formatTime(target-now);
+}
+
+
+function formatTime(ms){
+
+    let seconds=Math.floor(ms/1000);
+
+    const days=Math.floor(seconds/86400);
+    seconds%=86400;
+
+    const hours=Math.floor(seconds/3600);
+    seconds%=3600;
+
+    const minutes=Math.floor(seconds/60);
+    seconds%=60;
+
+    return `${days} روز | ${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+}
+
+
+/* =========================================================
+   WINNERS
+========================================================= */
+
+function updateWinnerSection(status){
+
+    const statusEl=document.getElementById("winnerStatus");
+
+    if(status==="saturday"){
+
+        statusEl.innerHTML=
+        "🎉 برندگان این هفته اعلام شدند! تبریک به قهرمانان امیرکرفت.";
+
+        loadWinners();
+
+    }else{
+
+        statusEl.innerHTML=
+        "🔒 برندگان این هفته شنبه اعلام می‌شوند.";
+
+    }
+}
+
+
+/*
+برای نمایش برندگان واقعی باید اطلاعات در یک دیتابیس
+یا بک‌اند ذخیره شود.
+
+فعلاً این بخش با اطلاعات نمونه کار می‌کند.
+*/
+
+function loadWinners(){
+
+    const winners=JSON.parse(
+        localStorage.getItem("amircraft_winners") ||
+        "null"
+    );
+
+    if(!winners)return;
+
+    const cards=document.querySelectorAll(".winner");
+
+    winners.forEach((winner,index)=>{
+
+        if(!cards[index])return;
+
+        cards[index].querySelector(".winner-name")
+        .textContent=winner.name;
+
+        cards[index].querySelector(".winner-score")
+        .textContent=winner.score+" / 100";
+
+    });
+
+}
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions=[
+
+["در Minecraft برای ساخت Eye of Ender به چه چیزهایی نیاز دارید؟",
+["Ender Pearl + Blaze Powder","Diamond + Gold","Iron + Quartz","Emerald + Coal"],0],
+
+["کدام موجود Nether Star می‌اندازد؟",
+["Wither","Warden","Ender Dragon","Blaze"],0],
+
+["کدام موجود در Ancient City پیدا می‌شود؟",
+["Warden","Ravager","Evoker","Guardian"],0],
+
+["کدام Enchantment باعث کاهش آسیب سقوط می‌شود؟",
+["Feather Falling","Sharpness","Fortune","Power"],0],
+
+["کدام آیتم برای ساخت Beacon لازم است؟",
+["Nether Star","Dragon Egg","Echo Shard","Elytra"],0],
+
+["Elytra معمولاً کجا پیدا می‌شود؟",
+["End City Ship","Village","Stronghold","Ocean Monument"],0],
+
+["کدام Potion دید در شب می‌دهد؟",
+["Night Vision","Strength","Swiftness","Harming"],0],
+
+["برای Potion of Night Vision کدام ماده مهم است؟",
+["Golden Carrot","Sugar","Rabbit Foot","Magma Cream"],0],
+
+["کدام موجود با نگاه کردن مستقیم به آن عصبانی می‌شود؟",
+["Enderman","Creeper","Spider","Ghast"],0],
+
+["کدام موجود می‌تواند از دیوار بالا برود؟",
+["Spider","Zombie","Skeleton","Cow"],0],
+
+["کدام موجود با انفجار معروف است؟",
+["Creeper","Slime","Bat","Pig"],0],
+
+["کدام ماده برای ساخت Netherite Ingot لازم است؟",
+["Netherite Scrap + Gold","Diamond + Gold","Iron + Quartz","Obsidian + Gold"],0],
+
+["Ancient Debris در کجا پیدا می‌شود؟",
+["Nether","End","Overworld","Stronghold"],0],
+
+["کدام ابزار برای استخراج Obsidian مناسب است؟",
+["Diamond Pickaxe یا بهتر","Iron Axe","Stone Shovel","Wood Pickaxe"],0],
+
+["کدام Villager با Lectern مرتبط است؟",
+["Librarian","Farmer","Butcher","Fisherman"],0],
+
+["کدام Villager با Composter مرتبط است؟",
+["Farmer","Librarian","Armorer","Fisherman"],0],
+
+["کدام بلوک برای Villager ماهیگیر استفاده می‌شود؟",
+["Barrel","Lectern","Composter","Smoker"],0],
+
+["کدام Villager با Smithing Table مرتبط است؟",
+["Toolsmith","Farmer","Librarian","Butcher"],0],
+
+["کدام آیتم برای ساخت Shield لازم است؟",
+["Iron Ingot + Planks","Gold + Stone","Diamond + Wood","Iron Block + Glass"],0],
+
+["کدام Enchantment روی Trident باعث برگشت آن می‌شود؟",
+["Loyalty","Sharpness","Power","Flame"],0],
+
+["کدام Enchantment با Riptide ناسازگار است؟",
+["Loyalty","Unbreaking","Mending","Impaling"],0],
+
+["کدام Enchantment سرعت حرکت در آب را افزایش می‌دهد؟",
+["Depth Strider","Feather Falling","Respiration","Power"],0],
+
+["Respiration روی کدام قطعه قرار می‌گیرد؟",
+["Helmet","Boots","Chestplate","Leggings"],0],
+
+["Aqua Affinity چه کاری انجام می‌دهد؟",
+["افزایش سرعت شکستن زیر آب","افزایش آسیب","کاهش سقوط","افزایش سرعت دویدن"],0],
+
+["کدام موجود از Blaze Rod استفاده/دراپ می‌کند؟",
+["Blaze","Ghast","Piglin","Hoglin"],0],
+
+["کدام آیتم برای ساخت Brewing Stand لازم است؟",
+["Blaze Rod","Iron Ingot","Gold Ingot","Quartz"],0],
+
+["کدام ماده برای Awkward Potion لازم است؟",
+["Nether Wart","Sugar","Golden Carrot","Spider Eye"],0],
+
+["کدام Potion با Fermented Spider Eye و Night Vision ساخته می‌شود؟",
+["Invisibility","Strength","Harming","Fire Resistance"],0],
+
+["کدام موجود در Ocean Monument پیدا می‌شود؟",
+["Guardian","Evoker","Vindicator","Ravager"],0],
+
+["کدام باس در Ocean Monument وجود دارد؟",
+["Elder Guardian","Wither","Warden","Ender Dragon"],0],
+
+["Heart of the Sea معمولاً در کجا پیدا می‌شود؟",
+["Buried Treasure","End City","Stronghold","Mansion"],0],
+
+["کدام آیتم محل آخرین مرگ را پیدا می‌کند؟",
+["Recovery Compass","Compass","Clock","Spyglass"],0],
+
+["Recovery Compass با چه چیزی ساخته می‌شود؟",
+["Echo Shards + Compass","Diamond + Compass","Quartz + Compass","Amethyst + Compass"],0],
+
+["Echo Shard در کجا پیدا می‌شود؟",
+["Ancient City","Village","Nether Fortress","Ocean Monument"],0],
+
+["کدام موجود Totem of Undying می‌اندازد؟",
+["Evoker","Vindicator","Pillager","Ravager"],0],
+
+["Totem of Undying چه زمانی فعال می‌شود؟",
+["وقتی بازیکن در دست داشتن آن بمیرد","وقتی روی زمین باشد","وقتی بازیکن بخوابد","وقتی وارد Nether شود"],0],
+
+["Evoker معمولاً در کدام سازه پیدا می‌شود؟",
+["Woodland Mansion","Stronghold","Village","Desert Temple"],0],
+
+["کدام دشمن توسط Evoker احضار می‌شود؟",
+["Vex","Blaze","Ghast","Slime"],0],
+
+["کدام سازه محل End Portal است؟",
+["Stronghold","Village","Mansion","Monument"],0],
+
+["کدام آیتم Stronghold را پیدا می‌کند؟",
+["Eye of Ender","Compass","Clock","Spyglass"],0],
+
+["کدام باس در The End قرار دارد؟",
+["Ender Dragon","Wither","Warden","Elder Guardian"],0],
+
+["End Crystal چه کاربرد مهمی دارد؟",
+["احیای Ender Dragon","ساخت Beacon","ساخت Elytra","ساخت Nether Portal"],0],
+
+["Dragon's Breath برای چه چیزی کاربرد دارد؟",
+["ساخت/جمع‌آوری ماده مربوط به Potion","ساخت شمشیر","ساخت زره","ساخت Portal"],0],
+
+["کدام موجود در Nether پرواز می‌کند؟",
+["Ghast","Piglin","Hoglin","Strider"],0],
+
+["کدام موجود روی Lava راه می‌رود؟",
+["Strider","Piglin","Hoglin","Ghast"],0],
+
+["برای کنترل Strider چه چیزی استفاده می‌شود؟",
+["Warped Fungus on a Stick","Carrot on a Stick","Fishing Rod","Lead"],0],
+
+["کدام موجود با Warped Fungus جذب می‌شود؟",
+["Strider","Piglin","Ghast","Skeleton"],0],
+
+["کدام بلوک باعث کند شدن بازیکن می‌شود؟",
+["Soul Sand","Stone","Glass","Dirt"],0],
+
+["Soul Speed روی کدام قطعه اعمال می‌شود؟",
+["Boots","Helmet","Sword","Chestplate"],0],
+
+["Respawn Anchor در کجا کاربرد اصلی دارد؟",
+["Nether","End","Overworld","Stronghold"],0],
+
+["Respawn Anchor با چه چیزی شارژ می‌شود؟",
+["Glowstone","Redstone","Coal","Quartz"],0],
+
+["Lodestone Compass به چه چیزی متصل می‌شود؟",
+["Lodestone","Beacon","End Crystal","Respawn Anchor"],0],
+
+["Spyglass با چه موادی ساخته می‌شود؟",
+["Copper + Amethyst Shard","Iron + Glass","Gold + Quartz","Diamond + Glass"],0],
+
+["Amethyst Geode دارای کدام ماده است؟",
+["Amethyst","Ancient Debris","Sculk","Purpur"],0],
+
+["کدام آیتم از Amethyst Cluster به دست می‌آید؟",
+["Amethyst Shard","Echo Shard","Quartz","Diamond"],0],
+
+["کدام موجود می‌تواند آیتم مشابه آیتم داده‌شده را جمع کند؟",
+["Allay","Vex","Bat","Cat"],0],
+
+["Allay با چه چیزی می‌تواند کار کند؟",
+["آیتمی که به آن داده شده","Emerald","Diamond","Nether Star"],0],
+
+["کدام موجود از Skeleton تبدیل می‌شود؟",
+["Stray در شرایط مناسب","Creeper","Zombie","Spider"],0],
+
+["کدام موجود می‌تواند در روز آتش بگیرد؟",
+["Zombie","Creeper","Spider","Enderman"],0],
+
+["کدام موجود می‌تواند تبدیل به Drowned شود؟",
+["Zombie","Skeleton","Spider","Creeper"],0],
+
+["کدام حیوان با Wheat پرورش پیدا می‌کند؟",
+["Cow","Pig","Chicken","Rabbit"],0],
+
+["کدام حیوان با Seeds پرورش پیدا می‌کند؟",
+["Chicken","Cow","Pig","Horse"],0],
+
+["کدام حیوان با Carrot پرورش پیدا می‌کند؟",
+["Pig","Cow","Sheep","Chicken"],0],
+
+["کدام حیوان با Bone اهلی می‌شود؟",
+["Wolf","Cat","Horse","Fox"],0],
+
+["کدام حیوان با Raw Fish اهلی می‌شود؟",
+["Cat","Wolf","Horse","Cow"],0],
+
+["کدام حیوان معمولاً با سقوط زیاد آسیب کمتری می‌بیند؟",
+["Chicken","Cow","Pig","Sheep"],0],
+
+["کدام موجود با ضربه می‌تواند بازیکن را پرتاب کند؟",
+["Goat","Cow","Pig","Sheep"],0],
+
+["کدام ابزار برای ساخت Furnace لازم است؟",
+["Cobblestone","Iron","Wood","Stone Bricks"],0],
+
+["Blast Furnace برای چه کاری مناسب‌تر است؟",
+["ذوب سریع‌تر بعضی مواد معدنی و فلزات","پخت غذا","ساخت Potion","ساخت Portal"],0],
+
+["Smoker بیشتر برای چه کاری استفاده می‌شود؟",
+["پخت غذا","ذوب Ore","ساخت ابزار","ساخت Potion"],0],
+
+["کدام بلوک برای ساخت Anvil استفاده می‌شود؟",
+["Iron Blocks + Iron Ingots","Gold + Stone","Diamond + Iron","Quartz + Iron"],0],
+
+["کدام بلوک تغییرات جلوی خود را تشخیص می‌دهد؟",
+["Observer","Hopper","Piston","Chest"],0],
+
+["کدام بلوک آیتم‌ها را انتقال می‌دهد؟",
+["Hopper","Observer","Piston","Repeater"],0],
+
+["کدام بلوک با Redstone کار می‌کند و نور می‌دهد؟",
+["Redstone Lamp","Dirt","Glass","Sand"],0],
+
+["کدام ماده برای ساخت Piston لازم است؟",
+["Wood + Cobblestone + Iron + Redstone","Diamond + Iron","Quartz + Gold","Obsidian + Iron"],0],
+
+["کدام Enchantment حداکثر سطح رایج V دارد؟",
+["Sharpness","Fortune","Power","هر سه"],3],
+
+["کدام Enchantment روی Bow استفاده می‌شود؟",
+["Power","Sharpness","Efficiency","Fortune"],0],
+
+["Flame روی کدام سلاح استفاده می‌شود؟",
+["Bow","Sword","Shield","Trident"],0],
+
+["Quick Charge مربوط به چیست؟",
+["Crossbow","Bow","Trident","Sword"],0],
+
+["Multishot مربوط به چیست؟",
+["Crossbow","Bow","Trident","Shield"],0],
+
+["Piercing مربوط به چیست؟",
+["Crossbow","Bow","Sword","Axe"],0],
+
+["کدام بلوک برای ساخت Lantern لازم است؟",
+["Iron Nugget + Torch","Gold Nugget + Torch","Diamond + Torch","Quartz + Torch"],0],
+
+["کدام بلوک برای ساخت Cartography Table لازم است؟",
+["Paper + Planks","Paper + Iron","Leather + Paper","Map + Iron"],0],
+
+["کدام آیتم زمان روز را نشان می‌دهد؟",
+["Clock","Compass","Map","Spyglass"],0],
+
+["کدام آیتم جهت را نشان می‌دهد؟",
+["Compass","Clock","Map","Spyglass"],0],
+
+["کدام آیتم برای پیدا کردن Treasure استفاده می‌شود؟",
+["Treasure Map","Compass","Clock","Spyglass"],0],
+
+["کدام بلوک در برابر انفجار بسیار مقاوم است؟",
+["Obsidian","Dirt","Wood","Glass"],0],
+
+["کدام بلوک نور زیادی تولید می‌کند؟",
+["Glowstone","Stone","Dirt","Clay"],0],
+
+["کدام آیتم برای ساخت Beacon مهم است؟",
+["Glass + Obsidian + Nether Star","Iron + Diamond","Gold + Quartz","Emerald + Glass"],0],
+
+["حداکثر سطح Fortune چند است؟",
+["III","II","IV","V"],0],
+
+["حداکثر سطح Looting چند است؟",
+["III","II","IV","V"],0],
+
+["کدام Enchantment باعث آتش گرفتن دشمن با شمشیر می‌شود؟",
+["Fire Aspect","Flame","Fire Protection","Burning"],0],
+
+["کدام Enchantment برای کاهش آسیب انفجار تخصصی است؟",
+["Blast Protection","Fire Protection","Projectile Protection","Protection"],0],
+
+["کدام Enchantment برای آسیب تیر تخصصی است؟",
+["Projectile Protection","Blast Protection","Power","Knockback"],0],
+
+["کدام آیتم برای ساخت Conduit لازم است؟",
+["Heart of the Sea","Nether Star","Dragon Egg","Echo Shard"],0],
+
+["Conduit بیشتر چه مزیتی می‌دهد؟",
+["قدرت‌های خاص زیر آب","پرواز","دید در شب دائمی","Teleport"],0],
+
+["کدام موجود در Woodland Mansion خطرناک است؟",
+["Vindicator","Cow","Pig","Sheep"],0],
+
+["کدام موجود Ravager است؟",
+["یک دشمن بزرگ در Raid","یک حیوان خانگی","یک موجود Nether","یک باس End"],0],
+
+["کدام رویداد شامل Pillager و Ravager است؟",
+["Raid","End Fight","Nether Raid","Village War"],0],
+
+["کدام آیتم برای ساخت End Portal Frame در Survival ساخته نمی‌شود؟",
+["End Portal Frame","Obsidian","Eye of Ender","هیچ‌کدام"],0],
+
+["کدام بُعد دارای End City است؟",
+["The End","Nether","Overworld","Deep Dark"],0],
+
+["کدام بُعد دارای Nether Fortress است؟",
+["Nether","End","Overworld","Deep Dark"],0],
+
+["کدام ماده برای ساخت Nether Portal لازم است؟",
+["Obsidian","Iron","Stone","Blackstone"],0],
+
+["کدام آیتم Nether Portal را روشن می‌کند؟",
+["Flint and Steel","Torch","Redstone","Fire Charge فقط"],0],
+
+["کدام آیتم برای ساخت Enchanting Table لازم است؟",
+["Diamond + Obsidian + Book","Iron + Gold + Book","Emerald + Stone","Netherite + Book"],0],
+
+["برای ساخت کامل یک کتابخانه Enchanting معمولاً چند Bookshelf لازم است؟",
+["15","10","20","30"],0],
+
+["کدام بلوک برای ساخت Enchanting Table استفاده می‌شود؟",
+["Obsidian","Stone","Blackstone","Deepslate"],0],
+
+["کدام ماده برای ساخت Book لازم است؟",
+["Leather + Paper","Iron + Paper","Wood + Paper","String + Paper"],0],
+
+["کدام ماده برای ساخت Paper استفاده می‌شود؟",
+["Sugar Cane","Wheat","Bamboo","Leaves"],0],
+
+["کدام گیاه برای ساخت Paper استفاده می‌شود؟",
+["Sugar Cane","Cactus","Bamboo","Kelp"],0],
+
+["کدام آیتم برای ساخت Map استفاده می‌شود؟",
+["Paper + Compass","Paper + Clock","Paper + Gold","Paper + Iron"],0],
+
+["کدام Enchantment باعث افزایش عمر ابزار می‌شود؟",
+["Unbreaking","Sharpness","Fortune","Power"],0],
+
+["کدام Enchantment به تعمیر ابزار با XP کمک می‌کند؟",
+["Mending","Repair","Fixing","Durability"],0],
+
+["کدام Enchantment باعث افزایش تعداد بعضی Dropها می‌شود؟",
+["Looting","Sharpness","Knockback","Fire Aspect"],0],
+
+["کدام Enchantment روی Pickaxe برای افزایش Drop بعضی Oreها استفاده می‌شود؟",
+["Fortune","Looting","Power","Flame"],0],
+
+["کدام Enchantment سرعت شکستن بلوک‌ها را افزایش می‌دهد؟",
+["Efficiency","Fortune","Haste","Speed"],0],
+
+["کدام Beacon Effect سرعت استخراج را افزایش می‌دهد؟",
+["Haste","Speed","Jump Boost","Strength"],0],
+
+["کدام Effect سرعت حرکت را زیاد می‌کند؟",
+["Speed","Haste","Strength","Resistance"],0],
+
+["کدام Effect آسیب حمله را افزایش می‌دهد؟",
+["Strength","Power","Attack","Damage"],0],
+
+["کدام Effect مقاومت در برابر آسیب می‌دهد؟",
+["Resistance","Protection","Shield","Armor"],0],
+
+["کدام Potion در برابر آتش مقاومت می‌دهد؟",
+["Fire Resistance","Water Breathing","Night Vision","Regeneration"],0],
+
+["برای Fire Resistance کدام ماده اصلی استفاده می‌شود؟",
+["Magma Cream","Blaze Rod","Gold","Lava Bucket"],0],
+
+["کدام موجود می‌تواند داخل آب شنا کند و در آن زندگی کند؟",
+["Axolotl","Cow","Sheep","Chicken"],0],
+
+["Axolotl معمولاً با چه چیزی تکثیر می‌شود؟",
+["Tropical Fish در سطل","Cod","Salmon","Wheat"],0],
+
+["کدام موجود در Deep Dark بسیار خطرناک است؟",
+["Warden","Zombie","Creeper","Spider"],0],
+
+["Warden بیشتر با چه حسی بازیکن را پیدا می‌کند؟",
+["لرزش و بو/حواس حسی","فقط دید","فقط نور","فقط صدا از دور"],0],
+
+["کدام بلوک در Deep Dark با لرزش مرتبط است؟",
+["Sculk Sensor","Diamond Block","Beacon","Quartz"],0],
+
+["کدام آیتم در Ancient City ارزشمند است؟",
+["Echo Shard","Nether Star","Dragon Breath","Totem"],0],
+
+["کدام بلوک برای ساخت Sculk Catalyst شناخته شده است؟",
+["Sculk Catalyst","Sculk Core","Dark Stone","Echo Block"],0],
+
+["کدام موجود می‌تواند با استفاده از یک وسیله خاص در هوا حرکت کند؟",
+["بازیکن با Elytra","Cow","Zombie","Pig"],0],
+
+["Elytra با کدام آیتم قابل تعمیر است؟",
+["Phantom Membrane","Leather","Feather","String"],0],
+
+["Phantom معمولاً پس از چه چیزی ظاهر می‌شود؟",
+["چند شب نخوابیدن","باران","ورود به Nether","خوردن غذا"],0],
+
+["کدام آیتم برای اهلی کردن Horse کاربرد اصلی دارد؟",
+["ابتدا سوار شدن و رام کردن","Bone","Fish","Sugar فقط"],0],
+
+["کدام حیوان می‌تواند Chest حمل کند؟",
+["Donkey","Cow","Sheep","Pig"],0],
+
+["کدام حیوان با Chest قابل استفاده برای حمل وسایل است؟",
+["Llama","Chicken","Cow","Rabbit"],0],
+
+["کدام آیتم برای Lead استفاده می‌شود؟",
+["کشیدن و بستن برخی موجودات","ساخت Potion","ساخت Portal","Enchant"],0],
+
+["Lead معمولاً با چه چیزی ساخته می‌شود؟",
+["String + Slimeball","Leather + Iron","String + Gold","Slime + Iron"],0],
+
+["کدام موجود Slimeball می‌تواند بیندازد؟",
+["Slime","Spider","Creeper","Witch"],0],
+
+["Slime معمولاً در کدام مکان خاص می‌تواند ظاهر شود؟",
+["Slime Chunk","Stronghold","End City","Village فقط"],0],
+
+["کدام موجود Gunpowder می‌اندازد؟",
+["Creeper","Zombie","Cow","Pig"],0],
+
+["Gunpowder برای ساخت چه چیزی کاربرد دارد؟",
+["Firework / TNT","Shield","Anvil","Elytra"],0],
+
+["کدام آیتم برای ساخت TNT لازم است؟",
+["Gunpowder + Sand","Iron + Sand","Coal + Sand","Redstone + Sand"],0],
+
+["کدام آیتم برای Firework Rocket لازم است؟",
+["Paper + Gunpowder","Paper + Iron","Stick + Gunpowder","Glass + Gunpowder"],0],
+
+["کدام ماده رنگ‌های مختلف به Firework می‌دهد؟",
+["Dye","Quartz","Iron","Coal"],0],
+
+["کدام بلوک برای ساخت Banner استفاده می‌شود؟",
+["Wool + Stick","Paper + Stick","Leather + Stick","Wood + Stick"],0],
+
+["کدام آیتم برای تغییر طرح Banner کاربرد دارد؟",
+["Loom","Anvil","Stonecutter","Grindstone"],0],
+
+["کدام بلوک برای ساخت Loom استفاده می‌شود؟",
+["String + Planks","Wool + Iron","Paper + Wood","Leather + String"],0],
+
+["کدام آیتم برای حذف Enchantment استفاده می‌شود؟",
+["Grindstone","Anvil","Stonecutter","Furnace"],0],
+
+["کدام بلوک برای برش سنگ استفاده می‌شود؟",
+["Stonecutter","Grindstone","Anvil","Smithing Table"],0],
+
+["کدام ابزار برای ساخت/استفاده از Smithing Table لازم نیست؟",
+["Stone","Iron","Diamond","Netherite"],0],
+
+["کدام آیتم در Smithing Table برای ارتقای تجهیزات Netherite کاربرد دارد؟",
+["Netherite Upgrade Template","Diamond Template","Nether Star","Ancient Core"],0],
+
+["کدام ساختار برای پیدا کردن Netherite Upgrade Template مهم است؟",
+["Bastion Remnant","Village","Stronghold","Ocean Monument"],0],
+
+["Piglin معمولاً به چه چیزی علاقه دارد؟",
+["Gold","Diamond","Iron","Emerald"],0],
+
+["پوشیدن حداقل یک قطعه زره طلایی چه فایده‌ای مقابل Piglin دارد؟",
+["کمک می‌کند به‌طور عادی خشمگین نشود","آن را اهلی می‌کند","به آن آسیب می‌زند","باعث فرار آن می‌شود"],0],
+
+["کدام موجود با باز کردن Chest ممکن است عصبانی شود؟",
+["Piglin","Cow","Sheep","Axolotl"],0],
+
+["کدام موجود در Bastion Remnant زیاد دیده می‌شود؟",
+["Piglin","Villager","Guardian","Warden"],0],
+
+["Bastion Remnant در کجا قرار دارد؟",
+["Nether","End","Overworld","Deep Dark"],0],
+
+["کدام موجود Hoglin است؟",
+["موجودی در Nether که می‌تواند حمله کند","موجود End","باس Overworld","Villager"],0],
+
+["کدام Fungus برای جلوگیری/دور کردن Hoglin کاربرد دارد؟",
+["Warped Fungus","Crimson Fungus","Mushroom","Brown Mushroom"],0],
+
+["کدام موجود Zombie Piglin است؟",
+["موجود Nether که معمولاً خنثی است مگر تحریک شود","باس Nether","Villager","موجود End"],0],
+
+["کدام ماده برای ساخت Chain کاربرد دارد؟",
+["Iron Nuggets + Iron Ingot","Gold + Iron","Copper + Iron","Quartz + Iron"],0],
+
+["کدام بلوک برای ساخت Campfire استفاده می‌شود؟",
+["Logs + Stick + Coal/Charcoal","Stone + Coal","Iron + Wood","Sand + Stick"],0],
+
+["Campfire می‌تواند چه کاری انجام دهد؟",
+["پخت بعضی غذاها بدون Fuel معمولی","ساخت Potion","ساخت Portal","Enchant"],0],
+
+["کدام آیتم برای ساخت Chest معمولی لازم است؟",
+["Planks","Iron","Stone","Gold"],0],
+
+["کدام بلوک از ترکیب دو Chest ساخته می‌شود؟",
+["Large Chest","Double Chest","Mega Chest","Big Chest"],0],
+
+["کدام آیتم برای ساخت Barrel استفاده می‌شود؟",
+["Planks + Slabs","Iron + Wood","Chest + Wood","Stone + Wood"],0],
+
+["کدام بلوک فضای ذخیره‌سازی دارد؟",
+["Chest","Dirt","Glass","Torch"],0],
+
+["کدام بلوک می‌تواند Shulker Box را نگه دارد و قابل حمل باشد؟",
+["Shulker Box","Chest","Barrel","Furnace"],0],
+
+["مزیت Shulker Box نسبت به Chest چیست؟",
+["با شکستن، محتویاتش حفظ می‌شود","بیشتر منفجر می‌شود","نور تولید می‌کند","خودکار آیتم می‌سازد"],0],
+
+["کدام ماده برای ساخت Shulker Box لازم است؟",
+["Shulker Shell + Chest","Ender Pearl + Chest","Purpur + Chest","Diamond + Chest"],0],
+
+["Shulker Shell از کجا می‌آید؟",
+["Shulker","Enderman","Ender Dragon","Vex"],0],
+
+["کدام موجود در End City قرار دارد و گلوله‌ای شلیک می‌کند که می‌تواند بازیکن را شناور کند؟",
+["Shulker","Ghast","Blaze","Vex"],0],
+
+["کدام Effect توسط Shulker ایجاد می‌شود؟",
+["Levitation","Poison","Wither","Blindness"],0],
+
+["کدام آیتم برای ساخت Ender Chest لازم است؟",
+["Obsidian + Eye of Ender","Obsidian + Diamond","Ender Pearl + Obsidian","Purpur + Eye"],0],
+
+["مزیت Ender Chest چیست؟",
+["موجودی شخصی مشترک بین Ender Chestها","ذخیره آیتم برای همه بازیکنان","انفجار نمی‌کند","خودکار آیتم می‌سازد"],0],
+
+["کدام بلوک با قرار گرفتن کنار آب و Lava می‌تواند Obsidian ایجاد کند؟",
+["آب روی Lava Source","Lava روی Lava","Water روی Stone","Rain روی Lava"],0],
+
+["کدام ماده با Lava و Water می‌تواند Cobblestone بسازد؟",
+["Water + flowing Lava","Water + Obsidian","Ice + Lava","Snow + Lava"],0],
+
+["کدام آیتم برای ساخت Bucket لازم است؟",
+["Iron Ingots","Gold","Copper","Stone"],0],
+
+["Bucket می‌تواند چه چیزی را حمل کند؟",
+["Water و Lava و بعضی مایعات","فقط Water","فقط Lava","فقط Milk"],0],
+
+["Milk Bucket چه کاری می‌کند؟",
+["Effectهای Potion را پاک می‌کند","Health را کامل می‌کند","XP می‌دهد","Armor می‌دهد"],0],
+
+["کدام حیوان Milk می‌دهد؟",
+["Cow","Sheep","Pig","Horse"],0],
+
+["کدام موجود تخم می‌گذارد؟",
+["Chicken","Cow","Pig","Horse"],0],
+
+["کدام آیتم برای ساخت Cake استفاده می‌شود؟",
+["Milk + Sugar + Egg + Wheat","Milk + Gold","Wheat + Diamond","Egg + Iron"],0],
+
+["کدام ماده برای ساخت Bread لازم است؟",
+["Wheat","Sugar","Potato","Carrot"],0],
+
+["کدام غذا می‌تواند بازیکن را مسموم کند؟",
+["Rotten Flesh","Bread","Steak","Golden Apple"],0],
+
+["Golden Apple از چه چیزی ساخته می‌شود؟",
+["Apple + Gold Ingots","Apple + Gold Nuggets","Apple + Diamond","Apple + Emerald"],0],
+
+["Enchanted Golden Apple چه نام معروفی دارد؟",
+["Notch Apple","God Apple","Golden Core","Dragon Apple"],0],
+
+["کدام غذا Saturation بالایی دارد؟",
+["Golden Carrot","Cookie","Melon","Bread"],0],
+
+["کدام آیتم برای Night Vision استفاده می‌شود؟",
+["Golden Carrot","Golden Apple","Carrot","Glowstone"],0],
+
+["کدام Potion سرعت را افزایش می‌دهد؟",
+["Swiftness","Strength","Regeneration","Harming"],0],
+
+["کدام ماده برای Swiftness Potion استفاده می‌شود؟",
+["Sugar","Rabbit Foot","Magma Cream","Blaze Powder"],0],
+
+["کدام Potion قدرت حمله را افزایش می‌دهد؟",
+["Strength","Swiftness","Harming","Poison"],0],
+
+["کدام ماده برای Strength Potion استفاده می‌شود؟",
+["Blaze Powder","Sugar","Magma Cream","Spider Eye"],0],
+
+["کدام Potion باعث آسیب مستقیم به موجود می‌شود؟",
+["Harming","Healing","Strength","Night Vision"],0],
+
+["کدام ماده برای تبدیل Healing به Harming کاربرد دارد؟",
+["Fermented Spider Eye","Sugar","Magma Cream","Blaze Powder"],0],
+
+["کدام Potion می‌تواند سلامتی را بازیابی کند؟",
+["Healing","Poison","Harming","Weakness"],0],
+
+["کدام ماده برای Healing Potion مهم است؟",
+["Glistering Melon Slice","Golden Carrot","Sugar","Rabbit Foot"],0],
+
+["کدام Potion سرعت سقوط را کاهش می‌دهد؟",
+["Slow Falling","Slowness","Feather","Resistance"],0],
+
+["کدام ماده برای Slow Falling استفاده می‌شود؟",
+["Phantom Membrane","Feather","Sugar","Rabbit Foot"],0],
+
+["کدام Potion باعث Poison می‌شود؟",
+["Poison","Harming","Weakness","Slowness"],0],
+
+["کدام ماده برای Poison Potion استفاده می‌شود؟",
+["Spider Eye","Fermented Spider Eye","Sugar","Magma Cream"],0],
+
+["کدام موجود Spider Eye می‌اندازد؟",
+["Spider","Creeper","Zombie","Skeleton"],0],
+
+["کدام موجود String می‌اندازد؟",
+["Spider","Cow","Pig","Zombie"],0],
+
+["کدام آیتم برای ساخت Fishing Rod لازم است؟",
+["Stick + String","Iron + String","Wood + Leather","Stick + Leather"],0],
+
+["کدام آیتم برای ساخت Bow لازم است؟",
+["Stick + String","Iron + String","Wood + String","Leather + Stick"],0],
+
+["کدام آیتم برای ساخت Arrow لازم است؟",
+["Flint + Stick + Feather","Iron + Stick","Stone + Feather","Coal + Stick"],0],
+
+["Flint معمولاً از شکستن چه چیزی به دست می‌آید؟",
+["Gravel","Sand","Stone","Dirt"],0],
+
+["کدام آیتم برای ساخت Torch لازم است؟",
+["Stick + Coal/Charcoal","Stick + Iron","Coal + Stone","Wood + Iron"],0],
+
+["کدام بلوک نور زیادی می‌دهد و در Nether هم پیدا می‌شود؟",
+["Glowstone","Stone","Netherrack","Soul Sand"],0],
+
+["کدام بلوک در Nether بسیار رایج است؟",
+["Netherrack","Dirt","Granite","Sand"],0],
+
+["کدام ماده در Nether برای ساخت Glass-like blocks کاربرد دارد؟",
+["Quartz","Diamond","Iron","Emerald"],0],
+
+["Nether Quartz Ore در کجا پیدا می‌شود؟",
+["Nether","End","Overworld","Ancient City"],0],
+
+["کدام Ore ارزشمند و کمیاب در Overworld است؟",
+["Diamond","Coal","Copper","Iron"],0],
+
+["Diamond Ore در لایه‌های عمیق Overworld بیشتر دیده می‌شود؟",
+["بله","خیر، فقط سطح زمین","فقط Nether","فقط End"],0],
+
+["کدام Ore برای ساخت Armor و Tools معمولی استفاده می‌شود؟",
+["Iron","Dirt","Clay","Sand"],0],
+
+["کدام Ore برای ساخت Redstone Componentها استفاده می‌شود؟",
+["Redstone Ore","Coal Ore","Copper Ore","Quartz Ore"],0],
+
+["کدام Ore برای ساخت Emerald استفاده می‌شود؟",
+["Emerald Ore","Diamond Ore","Gold Ore","Copper Ore"],0],
+
+["Emerald بیشتر برای چه چیزی استفاده می‌شود؟",
+["Trade با Villager","ساخت Sword","ساخت Portal","ساخت Potion"],0],
+
+["کدام Villager معمولاً Emerald در ازای Crop می‌دهد؟",
+["Farmer","Librarian","Armorer","Butcher"],0],
+
+["کدام آیتم برای Trading با Villager کاربرد اصلی دارد؟",
+["Emerald","Diamond","Iron Block","Quartz"],0],
+
+["کدام روستا در Desert ممکن است ساخته شود؟",
+["Desert Village","Jungle Village","Nether Village","End Village"],0],
+
+["کدام سازه در Desert پیدا می‌شود؟",
+["Desert Pyramid","Ocean Monument","Woodland Mansion","Ancient City"],0],
+
+["در مرکز Desert Pyramid چه خطری وجود دارد؟",
+["TNT Trap","Lava Boss","Creeper Spawner","Warden"],0],
+
+["کدام سازه در Jungle می‌تواند پیدا شود؟",
+["Jungle Temple","Ocean Monument","Mansion","Bastion"],0],
+
+["کدام سازه در Ocean پیدا می‌شود؟",
+["Shipwreck","Village","Mansion","Stronghold"],0],
+
+["Shipwreck می‌تواند چه چیزی داشته باشد؟",
+["Treasure Map","End Portal","Nether Star","Elytra"],0],
+
+["کدام سازه در Taiga می‌تواند ساخته شود؟",
+["Taiga Village","Desert Temple","Ocean Monument","Bastion"],0],
+
+["کدام سازه دارای Illagerها و Totem است؟",
+["Woodland Mansion","Village","Stronghold","Shipwreck"],0],
+
+["کدام سازه دارای Guardian است؟",
+["Ocean Monument","Stronghold","Mansion","Temple"],0],
+
+["کدام سازه دارای Shulker است؟",
+["End City","Village","Bastion","Fortress"],0],
+
+["کدام سازه دارای Blaze است؟",
+["Nether Fortress","Bastion","End City","Ancient City"],0],
+
+["کدام سازه برای پیدا کردن Wither Skeleton مهم است؟",
+["Nether Fortress","Village","Stronghold","Monument"],0],
+
+["Wither Skeleton چه چیزی می‌تواند بیندازد؟",
+["Wither Skeleton Skull","Nether Star","Dragon Egg","Echo Shard"],0],
+
+["برای احضار Wither چند Wither Skeleton Skull لازم است؟",
+["3","2","4","5"],0],
+
+["برای احضار Wither از چه بلوکی استفاده می‌شود؟",
+["Soul Sand/Soul Soil","Netherrack","Blackstone","Obsidian"],0],
+
+["Wither چه نوع باس است؟",
+["Undead Boss","Aquatic Boss","End Boss","Villager Boss"],0],
+
+["کدام باس با Nether Star مرتبط است؟",
+["Wither","Ender Dragon","Warden","Elder Guardian"],0],
+
+["کدام باس Dragon Egg می‌دهد؟",
+["Ender Dragon","Wither","Warden","Ravager"],0],
+
+["Dragon Egg معمولاً کجا ظاهر می‌شود؟",
+["بالای خروجی End Portal پس از شکست Dragon","Nether","Stronghold","End City"],0],
+
+["کدام آیتم برای ساخت Respawn Anchor استفاده نمی‌شود؟",
+["Glowstone","Crying Obsidian","Diamond","هیچ‌کدام"],0],
+
+["Crying Obsidian بیشتر در چه چیزی دیده می‌شود؟",
+["Ruined Portal","Village","Stronghold","End City"],0],
+
+["Ruined Portal در کجاها می‌تواند ظاهر شود؟",
+["Overworld و Nether","فقط End","فقط Ocean","فقط Ancient City"],0],
+
+["کدام آیتم می‌تواند Ruined Portal را روشن کند؟",
+["Flint and Steel","Compass","Torch","Redstone"],0],
+
+["کدام بلوک برای ساخت Netherite تجهیزات استفاده می‌شود؟",
+["Smithing Table","Enchanting Table","Anvil","Grindstone"],0],
+
+["کدام Template برای ارتقای Netherite استفاده می‌شود؟",
+["Netherite Upgrade","Armor Trim","Diamond Upgrade","Ancient Upgrade"],0],
+
+["Armor Trim برای چه کاری است؟",
+["تزئین زره","افزایش Health","افزایش Damage","Enchant خودکار"],0],
+
+["Trim Smithing Templateها قابل تکثیر هستند؟",
+["بله، با مواد مشخص","خیر، هرگز","فقط با Diamond","فقط در Nether"],0],
+
+["کدام ماده می‌تواند رنگ Trim را تعیین کند؟",
+["مواد مختلف مانند Gold یا Diamond","فقط Iron","فقط Wood","فقط Redstone"],0],
+
+["کدام بلوک در Ancient City برای تزئین بسیار رایج است؟",
+["Deepslate","Sand","Quartz","Purpur"],0],
+
+["Deep Dark بیشتر در چه عمقی پیدا می‌شود؟",
+["زیر زمین عمیق","روی کوه","در Nether","روی Ocean"],0],
+
+["کدام موجود می‌تواند بدون دید مستقیم خطرناک باشد و با صدا/لرزش واکنش نشان دهد؟",
+["Warden","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای جلوگیری از فعال شدن بعضی Sculk Sensorها کاربرد دارد؟",
+["Wool","Iron","Glass","Stone"],0],
+
+["Wool در Ancient City چه کاربردی دارد؟",
+["کاهش انتقال بعضی لرزش‌ها","ساخت Portal","ساخت Potion","ساخت Diamond"],0],
+
+["کدام بلوک در Redstone می‌تواند سیگنال را تقویت کند؟",
+["Repeater","Chest","Furnace","Piston"],0],
+
+["Comparator برای چه چیزی می‌تواند استفاده شود؟",
+["خواندن/مقایسه قدرت سیگنال","ساخت Armor","پخت غذا","ساخت Portal"],0],
+
+["کدام آیتم می‌تواند Redstone Signal تولید کند؟",
+["Lever","Stick","Leather","Feather"],0],
+
+["کدام بلوک با Lever قابل فعال شدن است؟",
+["Redstone Lamp","Dirt","Sand","Glass"],0],
+
+["کدام ابزار برای استخراج سریع‌تر چوب مناسب است؟",
+["Axe","Pickaxe","Shovel","Hoe"],0],
+
+["کدام ابزار برای خاک و Sand مناسب‌تر است؟",
+["Shovel","Axe","Pickaxe","Sword"],0],
+
+["کدام ابزار برای Crop و بعضی بلوک‌های گیاهی استفاده می‌شود؟",
+["Hoe","Axe","Sword","Pickaxe"],0],
+
+["کدام ابزار برای سنگ مناسب است؟",
+["Pickaxe","Axe","Hoe","Shovel"],0],
+
+["کدام ابزار بیشترین کاربرد را در مبارزه دارد؟",
+["Sword","Hoe","Shovel","Pickaxe"],0],
+
+["کدام ابزار در مبارزه نیز می‌تواند آسیب زیادی بزند؟",
+["Axe","Hoe","Shovel","Shears"],0],
+
+["Shears بیشتر برای چه کاری استفاده می‌شود؟",
+["جمع‌آوری بعضی بلوک‌های گیاهی و پشم","ساخت Diamond","Enchant","ساخت Potion"],0],
+
+["کدام آیتم برای گرفتن Honey از Bee Nest استفاده می‌شود؟",
+["Shears","Sword","Axe","Bucket فقط"],0],
+
+["برای گرفتن Honey بدون عصبانی کردن زنبورها چه چیزی کمک می‌کند؟",
+["Campfire","Torch","Lava","Redstone"],0],
+
+["Honey Bottle چه کاری می‌تواند انجام دهد؟",
+["رفع Poison و تغذیه","ساخت Diamond","ساخت Netherite","Enchant"],0],
+
+["Bee می‌تواند کجا زندگی کند؟",
+["Bee Nest / Beehive","Stronghold","End City","Bastion"],0],
+
+["Bee با چه چیزی تکثیر می‌شود؟",
+["Flower","Wheat","Seeds","Sugar"],0],
+
+["کدام موجود می‌تواند با گل‌ها ارتباط داشته باشد؟",
+["Bee","Cow","Pig","Zombie"],0],
+
+["کدام بلوک محل مصنوعی زنبورهاست؟",
+["Beehive","Bee Box","Honey Chest","Hive Block"],0],
+
+["کدام ماده برای ساخت Beehive استفاده می‌شود؟",
+["Honeycomb + Planks","Honey Bottle + Wood","Wax + Iron","Flower + Wood"],0],
+
+["Honeycomb از کجا به دست می‌آید؟",
+["Bee Nest/Beehive","Chest","Village","Mansion"],0],
+
+["کدام بلوک از Honeycomb ساخته می‌شود؟",
+["Honeycomb Block","Honey Stone","Honey Brick","Honey Glass"],0],
+
+["کدام بلوک لغزنده است؟",
+["Honey Block","Stone","Dirt","Iron"],0],
+
+["Slime Block و Honey Block در Redstone برای چه چیزی مشهورند؟",
+["حرکت دادن ساختارها و ماشین‌ها","پخت غذا","ساخت Potion","ساخت Portal"],0],
+
+["کدام موجود در جنگل می‌تواند روی درختان زندگی کند؟",
+["Parrot","Cow","Pig","Axolotl"],0],
+
+["Parrot با چه چیزی اهلی می‌شود؟",
+["Seeds","Wheat","Fish","Bone"],0],
+
+["کدام موجود می‌تواند صداهای موجودات دیگر را تقلید کند؟",
+["Parrot","Cat","Wolf","Fox"],0],
+
+["کدام موجود در Snow Biome پیدا می‌شود و می‌تواند دنبال بازیکن راه برود؟",
+["Goat","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای جلوگیری از یخ‌زدگی آب به کار می‌رود؟",
+["Torch / Light","Stone","Dirt","Sand"],0],
+
+["کدام بلوک وقتی زیرش Soul Sand باشد می‌تواند Bubble Column ایجاد کند؟",
+["Water","Lava","Ice","Honey"],0],
+
+["Soul Sand Bubble Column چه کاری می‌کند؟",
+["بازیکن را به بالا می‌برد","بازیکن را می‌کشد","بازیکن را نامرئی می‌کند","بازیکن را Teleport می‌کند"],0],
+
+["Magma Block در Bubble Column چه کاری می‌کند؟",
+["بازیکن را به پایین می‌کشد","بازیکن را بالا می‌برد","بازیکن را نامرئی می‌کند","هیچ کاری"],0],
+
+["کدام بلوک در زیر آب نور می‌دهد؟",
+["Sea Lantern","Stone","Dirt","Sand"],0],
+
+["Sea Lantern از کجا به دست می‌آید؟",
+["Ocean Monument","Village","Nether Fortress","End City"],0],
+
+["Prismarine بیشتر با کدام سازه مرتبط است؟",
+["Ocean Monument","Stronghold","Mansion","Bastion"],0],
+
+["کدام موجود از Ocean Monument محافظت می‌کند؟",
+["Guardian","Vindicator","Pillager","Evoker"],0],
+
+["کدام Effect توسط Elder Guardian ایجاد می‌شود؟",
+["Mining Fatigue","Poison","Wither","Slowness"],0],
+
+["برای ساخت Milk Bucket چه چیزی لازم است؟",
+["Bucket + Cow","Iron + Cow","Bucket + Wheat","Bucket + Goat"],0],
+
+["کدام موجود می‌تواند شیر بدهد؟",
+["Cow","Pig","Chicken","Rabbit"],0],
+
+["کدام حیوان پشم می‌دهد؟",
+["Sheep","Cow","Pig","Chicken"],0],
+
+["Shears برای Sheep چه کاری می‌کند؟",
+["پشم جمع می‌کند","آن را می‌کشد","آن را اهلی می‌کند","آن را نامرئی می‌کند"],0],
+
+["کدام رنگ از Dyeها از Bone Meal ساخته می‌شود؟",
+["White","Black","Blue","Red"],0],
+
+["کدام ماده برای Black Dye استفاده می‌شود؟",
+["Ink Sac","Bone Meal","Lapis","Cactus"],0],
+
+["کدام ماده برای Green Dye استفاده می‌شود؟",
+["Cactus","Rose","Lapis","Ink Sac"],0],
+
+["کدام ماده برای Blue Dye استفاده می‌شود؟",
+["Lapis Lazuli","Cactus","Ink Sac","Bone Meal"],0],
+
+["کدام ماده برای Red Dye استفاده می‌شود؟",
+["Poppy/Red Flower","Lapis","Cactus","Ink Sac"],0],
+
+["کدام ماده برای Purple Dye ساخته می‌شود؟",
+["Red + Blue Dye","Green + White","Black + Yellow","Blue + White"],0],
+
+["کدام آیتم برای رنگ کردن Leather Armor استفاده می‌شود؟",
+["Dye","Iron","Gold","Quartz"],0],
+
+["کدام بلوک برای ساخت Banner Pattern استفاده می‌شود؟",
+["Loom","Anvil","Grindstone","Furnace"],0],
+
+["کدام آیتم برای ساخت Sign استفاده می‌شود؟",
+["Planks + Stick","Iron + Stick","Stone + Stick","Paper + Stick"],0],
+
+["کدام بلوک برای ساخت Bookcase استفاده می‌شود؟",
+["Bookshelves","Books","Wood only","Paper"],0],
+
+["Bookshelf از چه چیزی ساخته می‌شود؟",
+["Books + Planks","Paper + Planks","Leather + Planks","Books + Stone"],0],
+
+["کدام آیتم برای Enchant کردن نیاز است؟",
+["Experience Levels","Emerald فقط","Diamond فقط","Gold فقط"],0],
+
+["Enchanting Table چه چیزی مصرف می‌کند؟",
+["XP و Lapis Lazuli","Emerald و Gold","Diamond و XP","Coal و Iron"],0],
+
+["Lapis Lazuli بیشتر در چه کاری استفاده می‌شود؟",
+["Enchanting","ساخت Portal","ساخت Netherite","ساخت Elytra"],0],
+
+["کدام ماده برای ساخت Diamond Pickaxe لازم است؟",
+["3 Diamond + 2 Sticks","2 Diamond + 3 Sticks","5 Diamond","3 Diamond + Iron"],0],
+
+["کدام ابزار می‌تواند Obsidian را استخراج کند؟",
+["Diamond/Netherite Pickaxe","Wood Pickaxe","Stone Pickaxe","Gold Axe"],0],
+
+["کدام Pickaxe برای Diamond Ore مناسب است؟",
+["Iron یا بهتر","Stone","Wood","Gold Axe"],0],
+
+["کدام Ore را می‌توان با Stone Pickaxe استخراج کرد؟",
+["Iron Ore","Diamond Ore","Gold Ore","Emerald Ore"],0],
+
+["کدام Ore نیازمند Iron Pickaxe یا بهتر است؟",
+["Diamond Ore","Coal Ore","Stone","Copper"],0],
+
+["کدام ماده برای ساخت Gold Armor استفاده می‌شود؟",
+["Gold Ingots","Gold Nuggets","Gold Blocks","Gold Ore"],0],
+
+["کدام Armor در برابر Piglin کمک می‌کند؟",
+["Gold Armor","Iron Armor","Leather Armor","Chainmail فقط"],0],
+
+["کدام Armor بهترین سطح پایه را در Survival دارد؟",
+["Netherite","Diamond","Iron","Gold"],0],
+
+["Netherite Armor نسبت به Diamond چه ویژگی مهمی دارد؟",
+["قوی‌تر و مقاوم‌تر است","ضعیف‌تر است","فقط زیباتر است","فقط ضدآب است"],0],
+
+["کدام آیتم برای ساخت Netherite Armor به Diamond Armor نیاز دارد؟",
+["Netherite Upgrade Template + Netherite Ingot","Gold فقط","Iron فقط","Nether Star"],0],
+
+["کدام ماده باعث Knockback کمتر در Netherite می‌شود؟",
+["ویژگی Knockback Resistance","Gold","Iron","Obsidian"],0],
+
+["کدام غذا بیشترین کاربرد برای پر کردن Hunger دارد؟",
+["Steak","Cookie","Melon Slice","Sweet Berries"],0],
+
+["کدام غذا معمولاً Saturation بالاتری دارد؟",
+["Golden Carrot","Cookie","Bread","Melon"],0],
+
+["کدام غذا می‌تواند اثر خاصی داشته باشد؟",
+["Golden Apple","Bread","Potato","Carrot"],0],
+
+["کدام آیتم هنگام خوردن می‌تواند Absorption بدهد؟",
+["Golden Apple","Bread","Steak","Cookie"],0],
+
+["کدام Effect از Golden Apple می‌تواند حاصل شود؟",
+["Absorption","Mining Fatigue","Levitation","Conduit Power فقط"],0],
+
+["کدام آیتم برای خواب استفاده می‌شود؟",
+["Bed","Chest","Boat","Campfire"],0],
+
+["Bed در Nether چه اتفاقی می‌تواند ایجاد کند؟",
+["انفجار","Portal","Snow","هیچ اتفاقی"],0],
+
+["Bed در End چه اتفاقی می‌تواند ایجاد کند؟",
+["انفجار","آب","Portal","هیچ اتفاقی"],0],
+
+["کدام آیتم Spawn Point را تنظیم می‌کند؟",
+["Bed","Chest","Compass","Anchor فقط"],0],
+
+["Respawn Anchor برای چه کاری در Nether استفاده می‌شود؟",
+["تنظیم Spawn","ساخت Portal","ساخت Beacon","Enchant"],0],
+
+["کدام آیتم می‌تواند با Lodestone Compass کار کند؟",
+["Lodestone","Bed","Beacon","Chest"],0],
+
+["کدام بلوک در Village برای ساخت مسیرهای خاص استفاده می‌شود؟",
+["Path Block","Dirt Path","Grass Path","همه موارد بسته به نسخه"],3],
+
+["کدام موجود می‌تواند زنگ Village را به صدا درآورد؟",
+["بازیکن","فقط Villager","فقط Iron Golem","هیچ‌کس"],0],
+
+["Bell در Village چه کاربردی دارد؟",
+["علامت/هشدار و جمع شدن Villagerها","ساخت Iron","ساخت Portal","Enchant"],0],
+
+["Iron Golem معمولاً از Village محافظت می‌کند؟",
+["بله","خیر","فقط در Nether","فقط در End"],0],
+
+["Iron Golem را می‌توان با چه ساختاری ساخت؟",
+["Iron Blocks + Carved Pumpkin","Iron + Diamond","Iron + Emerald","Stone + Pumpkin"],0],
+
+["Snow Golem با چه چیزی ساخته می‌شود؟",
+["Snow Blocks + Carved Pumpkin","Snow + Iron","Ice + Pumpkin","Snow + Diamond"],0],
+
+["Snow Golem بیشتر چه چیزی پرتاب می‌کند؟",
+["Snowballs","Ice Balls","Arrows","Fireballs"],0],
+
+["کدام موجود معمولاً دشمن Snow Golem است؟",
+["Blaze","Cow","Chicken","Sheep"],0],
+
+["کدام موجود با Pumpkin روی سر ممکن است از Enderman جلوگیری کند؟",
+["Enderman","Creeper","Zombie","Spider"],0],
+
+["Carved Pumpkin چگونه ساخته می‌شود؟",
+["با Shears روی Pumpkin","با Axe","با Sword","با Furnace"],0],
+
+["کدام بلوک برای ساخت Pumpkin Pie استفاده می‌شود؟",
+["Pumpkin + Sugar + Egg","Pumpkin + Wheat","Pumpkin + Milk","Pumpkin + Gold"],0],
+
+["کدام گیاه در Swamp برای ساخت خاصی کاربرد دارد؟",
+["Sugar Cane","Cactus","Bamboo","Kelp"],0],
+
+["کدام گیاه در Desert می‌تواند پیدا شود؟",
+["Cactus","Sugar Cane","Bamboo","Kelp"],0],
+
+["کدام گیاه برای ساخت Bamboo Wood استفاده می‌شود؟",
+["Bamboo","Sugar Cane","Cactus","Kelp"],0],
+
+["Bamboo بیشتر در کدام Biome دیده می‌شود؟",
+["Jungle","Desert","Ice Plains","Nether"],0],
+
+["کدام بلوک برای ساخت Scaffolding استفاده می‌شود؟",
+["Bamboo + String","Wood + String","Iron + Bamboo","Bamboo + Wool"],0],
+
+["Scaffolding برای چه کاری کاربرد دارد؟",
+["ساخت سریع سازه و بالا رفتن","Enchant","Potion","Mining"],0],
+
+["کدام آیتم برای ساخت Campfire Soul استفاده می‌شود؟",
+["Soul Sand/Soul Soil","Glowstone","Quartz","Blackstone"],0],
+
+["Soul Campfire چه ویژگی دارد؟",
+["نور و شعله آبی","شعله قرمز","بدون نور","انفجار"],0],
+
+["کدام ماده برای ساخت Blue Fire مرتبط است؟",
+["Soul Soil/Soul Sand","Water","Ice","Blue Wool"],0],
+
+["کدام آیتم می‌تواند رنگ چراغ را در Soul Fire ایجاد کند؟",
+["Soul Sand/Soul Soil","Lapis","Blue Dye","Water"],0],
+
+["کدام بلوک می‌تواند آب را منجمد کند؟",
+["در شرایط مناسب Ice","Stone","Glass","Dirt"],0],
+
+["Frost Walker روی کدام قطعه است؟",
+["Boots","Helmet","Chestplate","Leggings"],0],
+
+["Frost Walker چه کاری می‌کند؟",
+["یخ کردن آب زیر پا","راه رفتن روی Lava","پرواز","دویدن سریع"],0],
+
+["کدام Enchantment با Frost Walker ناسازگار است؟",
+["Depth Strider","Protection","Unbreaking","Mending"],0],
+
+["کدام Enchantment باعث برگشت Trident می‌شود؟",
+["Loyalty","Riptide","Channeling","Impaling"],0],
+
+["Channeling چه کاری می‌تواند انجام دهد؟",
+["در شرایط مناسب رعد و برق احضار کند","آتش روشن کند","آب را منجمد کند","بازیکن را Heal کند"],0],
+
+["Impaling روی چه سلاحی است؟",
+["Trident","Sword","Bow","Crossbow"],0],
+
+["کدام Enchantment آسیب Trident را علیه موجودات خاص افزایش می‌دهد؟",
+["Impaling","Sharpness","Power","Smite"],0],
+
+["Smite برای چه نوع دشمنانی مناسب است؟",
+["Undead","Arthropods","Aquatic فقط","Villagers"],0],
+
+["Bane of Arthropods برای چه موجوداتی است؟",
+["Spider و موجودات Arthropod","Zombie","Skeleton","Piglin"],0],
+
+["Knockback چه کاری می‌کند؟",
+["دشمن را بیشتر عقب می‌راند","Damage را دو برابر می‌کند","Armor می‌دهد","سرعت بازیکن را زیاد می‌کند"],0],
+
+["Sweeping Edge مربوط به چیست؟",
+["آسیب حمله Sweep شمشیر","Bow","Trident","Shield"],0],
+
+["Shield می‌تواند در برابر چه چیزی مفید باشد؟",
+["برخی حملات و پرتابه‌ها","فقط Lava","فقط Fall Damage","هیچ‌چیز"],0],
+
+["کدام ماده برای ساخت Shield به کار می‌رود؟",
+["Iron + Planks","Diamond + Wood","Gold + Wood","Stone + Iron"],0],
+
+["کدام آیتم برای ساخت Armor Stand استفاده می‌شود؟",
+["Sticks + Stone Slab","Iron + Wood","Leather + Stick","Stone + Iron"],0],
+
+["Armor Stand برای چه کاری است؟",
+["نمایش زره","Enchant","ساخت Armor","ذخیره XP"],0],
+
+["کدام آیتم برای ساخت Item Frame لازم است؟",
+["Stick + Leather","Wood + Glass","Iron + Leather","Paper + Stick"],0],
+
+["Item Frame برای چه کاری است؟",
+["نمایش آیتم","ذخیره XP","ساخت Potion","ساخت Portal"],0],
+
+["Glow Item Frame چه مزیتی دارد؟",
+["آیتم را روشن‌تر/درخشان نمایش می‌دهد","آیتم را تکثیر می‌کند","آیتم را Enchant می‌کند","آیتم را می‌خورد"],0],
+
+["کدام آیتم برای Glow Item Frame استفاده می‌شود؟",
+["Glow Ink Sac","Glowstone","Torch","Amethyst"],0],
+
+["Glow Ink Sac از کدام موجود می‌آید؟",
+["Glow Squid","Squid","Guardian","Axolotl"],0],
+
+["کدام موجود در آب زندگی می‌کند و Ink Sac می‌اندازد؟",
+["Squid","Cow","Bat","Chicken"],0],
+
+["کدام موجود می‌تواند روی زمین و آب حرکت کند؟",
+["Frog","Squid","Fish","Guardian"],0],
+
+["Frog با چه چیزی می‌تواند تکثیر شود؟",
+["Slimeball","Wheat","Seeds","Fish"],0],
+
+["Frog در کدام مکان می‌تواند پیدا شود؟",
+["Swamp/Mangrove Swamp","Desert","Nether","End"],0],
+
+["Froglight توسط چه چیزی مرتبط است؟",
+["Frog و Magma Cube interaction","Warden","Ghast","Guardian"],0],
+
+["Mangrove Swamp دارای چه درختی است؟",
+["Mangrove","Oak","Spruce","Jungle"],0],
+
+["کدام حیوان در Mangrove Swamp دیده می‌شود؟",
+["Frog","Polar Bear","Goat","Rabbit"],0],
+
+["کدام ماده از Mangrove Propagule به دست می‌آید؟",
+["Mangrove Tree","Oak","Bamboo","Birch"],0],
+
+["کدام Biome در Nether دارای قارچ‌های Crimson است؟",
+["Crimson Forest","Warped Forest","Soul Sand Valley","Basalt Deltas"],0],
+
+["کدام Biome در Nether آبی‌رنگ‌تر است؟",
+["Warped Forest","Crimson Forest","Soul Sand Valley","Basalt Deltas"],0],
+
+["Basalt Deltas دارای چه بلوکی است؟",
+["Basalt","Grass","Sand","Prismarine"],0],
+
+["کدام موجود در Warped Forest کمتر از بعضی Nether Biomeها دیده می‌شود؟",
+["Enderman","Piglin","Cow","Guardian"],0],
+
+["کدام موجود در Soul Sand Valley زیاد دیده می‌شود؟",
+["Skeleton","Cow","Pig","Villager"],0],
+
+["کدام Biome Nether دارای Soul Soil است؟",
+["Soul Sand Valley","Crimson Forest","Warped Forest","Basalt Deltas"],0],
+
+["کدام ساختار Nether دارای Piglin و گنج‌های مختلف است؟",
+["Bastion Remnant","Village","End City","Stronghold"],0],
+
+["کدام آیتم می‌تواند در Bastion بسیار ارزشمند باشد؟",
+["Ancient Debris/Gold","Dragon Egg","Elytra","Totem"],0],
+
+["کدام موجود با Netherite/Gold ارتباط دارد؟",
+["Piglin","Cow","Chicken","Villager"],0],
+
+["Piglin Brute چه ویژگی دارد؟",
+["خطرناک‌تر و معمولاً خصمانه است","اهلی می‌شود","فقط در Overworld است","پرواز می‌کند"],0],
+
+["کدام موجود می‌تواند در Nether سوار Strider شود؟",
+["Zombie Piglin/Piglin در شرایط مناسب","Cow","Villager","Guardian"],0],
+
+["کدام آیتم برای عبور از Lava با Strider استفاده می‌شود؟",
+["Warped Fungus on a Stick","Boat","Elytra","Lead"],0],
+
+["کدام وسیله در Lava قابل استفاده است؟",
+["Strider","Boat","Minecart","Horse"],0],
+
+["کدام موجود در Lava نمی‌سوزد؟",
+["Strider","Cow","Chicken","Sheep"],0],
+
+["کدام بلوک در Nether Portal دیده می‌شود؟",
+["Obsidian","Purpur","End Stone","Prismarine"],0],
+
+["کدام بلوک در End بسیار رایج است؟",
+["End Stone","Netherrack","Blackstone","Quartz"],0],
+
+["کدام بلوک در End City رایج است؟",
+["Purpur","Netherrack","Quartz","Prismarine"],0],
+
+["کدام موجود در End City پرواز نمی‌کند اما خطرناک است؟",
+["Shulker","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای شناور کردن بازیکن توسط Shulker استفاده می‌شود؟",
+["Levitation Effect","Potion","Arrow","Pearl"],0],
+
+["کدام آیتم برای ساخت Ender Pearl استفاده نمی‌شود؟",
+["هیچ آیتمی؛ Ender Pearl Drop است","Diamond","Gold","Quartz"],0],
+
+["Ender Pearl از کدام موجود می‌تواند به دست آید؟",
+["Enderman","Warden","Ghast","Blaze"],0],
+
+["Ender Pearl برای چه کاری کاربرد دارد؟",
+["Teleport","Enchant","Potion","ساخت Sword"],0],
+
+["کدام آیتم با Ender Pearl و Blaze Powder ساخته می‌شود؟",
+["Eye of Ender","End Crystal","End Rod","End Stone"],0],
+
+["End Rod در کجا دیده می‌شود؟",
+["End City","Village","Nether Fortress","Stronghold"],0],
+
+["End Rod نور تولید می‌کند؟",
+["بله","خیر","فقط در Nether","فقط هنگام باران"],0],
+
+["کدام بلوک در End City برای ساخت استفاده شده است؟",
+["Purpur","Quartz","Blackstone","Netherrack"],0],
+
+["کدام آیتم برای ساخت Purple Dye استفاده می‌شود؟",
+["Red + Blue","Green + Red","Yellow + Blue","White + Black"],0],
+
+["کدام ماده برای ساخت Magenta Dye می‌تواند استفاده شود؟",
+["Purple + Pink/Red+Blue combinations","Black + White","Green + Blue","Brown + White"],0],
+
+["کدام آیتم برای ساخت Glass Pane استفاده می‌شود؟",
+["Glass","Sand + Iron","Quartz","Ice"],0],
+
+["Glass از چه چیزی ساخته می‌شود؟",
+["Sand در Furnace","Stone در Furnace","Clay در Furnace","Dirt در Furnace"],0],
+
+["کدام بلوک از Clay ساخته می‌شود؟",
+["Terracotta","Glass","Stone","Quartz"],0],
+
+["Terracotta را می‌توان با چه چیزی رنگ کرد؟",
+["Dye","Iron","Gold","Quartz"],0],
+
+["Concrete Powder با چه چیزی به Concrete تبدیل می‌شود؟",
+["آب","Lava","Fire","Snow"],0],
+
+["Concrete Powder از چه چیزی ساخته می‌شود؟",
+["Sand + Gravel + Dye","Stone + Dye","Clay + Dye","Glass + Dye"],0],
+
+["کدام بلوک برای ساخت Brick استفاده می‌شود؟",
+["Brick","Stone","Iron","Clay فقط"],0],
+
+["Brick از چه چیزی ساخته می‌شود؟",
+["Clay Ball پخته‌شده","Stone","Sand","Mud"],0],
+
+["Mud می‌تواند با چه چیزی تبدیل به Packed Mud شود؟",
+["Wheat","Sugar","Sand","Clay"],0],
+
+["Mud Brick از چه چیزی ساخته می‌شود؟",
+["Packed Mud","Stone","Clay","Sand"],0],
+
+["کدام بلوک در Mangrove Swamp زیاد دیده می‌شود؟",
+["Mud","Quartz","Snow","Prismarine"],0],
+
+["کدام ماده برای ساخت Mud استفاده می‌شود؟",
+["Water روی Dirt","Water روی Stone","Lava روی Dirt","Rain روی Sand"],0],
+
+["کدام آیتم برای ساخت Packed Ice استفاده می‌شود؟",
+["Ice","Snow","Water","Blue Ice"],0],
+
+["Blue Ice نسبت به Packed Ice چه ویژگی دارد؟",
+["لغزنده‌تر است","گرم‌تر است","نور می‌دهد","در Nether ساخته می‌شود"],0],
+
+["کدام وسیله روی Ice بسیار سریع حرکت می‌کند؟",
+["Boat","Horse","Minecart","Pig"],0],
+
+["کدام بلوک برای ساخت Beacon Base استفاده می‌شود؟",
+["Iron/Gold/Emerald/Diamond/Netherite Blocks","Stone فقط","Dirt","Glass"],0],
+
+["Beacon می‌تواند چند Effect اصلی انتخابی داشته باشد؟",
+["بسته به سطح و انتخاب بازیکن","هیچ","فقط Speed","فقط Haste"],0],
+
+["کدام آیتم Beacon را فعال می‌کند؟",
+["Nether Star","Diamond","Gold","Emerald"],0],
+
+["کدام بلوک می‌تواند Beacon را بپوشاند ولی نور آن عبور می‌کند؟",
+["Glass","Stone","Dirt","Obsidian"],0],
+
+["کدام آیتم برای ساخت Glass استفاده می‌شود؟",
+["Sand","Gravel","Clay","Stone"],0],
+
+["کدام Ore در Deep Slate شکل متفاوتی دارد؟",
+["Deepslate Diamond Ore","Grass Ore","Wood Ore","Glass Ore"],0],
+
+["Deepslate در چه عمقی بیشتر دیده می‌شود؟",
+["عمق‌های پایین‌تر Overworld","Nether","End","سطح آسمان"],0],
+
+["کدام بلوک جایگزین Stone در عمق‌های پایین است؟",
+["Deepslate","Blackstone","Basalt","End Stone"],0],
+
+["Blackstone بیشتر در کجا پیدا می‌شود؟",
+["Nether","Overworld","End","Ocean"],0],
+
+["Basalt بیشتر در کجا پیدا می‌شود؟",
+["Nether","End","Village","Stronghold"],0],
+
+["Polished Blackstone در کجا ساخته/پیدا می‌شود؟",
+["Nether","End City","Ocean","Village"],0],
+
+["کدام آیتم برای ساخت Lodestone استفاده می‌شود؟",
+["Netherite Ingot + Chiseled Stone Bricks","Diamond + Stone","Gold + Stone","Iron + Quartz"],0],
+
+["Lodestone برای چه چیزی کاربرد دارد؟",
+["لنگر کردن Compass","ساخت Portal","Enchant","ساخت Armor"],0],
+
+["کدام آیتم برای ساخت Compass لازم است؟",
+["Iron + Redstone","Gold + Redstone","Copper + Redstone","Diamond + Redstone"],0],
+
+["Compass معمولی در Nether چه رفتاری دارد؟",
+["می‌تواند سرگردان شود/جهت مشخص Overworld را نمی‌دهد","همیشه شمال را نشان می‌دهد","به End اشاره می‌کند","کار نمی‌کند ولی ثابت است"],0],
+
+["Clock در Nether چه مشکلی دارد؟",
+["زمان روز را درست نشان نمی‌دهد","می‌شکند","منفجر می‌شود","به Compass تبدیل می‌شود"],0],
+
+["کدام آیتم برای پیدا کردن خانه در Overworld مناسب است؟",
+["Compass/Lodestone Compass","Clock فقط","Torch","Shield"],0],
+
+["کدام آیتم برای ذخیره Spawn در Nether ساخته شده است؟",
+["Respawn Anchor","Bed","Lodestone","Beacon"],0],
+
+["کدام ماده برای ساخت Respawn Anchor لازم است؟",
+["Crying Obsidian + Glowstone","Obsidian + Diamond","Gold + Glowstone","Blackstone + Quartz"],0],
+
+["Crying Obsidian را می‌توان در چه چیزی پیدا کرد؟",
+["Ruined Portal و Bastion/Chestها بسته به نسخه","Village","End City","Stronghold"],0],
+
+["کدام بلوک برای ساخت Portal End استفاده نمی‌شود؟",
+["Obsidian","End Portal Frame","Eye of Ender","هیچ‌کدام"],0],
+
+["End Portal Frame در Survival به‌طور معمول ساخته می‌شود؟",
+["خیر","بله با Obsidian","بله با Diamond","بله با Stone"],0],
+
+["کدام آیتم داخل End Portal Frame قرار می‌گیرد؟",
+["Eye of Ender","Ender Pearl","Dragon Breath","Nether Star"],0],
+
+["کدام شرط برای فعال شدن End Portal لازم است؟",
+["تمام Frameهای لازم Eye داشته باشند","یک Eye کافی است","Obsidian لازم است","Beacon لازم است"],0],
+
+["کدام باس پس از شکست Ender Dragon دوباره قابل احضار است؟",
+["Ender Dragon","Warden","Guardian","Ravager"],0],
+
+["برای احضای دوباره Ender Dragon چه چیزی لازم است؟",
+["End Crystals","Nether Stars","Eyes of Ender","Dragon Eggs"],0],
+
+["چند End Crystal برای احیای Dragon لازم است؟",
+["4","2","6","8"],0],
+
+["کدام آیتم پس از Dragon Fight می‌تواند روی Portal ظاهر شود؟",
+["Dragon Egg","Elytra","Totem","Nether Star"],0],
+
+["کدام سازه پس از Dragon Fight با End Gateway قابل دسترسی است؟",
+["Outer End Islands","Nether","Stronghold","Village"],0],
+
+["End Gateway برای چه چیزی مفید است؟",
+["رسیدن به Outer End Islands","رفتن به Nether","ساخت Portal","Teleport به Village"],0],
+
+["کدام آیتم برای End Gateway پرتاب می‌شود؟",
+["Ender Pearl","Eye of Ender","Snowball","Arrow"],0],
+
+["کدام موجود می‌تواند در End City روی دیوار باشد؟",
+["Shulker","Spider","Zombie","Creeper"],0],
+
+["کدام آیتم از Shulker می‌تواند به دست آید؟",
+["Shulker Shell","Ender Eye","Purpur Core","Dragon Scale"],0],
+
+["کدام بلوک برای ساخت Shulker Box استفاده می‌شود؟",
+["Chest + Shulker Shell","Chest + Purpur","Chest + Ender Pearl","Chest + Diamond"],0],
+
+["Shulker Box وقتی شکسته شود چه اتفاقی برای محتویاتش می‌افتد؟",
+["حفظ می‌شوند","از بین می‌روند","به XP تبدیل می‌شوند","به Chest تبدیل می‌شوند"],0],
+
+["کدام آیتم برای ساخت Chest Minecart لازم است؟",
+["Minecart + Chest","Chest + Iron Block","Minecart + Wood","Chest + Rails"],0],
+
+["Minecart روی چه چیزی حرکت می‌کند؟",
+["Rails","Stone","Ice","Wood"],0],
+
+["Powered Rail با چه چیزی فعال می‌شود؟",
+["Redstone","Coal فقط","Iron","Gold"],0],
+
+["Activator Rail چه کاری می‌تواند انجام دهد؟",
+["فعال‌کردن بعضی رفتارهای Minecart","سرعت دادن به بازیکن","ساخت Portal","Enchant"],0],
+
+["Detector Rail چه چیزی را تشخیص می‌دهد؟",
+["Minecart روی Rail","Player","Redstone فقط","Water"],0],
+
+["کدام آیتم برای ساخت Rail لازم است؟",
+["Iron + Stick","Gold + Stick","Copper + Stick","Stone + Stick"],0],
+
+["کدام Rail برای سرعت دادن به Minecart استفاده می‌شود؟",
+["Powered Rail","Detector Rail","Activator Rail","Normal Rail"],0],
+
+["کدام آیتم برای ساخت Boat لازم است؟",
+["Planks","Iron","Stick","Leather"],0],
+
+["Boat روی چه چیزی حرکت می‌کند؟",
+["Water","Lava","Snow","Soul Sand"],0],
+
+["کدام حیوان می‌تواند داخل Boat قرار بگیرد؟",
+["بسیاری از موجودات","فقط Fish","فقط Cow","فقط Villager"],0],
+
+["کدام وسیله برای جابه‌جایی Villager کاربرد دارد؟",
+["Boat/Minecart","Shield","Elytra فقط","Fishing Rod"],0],
+
+["کدام آیتم Villager را نمی‌تواند مستقیم Teleport کند؟",
+["Boat","Minecart","Walking","Elytra"],0],
+
+["کدام بلوک برای تبدیل Zombie Villager به Villager استفاده می‌شود؟",
+["Weakness + Golden Apple","Strength + Apple","Healing + Gold","Night Vision + Apple"],0],
+
+["برای درمان Zombie Villager ابتدا چه Effectی لازم است؟",
+["Weakness","Strength","Speed","Fire Resistance"],0],
+
+["کدام آیتم Zombie Villager را درمان می‌کند؟",
+["Golden Apple","Apple","Golden Carrot","Enchanted Apple"],0],
+
+["کدام Villager تخفیف‌های خوبی پس از درمان می‌تواند داشته باشد؟",
+["Zombie Villager درمان‌شده","Cow","Pig","Wandering Trader"],0],
+
+["Wandering Trader معمولاً چه چیزی دارد؟",
+["Tradeهای خاص","End Portal","Nether Star","Elytra"],0],
+
+["Wandering Trader معمولاً چه حیواناتی همراه خود دارد؟",
+["Llama","Cow","Horse","Goat"],0],
+
+["کدام حیوان را می‌توان با Lead کشید؟",
+["Llama","Fish","Squid","Bat"],0],
+
+["Llama می‌تواند چه چیزی حمل کند؟",
+["Chest","Ender Chest","Shulker Box","Beacon"],0],
+
+["کدام آیتم برای تزئین Llama استفاده می‌شود؟",
+["Carpet","Banner فقط","Leather Armor","Iron Armor"],0],
+
+["کدام موجود می‌تواند Carpet روی خود داشته باشد؟",
+["Llama","Cow","Pig","Chicken"],0],
+
+["کدام حیوان با Golden Carrot یا Golden Apple پرورش داده می‌شود؟",
+["Horse/Donkey","Cow","Pig","Sheep"],0],
+
+["کدام موجود در Nether تخم‌گذاری طبیعی دارد؟",
+["Hoglin","Cow","Chicken","Horse"],0],
+
+["Hoglin با کدام قارچ از خود دور می‌شود؟",
+["Warped Fungus","Crimson Fungus","Brown Mushroom","Red Mushroom"],0],
+
+["کدام موجود با Crimson Fungus پرورش پیدا می‌کند؟",
+["Hoglin","Strider","Piglin","Ghast"],0],
+
+["Strider با چه چیزی پرورش پیدا می‌کند؟",
+["Warped Fungus","Crimson Fungus","Wheat","Carrot"],0],
+
+["کدام موجود در Nether می‌تواند به Piglin تبدیل شود؟",
+["Zombie Pigman/Zombified Piglin","Cow","Horse","Villager"],0],
+
+["کدام آیتم برای ساخت Fire Charge استفاده می‌شود؟",
+["Gunpowder + Blaze Powder + Coal","Iron + Coal","Gold + Blaze","Quartz + Coal"],0],
+
+["Fire Charge چه کاری می‌کند؟",
+["آتش ایجاد می‌کند","Portal می‌سازد","Potion می‌سازد","Enchant می‌کند"],0],
+
+["کدام آیتم می‌تواند TNT را روشن کند؟",
+["Flint and Steel / Fire","Compass","Map","Stick"],0],
+
+["کدام ماده برای ساخت Firework Star استفاده می‌شود؟",
+["Gunpowder + Dye","Paper + Dye","Iron + Dye","Glass + Dye"],0],
+
+["Firework Rocket با Elytra چه کاربردی دارد؟",
+["افزایش سرعت پرواز","افزایش Armor","Heal","Teleport"],0],
+
+["کدام آیتم برای پرواز با Elytra در Survival بسیار مهم است؟",
+["Firework Rocket","Snowball","Arrow","Ender Pearl"],0],
+
+["کدام Potion برای مقابله با سقوط در پرواز Elytra مفید است؟",
+["Slow Falling","Strength","Harming","Poison"],0],
+
+["کدام آیتم Phantom را دور نگه می‌دارد؟",
+["خوابیدن منظم","Torch","Shield","Milk"],0],
+
+["کدام موجود با خوابیدن بازیکن دوباره ظاهر نمی‌شود؟",
+["Phantom","Creeper","Zombie","Spider"],0],
+
+["کدام موجود در Night می‌تواند روی بازیکن بدون خواب ظاهر شود؟",
+["Phantom","Warden","Guardian","Ravager"],0],
+
+["کدام موجود در Snowy Biome می‌تواند تخم‌گذاری کند؟",
+["Chicken","Cow","Pig","Axolotl"],0],
+
+["کدام آیتم برای ساخت Snow Block لازم است؟",
+["Snowballs","Ice","Water","White Dye"],0],
+
+["کدام موجود Snowball پرتاب می‌کند؟",
+["Snow Golem","Blaze","Ghast","Skeleton"],0],
+
+["Snowball روی بعضی دشمنان آسیب کمی یا خاص دارد؟",
+["بله","خیر، هیچ‌وقت اثر ندارد","فقط روی Cow","فقط روی Villager"],0],
+
+["کدام آیتم برای ساخت Arrow of Tipped Potion استفاده می‌شود؟",
+["Potion + Arrows","Potion + Sticks","Potion + Feathers","Potion + Flint"],0],
+
+["کدام آیتم برای ساخت Spectral Arrow استفاده می‌شود؟",
+["Glowstone Dust + Arrow","Amethyst + Arrow","Quartz + Arrow","Glow Ink + Arrow"],0],
+
+["Spectral Arrow چه اثری دارد؟",
+["Glowing Effect","Poison","Fire","Slowness"],0],
+
+["کدام موجود Glowing Effect را می‌تواند به بازیکن بدهد؟",
+["Spectral Arrow","Cow","Pig","Chicken"],0],
+
+["کدام Potion برای Weakness استفاده می‌شود؟",
+["Weakness Potion","Harming","Strength","Night Vision"],0],
+
+["Weakness برای درمان Zombie Villager مهم است؟",
+["بله","خیر","فقط برای Warden","فقط در Nether"],0],
+
+["کدام ماده برای Weakness Potion کاربرد دارد؟",
+["Fermented Spider Eye","Sugar","Blaze Powder","Magma Cream"],0],
+
+["کدام Potion می‌تواند Slowness ایجاد کند؟",
+["Slowness Potion","Speed Potion","Strength","Healing"],0],
+
+["کدام ماده برای Slowness Potion استفاده می‌شود؟",
+["Sugar + Fermented Spider Eye","Rabbit Foot","Magma Cream","Blaze Powder"],0],
+
+["کدام Effect باعث کندی حرکت می‌شود؟",
+["Slowness","Speed","Haste","Strength"],0],
+
+["کدام Effect باعث سرعت بیشتر می‌شود؟",
+["Speed","Slowness","Mining Fatigue","Weakness"],0],
+
+["کدام Effect استخراج را کند می‌کند؟",
+["Mining Fatigue","Haste","Slowness","Weakness"],0],
+
+["Guardian بیشتر چه نوع موجودی است؟",
+["Aquatic hostile mob","Undead","Nether mob","End mob"],0],
+
+["Guardian چه حمله‌ای دارد؟",
+["لیزر","Fireball","Arrow","Explosion"],0],
+
+["Elder Guardian چه تفاوتی دارد؟",
+["بزرگ‌تر و قوی‌تر است","پرواز می‌کند","در Nether است","نامرئی است"],0],
+
+["کدام سازه Guardian دارد؟",
+["Ocean Monument","Village","Stronghold","Mansion"],0],
+
+["کدام بلوک برای ساخت Conduit Power لازم است؟",
+["Conduit + Prismarine frame","Beacon + Iron","End Crystal + Quartz","Nether Star"],0],
+
+["کدام ماده برای ساخت Conduit لازم است؟",
+["Nautilus Shell + Heart of the Sea","Diamond + Heart","Prismarine + Heart","Gold + Heart"],0],
+
+["Nautilus Shell را می‌توان از کجا گرفت؟",
+["Fishing/Drowned/Trading بسته به روش","End City","Warden","Blaze"],0],
+
+["Drowned ممکن است چه آیتمی بیندازد؟",
+["Trident","Elytra","Nether Star","Totem"],0],
+
+["کدام موجود می‌تواند Trident داشته باشد؟",
+["Drowned","Zombie","Cow","Spider"],0],
+
+["Trident را می‌توان با چه Enchantmentهایی خاص کرد؟",
+["Loyalty/Riptide/Channeling و...","Sharpness فقط","Power فقط","Flame فقط"],0],
+
+["کدام آیتم برای تعمیر Trident در Anvil استفاده می‌شود؟",
+["Trident دیگر/مواد مناسب بسته به روش","Iron","Diamond فقط","Stick"],0],
+
+["کدام موجود ممکن است Trident پرتاب کند؟",
+["Drowned","Zombie","Skeleton","Piglin"],0],
+
+["کدام موجود زیر آب در Ocean می‌تواند دیده شود؟",
+["Drowned","Witch","Evoker","Vindicator"],0],
+
+["کدام موجود Zombie در آب به Drowned تبدیل می‌شود؟",
+["Zombie","Skeleton","Creeper","Spider"],0],
+
+["کدام موجود Skeleton در Snow Biome می‌تواند به Stray تبدیل شود؟",
+["Skeleton","Zombie","Creeper","Spider"],0],
+
+["Stray چه نوع موجودی است؟",
+["نوعی Skeleton","نوعی Zombie","نوعی Spider","نوعی Creeper"],0],
+
+["Stray چه نوع تیر خاصی می‌تواند استفاده کند؟",
+["Slowness Arrow","Poison Arrow","Fire Arrow","Harming Arrow"],0],
+
+["Skeleton چه آیتمی می‌اندازد؟",
+["Bone","Iron","Leather","Gold"],0],
+
+["Bone برای چه چیزی کاربرد دارد؟",
+["Bone Meal و اهلی کردن Wolf","ساخت Diamond","ساخت Netherite","ساخت Portal"],0],
+
+["Bone Meal برای چه کاری کاربرد دارد؟",
+["رشد سریع گیاهان در موارد مناسب","Enchant","ساخت Portal","ساخت Elytra"],0],
+
+["کدام موجود ممکن است Bow داشته باشد؟",
+["Skeleton","Cow","Pig","Sheep"],0],
+
+["کدام موجود معمولاً Bow ندارد؟",
+["Cow","Skeleton","Pillager","Stray"],0],
+
+["Pillager از چه سلاحی استفاده می‌کند؟",
+["Crossbow","Bow","Sword","Trident"],0],
+
+["Pillager به چه رویدادی مرتبط است؟",
+["Raid","Dragon Fight","End City","Nether Portal"],0],
+
+["کدام دشمن Crossbow دارد؟",
+["Pillager","Skeleton","Zombie","Spider"],0],
+
+["Vindicator چه سلاحی دارد؟",
+["Axe","Bow","Crossbow","Trident"],0],
+
+["Evoker چه چیزی احضار می‌کند؟",
+["Vex","Ravager","Guardian","Warden"],0],
+
+["Ravager در چه رویدادی ظاهر می‌شود؟",
+["Raid","Dragon Fight","Nether Event","Ocean Event"],0],
+
+["کدام موجود می‌تواند در Raid سوار Ravager باشد؟",
+["Illagerها در شرایط خاص","Cow","Villager","Chicken"],0],
+
+["کدام سازه محل اصلی Pillager Outpost است؟",
+["Pillager Outpost","Stronghold","Mansion","Bastion"],0],
+
+["Pillager Outpost در کدام بُعد است؟",
+["Overworld","Nether","End","Deep Dark"],0],
+
+["Bad Omen به چه چیزی مربوط است؟",
+["شروع Raid در شرایط مناسب","Ender Dragon","Nether Portal","Warden"],0],
+
+["کدام آیتم/رویداد در نسخه‌های جدید برای Raid متفاوت شده است؟",
+["Ominous Bottle و Bad Omen","Dragon Egg","Nether Star","Elytra"],0],
+
+["کدام مورد در Minecraft می‌تواند یک Challenge هفتگی را جذاب کند؟",
+["سؤال‌های جدید و جدول برندگان","حذف همه بازیکنان","فقط یک سؤال","بدون امتیاز"],0],
+
+["در مسابقه AmirCraft چند سؤال وجود دارد؟",
+["100","50","75","150"],0]
 
 ];
 
-/* اطمینان از دقیقاً 100 سؤال */
-let quizQuestions = questions.slice(0,100);
 
-/* قاطی کردن گزینه‌ها برای هر سؤال */
-function shuffleQuestionOptions(q){
-    const arr=q.o.map((text,index)=>({
-        text,
-        correct:index===q.a
+/* =========================================================
+   اطمینان از 100 سؤال
+========================================================= */
+
+let quizQuestions=questions.slice(0,100);
+
+
+/* =========================================================
+   SHUFFLE OPTIONS
+========================================================= */
+
+function shuffleQuestion(q){
+
+    const arr=q[1].map((text,index)=>({
+        text:text,
+        correct:index===q[2]
     }));
 
     for(let i=arr.length-1;i>0;i--){
+
         const j=Math.floor(Math.random()*(i+1));
+
         [arr[i],arr[j]]=[arr[j],arr[i]];
     }
 
     return {
-        q:q.q,
+        q:q[0],
         options:arr.map(x=>x.text),
         answer:arr.findIndex(x=>x.correct)
     };
 }
 
-quizQuestions=quizQuestions.map(shuffleQuestionOptions);
+quizQuestions=quizQuestions.map(shuffleQuestion);
 
-/* STATE */
+
+/* =========================================================
+   STATE
+========================================================= */
+
 let current=0;
 let score=0;
 let answered=false;
@@ -1416,34 +3233,96 @@ const questionNumberEl=document.getElementById("questionNumber");
 const nextButton=document.getElementById("nextButton");
 const quizCard=document.getElementById("quizCard");
 
-/* CHECK ONE-TIME PARTICIPATION */
-function alreadyPlayed(){
-    return localStorage.getItem("amircraft_finished")==="true";
+
+/* =========================================================
+   WEEK KEY
+========================================================= */
+
+function getWeekKey(){
+
+    const now=new Date();
+
+    const firstDay=new Date(now.getFullYear(),0,1);
+
+    const dayOfYear=
+        Math.floor((now-firstDay)/86400000);
+
+    const week=Math.ceil(
+        (dayOfYear+firstDay.getDay()+1)/7
+    );
+
+    return `${now.getFullYear()}-${week}`;
 }
+
+const WEEK_KEY=getWeekKey();
+
+
+function alreadyPlayed(){
+
+    return localStorage.getItem(
+        "amircraft_finished_"+WEEK_KEY
+    )==="true";
+}
+
+
+/* =========================================================
+   GO REGISTER
+========================================================= */
 
 function goRegister(){
 
-    if(alreadyPlayed()){
+    const status=getContestStatus();
+
+    if(status==="friday" || status==="saturday"){
+
         showPopup(
-            "⛔ قبلاً شرکت کرده‌ای!",
-            "این مرورگر قبلاً یک نتیجه نهایی برای مسابقه امیرکرفت ثبت کرده است. طبق قوانین، هر نفر فقط یک‌بار می‌تواند شرکت کند."
+            "⛔ مسابقه بسته است",
+            status==="friday"
+            ?
+            "مهلت شرکت در چالش این هفته تمام شده است. شنبه برندگان اعلام می‌شوند."
+            :
+            "امروز روز اعلام برندگان است. چالش هفته جدید بعد از شروع هفته فعال خواهد شد."
         );
+
         return;
     }
 
-    registerSection.scrollIntoView({behavior:"smooth"});
+    if(alreadyPlayed()){
+
+        showPopup(
+            "⛔ قبلاً شرکت کرده‌ای!",
+            "طبق قوانین، هر نفر فقط یک بار در چالش این هفته می‌تواند شرکت کند."
+        );
+
+        return;
+    }
+
+    registerSection.scrollIntoView({
+        behavior:"smooth"
+    });
 }
 
-/* IMAGE PREVIEW */
-document.getElementById("proofImage").addEventListener("change",function(){
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+document.getElementById("proofImage")
+.addEventListener("change",function(){
 
     const file=this.files[0];
+
     const preview=document.getElementById("preview");
 
     if(!file)return;
 
     if(!file.type.startsWith("image/")){
-        showPopup("⚠️ فایل نامعتبر","لطفاً یک تصویر انتخاب کنید.");
+
+        showPopup(
+            "⚠️ فایل نامعتبر",
+            "لطفاً یک تصویر انتخاب کنید."
+        );
+
         this.value="";
         return;
     }
@@ -1451,79 +3330,144 @@ document.getElementById("proofImage").addEventListener("change",function(){
     const reader=new FileReader();
 
     reader.onload=function(e){
+
         preview.src=e.target.result;
+
         preview.style.display="block";
+
     };
 
     reader.readAsDataURL(file);
+
 });
 
-/* START */
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
 function startQuiz(){
 
-    if(alreadyPlayed()){
+    const status=getContestStatus();
+
+    if(status==="friday" || status==="saturday"){
+
         showPopup(
-            "⛔ امکان شرکت دوباره نیست",
-            "این دستگاه قبلاً مسابقه را به پایان رسانده است."
+            "🔴 مسابقه بسته است",
+            "مهلت شرکت در مسابقه این هفته به پایان رسیده است."
         );
+
         return;
     }
 
-    const name=document.getElementById("playerName").value.trim();
-    const id=document.getElementById("playerId").value.trim();
-    const rules=document.getElementById("rules").checked;
+    if(alreadyPlayed()){
+
+        showPopup(
+            "⛔ امکان شرکت دوباره نیست",
+            "این حساب/مرورگر قبلاً در چالش این هفته شرکت کرده است."
+        );
+
+        return;
+    }
+
+    const name=
+        document.getElementById("playerName")
+        .value.trim();
+
+    const id=
+        document.getElementById("playerId")
+        .value.trim();
+
+    const rules=
+        document.getElementById("rules").checked;
 
     if(name.length<2){
-        showPopup("⚠️ نام را وارد کن","لطفاً نام خود را وارد کنید.");
+
+        showPopup(
+            "⚠️ نام را وارد کن",
+            "لطفاً نام و نام خانوادگی خود را وارد کنید."
+        );
+
         return;
     }
 
     if(id.length<2){
-        showPopup("⚠️ آیدی روبیکا را وارد کن","آیدی روبیکا برای ارسال نتیجه لازم است.");
+
+        showPopup(
+            "⚠️ آیدی روبیکا",
+            "آیدی روبیکا را وارد کنید."
+        );
+
         return;
     }
 
     if(!rules){
-        showPopup("⚠️ قوانین","برای شروع باید قوانین مسابقه را بپذیرید.");
+
+        showPopup(
+            "⚠️ قوانین",
+            "برای ورود باید قوانین مسابقه را قبول کنید."
+        );
+
         return;
     }
 
-    localStorage.setItem("amircraft_name",name);
-    localStorage.setItem("amircraft_id",id);
+    localStorage.setItem(
+        "amircraft_name_"+WEEK_KEY,
+        name
+    );
+
+    localStorage.setItem(
+        "amircraft_id_"+WEEK_KEY,
+        id
+    );
 
     current=0;
     score=0;
     answered=false;
 
     registerSection.style.display="none";
-
     quizSection.style.display="block";
-    quizSection.scrollIntoView({behavior:"smooth"});
+
+    quizSection.scrollIntoView({
+        behavior:"smooth"
+    });
 
     loadQuestion();
 
-    showPopup(
-        "⚔️ مسابقه شروع شد!",
-        "۱۰۰ سؤال پیش روی توست. گزینه‌ها در هر سؤال به صورت تصادفی جابه‌جا شده‌اند."
-    );
+    createExplosion("start");
+
+    setTimeout(()=>{
+
+        showPopup(
+            "⚔️ چالش شروع شد!",
+            "۱۰۰ سؤال ماینکرافتی در انتظار توست. گزینه‌ها برای هر سؤال به‌صورت تصادفی جابه‌جا شده‌اند."
+        );
+
+    },300);
 }
 
-/* LOAD QUESTION */
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
 function loadQuestion(){
 
     answered=false;
+
     nextButton.classList.remove("show");
+
     feedbackEl.innerHTML="";
 
     const item=quizQuestions[current];
 
     questionNumberEl.textContent=
-        `سؤال ${current+1} از ${quizQuestions.length}`;
+        `سؤال ${current+1} از 100`;
 
     questionEl.textContent=item.q;
 
     progressEl.style.width=
-        ((current)/quizQuestions.length*100)+"%";
+        `${((current)/100)*100}%`;
 
     optionsEl.innerHTML="";
 
@@ -1532,20 +3476,32 @@ function loadQuestion(){
         const btn=document.createElement("button");
 
         btn.className="option";
+
         btn.textContent=
             `${String.fromCharCode(65+index)}) ${option}`;
 
-        btn.onclick=()=>answerQuestion(index,btn);
+        btn.onclick=()=>{
+            answerQuestion(index,btn);
+        };
 
         optionsEl.appendChild(btn);
+
     });
 
     scoreEl.textContent=score;
 
-    quizCard.classList.remove("correctFlash","shake");
+    quizCard.classList.remove(
+        "correctFlash",
+        "shake"
+    );
+
 }
 
-/* ANSWER */
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
 function answerQuestion(index,clicked){
 
     if(answered)return;
@@ -1553,9 +3509,13 @@ function answerQuestion(index,clicked){
     answered=true;
 
     const item=quizQuestions[current];
-    const buttons=[...document.querySelectorAll(".option")];
 
-    buttons.forEach(b=>b.classList.add("disabled"));
+    const buttons=
+        [...document.querySelectorAll(".option")];
+
+    buttons.forEach(
+        b=>b.classList.add("disabled")
+    );
 
     if(index===item.answer){
 
@@ -1568,7 +3528,9 @@ function answerQuestion(index,clicked){
 
         feedbackEl.style.color="#6cff81";
 
-        quizCard.classList.add("correctFlash");
+        quizCard.classList.add(
+            "correctFlash"
+        );
 
         createExplosion("good");
 
@@ -1576,7 +3538,8 @@ function answerQuestion(index,clicked){
 
         clicked.classList.add("wrong");
 
-        buttons[item.answer].classList.add("correct");
+        buttons[item.answer]
+        .classList.add("correct");
 
         feedbackEl.innerHTML=
             "❌ اشتباه! جواب درست مشخص شد.";
@@ -1591,22 +3554,30 @@ function answerQuestion(index,clicked){
     scoreEl.textContent=score;
 
     progressEl.style.width=
-        (((current+1)/quizQuestions.length)*100)+"%";
+        `${((current+1)/100)*100}%`;
 
     nextButton.classList.add("show");
 
-    if(current===quizQuestions.length-1){
-        nextButton.textContent="🏆 مشاهده نتیجه";
+    if(current===99){
+
+        nextButton.textContent=
+            "🏆 مشاهده نتیجه";
     }
 }
 
-/* NEXT */
+
+/* =========================================================
+   NEXT
+========================================================= */
+
 function nextQuestion(){
 
     if(!answered)return;
 
-    if(current>=quizQuestions.length-1){
+    if(current>=99){
+
         finishQuiz();
+
         return;
     }
 
@@ -1620,136 +3591,243 @@ function nextQuestion(){
     });
 }
 
-/* FINISH */
+
+/* =========================================================
+   FINISH
+========================================================= */
+
 function finishQuiz(){
 
-    localStorage.setItem("amircraft_finished","true");
-    localStorage.setItem("amircraft_score",score);
-    localStorage.setItem("amircraft_finished_at",Date.now());
+    localStorage.setItem(
+        "amircraft_finished_"+WEEK_KEY,
+        "true"
+    );
+
+    localStorage.setItem(
+        "amircraft_score_"+WEEK_KEY,
+        score
+    );
+
+    localStorage.setItem(
+        "amircraft_finished_at_"+WEEK_KEY,
+        Date.now()
+    );
 
     quizSection.style.display="none";
+
     resultSection.style.display="block";
 
-    document.getElementById("finalScore").textContent=score;
+    document.getElementById(
+        "finalScore"
+    ).textContent=score;
 
     let message="";
 
     if(score>=90){
+
         message=
         "🔥 فوق‌العاده! تو واقعاً یک ماینکرافت پلیر حرفه‌ای هستی!";
+
     }else if(score>=75){
+
         message=
         "💎 عالی بود! اطلاعات ماینکرافتی خیلی خوبی داری.";
+
     }else if(score>=60){
+
         message=
-        "🟩 خوب بود! کمی تمرین بیشتر و می‌توانی حرفه‌ای‌تر شوی.";
+        "🟩 خوب بود! عملکردت واقعاً قابل قبول بود.";
+
     }else if(score>=40){
+
         message=
-        "⛏️ بد نبود! ولی هنوز رازهای زیادی از ماینکرافت باقی مانده.";
+        "⛏️ بد نبود! ولی هنوز رازهای زیادی از Minecraft باقی مانده.";
+
     }else{
+
         message=
-        "🌱 تازه اول راهی! ماینکرافت را بیشتر بازی کن و دوباره دانش خودت را امتحان کن.";
+        "🌱 تازه اول راهی! تمرین کن و هفته بعد دوباره بدرخش.";
     }
 
-    document.getElementById("resultMessage").innerHTML=
-        `${message}<br><br>
-        امتیاز نهایی تو: <strong>${score} از 100</strong><br>
-        نتیجه را از صفحه اسکرین‌شات بگیر و برای <strong>@amirtbpedit</strong> در روبیکا بفرست.`;
+    document.getElementById(
+        "resultMessage"
+    ).innerHTML=
+    `${message}<br><br>
+    امتیاز نهایی تو:
+    <strong>${score} از 100</strong>
+    <br>
+    نتیجه را اسکرین‌شات بگیر و برای
+    <strong>@amirtbpedit</strong>
+    در روبیکا ارسال کن.
+    <br><br>
+    🏆 نتایج نهایی و برندگان شنبه اعلام می‌شوند.`;
 
     createExplosion("finish");
 
-    resultSection.scrollIntoView({behavior:"smooth"});
-}
-
-/* POPUP */
-function showPopup(title,text){
-
-    document.getElementById("popupTitle").textContent=title;
-    document.getElementById("popupText").textContent=text;
-    document.getElementById("popup").classList.add("show");
-}
-
-function closePopup(){
-    document.getElementById("popup").classList.remove("show");
-}
-
-/* COPY */
-function copyRubika(){
-
-    navigator.clipboard.writeText("@amirtbpedit")
-    .then(()=>{
-        showPopup(
-            "📋 کپی شد!",
-            "آیدی @amirtbpedit در کلیپ‌بورد کپی شد."
-        );
-    })
-    .catch(()=>{
-        showPopup(
-            "📱 آیدی برگزارکننده",
-            "@amirtbpedit"
-        );
+    resultSection.scrollIntoView({
+        behavior:"smooth"
     });
 }
 
-/* EFFECT PARTICLES */
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+function showPopup(title,text){
+
+    document.getElementById(
+        "popupTitle"
+    ).textContent=title;
+
+    document.getElementById(
+        "popupText"
+    ).textContent=text;
+
+    document.getElementById(
+        "popup"
+    ).classList.add("show");
+}
+
+function closePopup(){
+
+    document.getElementById(
+        "popup"
+    ).classList.remove("show");
+}
+
+
+/* =========================================================
+   COPY RUBIKA
+========================================================= */
+
+function copyRubika(){
+
+    navigator.clipboard
+    .writeText("@amirtbpedit")
+    .then(()=>{
+
+        showPopup(
+            "📋 کپی شد!",
+            "آیدی @amirtbpedit کپی شد."
+        );
+
+    })
+    .catch(()=>{
+
+        showPopup(
+            "📱 آیدی",
+            "@amirtbpedit"
+        );
+
+    });
+}
+
+
+/* =========================================================
+   EXPLOSION EFFECT
+========================================================= */
+
 function createExplosion(type){
 
     let symbols=[];
 
     if(type==="good"){
-        symbols=["✨","⭐","🟩","💚","⚡"];
+
+        symbols=[
+            "✨","⭐","🟩","💚","⚡","⛏️"
+        ];
+
     }else if(type==="bad"){
-        symbols=["💥","❌","🔴","⚠️"];
+
+        symbols=[
+            "💥","❌","🔴","⚠️","💣"
+        ];
+
     }else{
-        symbols=["🏆","⭐","💎","🟩","✨","🔥"];
+
+        symbols=[
+            "🏆","⭐","💎","🟩",
+            "✨","🔥","⚡","⛏️",
+            "🎉","💚"
+        ];
     }
 
-    for(let i=0;i<30;i++){
+    for(let i=0;i<45;i++){
 
         const el=document.createElement("div");
 
         el.textContent=
-            symbols[Math.floor(Math.random()*symbols.length)];
+            symbols[
+                Math.floor(
+                    Math.random()*symbols.length
+                )
+            ];
 
         el.style.position="fixed";
         el.style.left="50%";
         el.style.top="50%";
-        el.style.zIndex="1000";
+        el.style.zIndex="10000";
         el.style.pointerEvents="none";
-        el.style.fontSize=(15+Math.random()*25)+"px";
+        el.style.fontSize=
+            (14+Math.random()*30)+"px";
 
         document.body.appendChild(el);
 
-        const angle=Math.random()*Math.PI*2;
-        const distance=100+Math.random()*400;
+        const angle=
+            Math.random()*Math.PI*2;
 
-        const x=Math.cos(angle)*distance;
-        const y=Math.sin(angle)*distance;
+        const distance=
+            100+Math.random()*500;
+
+        const x=
+            Math.cos(angle)*distance;
+
+        const y=
+            Math.sin(angle)*distance;
 
         el.animate(
-            [
-                {
-                    transform:"translate(-50%,-50%) scale(.3)",
-                    opacity:1
-                },
-                {
-                    transform:
-                      `translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(1.5) rotate(${Math.random()*720}deg)`,
-                    opacity:0
-                }
-            ],
+        [
             {
-                duration:700+Math.random()*700,
-                easing:"cubic-bezier(.1,.8,.2,1)"
+                transform:
+                "translate(-50%,-50%) scale(.2)",
+                opacity:1
+            },
+            {
+                transform:
+                `translate(
+                    calc(-50% + ${x}px),
+                    calc(-50% + ${y}px)
+                )
+                scale(1.6)
+                rotate(${Math.random()*900}deg)`,
+                opacity:0
             }
-        ).onfinish=()=>el.remove();
+        ],
+        {
+            duration:
+                600+Math.random()*900,
+            easing:
+                "cubic-bezier(.1,.8,.2,1)"
+        })
+        .onfinish=()=>{
+            el.remove();
+        };
     }
 }
 
-/* KEYBOARD SUPPORT */
-document.addEventListener("keydown",e=>{
 
-    if(quizSection.style.display!=="block")return;
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+"keydown",
+e=>{
+
+    if(
+        quizSection.style.display!=="block"
+    )return;
 
     if(!answered){
 
@@ -1760,38 +3838,137 @@ document.addEventListener("keydown",e=>{
             "4":3
         };
 
-        if(keys[e.key]!==undefined){
+        if(
+            keys[e.key]!==undefined
+        ){
 
-            const buttons=document.querySelectorAll(".option");
+            const buttons=
+                document.querySelectorAll(
+                    ".option"
+                );
 
-            if(buttons[keys[e.key]]){
-                buttons[keys[e.key]].click();
+            if(
+                buttons[keys[e.key]]
+            ){
+
+                buttons[
+                    keys[e.key]
+                ].click();
             }
         }
+
     }else if(e.key==="Enter"){
 
         nextQuestion();
+
     }
+
 });
 
-/* ESC POPUP */
-document.addEventListener("keydown",e=>{
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+"keydown",
+e=>{
+
     if(e.key==="Escape"){
-        document.getElementById("popup").classList.remove("show");
+
+        document.getElementById(
+            "popup"
+        ).classList.remove("show");
+
     }
+
 });
 
-/* PREVENT ACCIDENTAL REFRESH DURING QUIZ */
-window.addEventListener("beforeunload",e=>{
+
+/* =========================================================
+   REFRESH PROTECTION
+========================================================= */
+
+window.addEventListener(
+"beforeunload",
+e=>{
 
     if(
         quizSection.style.display==="block" &&
-        !localStorage.getItem("amircraft_finished")
+        !alreadyPlayed()
     ){
+
         e.preventDefault();
         e.returnValue="";
     }
+
 });
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+updateStatus();
+
+setInterval(
+updateStatus,
+1000
+);
+
+
+/* =========================================================
+   SATURDAY WINNER ANIMATION
+========================================================= */
+
+setInterval(()=>{
+
+    if(
+        getContestStatus()==="saturday"
+    ){
+
+        const cards=
+            document.querySelectorAll(
+                ".winner"
+            );
+
+        cards.forEach((card,index)=>{
+
+            setTimeout(()=>{
+
+                card.animate(
+                [
+                    {
+                        transform:"scale(1)"
+                    },
+                    {
+                        transform:
+                        "scale(1.07) rotate(1deg)"
+                    },
+                    {
+                        transform:
+                        "scale(1)"
+                    }
+                ],
+                {
+                    duration:900,
+                    easing:"ease-in-out"
+                });
+
+                createExplosion(
+                    index===0
+                    ?"finish"
+                    :"good"
+                );
+
+            },index*350);
+
+        });
+
+    }
+
+},7000);
+
 </script>
 
 </body>
