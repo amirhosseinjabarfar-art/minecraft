@@ -1250,7 +1250,7 @@ onclick="nextQuestion()">
 <br>
 
 برگزارکننده:
-<span>آیدی برگزارکننده نمایشی</span>
+<a href="#">@amirtbpedit</a>
 
 <br>
 
@@ -1309,35 +1309,7 @@ const WINNER_DAY = 6;
    وضعیت هفته
 ========================================================= */
 
-function getContestStatus(){
-
-    const now = new Date();
-    const day = now.getDay();
-
-    /*
-    پنج‌شنبه تا پایان روز مسابقه فعال است.
-    جمعه بسته است.
-    شنبه اعلام برندگان.
-    یکشنبه دوباره هفته جدید.
-    */
-
-    if(day === 4){
-
-        return "thursday";
-    }
-
-    if(day === 5){
-
-        return "friday";
-    }
-
-    if(day === 6){
-
-        return "saturday";
-    }
-
-    return "open";
-}
+function getContestStatus(){ return "open"; }
 
 
 /* =========================================================
@@ -1503,9 +1475,1834 @@ function updateWinnerSection(status){
 فعلاً این بخش با اطلاعات نمونه کار می‌کند.
 */
 
-function loadWinners(){
-    // داده واقعی برندگان در نسخه نمایشی نمایش داده نمی‌شود.
+function loadWinners(){ /* داده واقعی برندگان نمایش داده نمی‌شود. */ }
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions=[
+
+["در Minecraft برای ساخت Eye of Ender به چه چیزهایی نیاز دارید؟",
+["Ender Pearl + Blaze Powder","Diamond + Gold","Iron + Quartz","Emerald + Coal"],0],
+
+["کدام موجود Nether Star می‌اندازد؟",
+["Wither","Warden","Ender Dragon","Blaze"],0],
+
+["کدام موجود در Ancient City پیدا می‌شود؟",
+["Warden","Ravager","Evoker","Guardian"],0],
+
+["کدام Enchantment باعث کاهش آسیب سقوط می‌شود؟",
+["Feather Falling","Sharpness","Fortune","Power"],0],
+
+["کدام آیتم برای ساخت Beacon لازم است؟",
+["Nether Star","Dragon Egg","Echo Shard","Elytra"],0],
+
+["Elytra معمولاً کجا پیدا می‌شود؟",
+["End City Ship","Village","Stronghold","Ocean Monument"],0],
+
+["کدام Potion دید در شب می‌دهد؟",
+["Night Vision","Strength","Swiftness","Harming"],0],
+
+["برای Potion of Night Vision کدام ماده مهم است؟",
+["Golden Carrot","Sugar","Rabbit Foot","Magma Cream"],0],
+
+["کدام موجود با نگاه کردن مستقیم به آن عصبانی می‌شود؟",
+["Enderman","Creeper","Spider","Ghast"],0],
+
+["کدام موجود می‌تواند از دیوار بالا برود؟",
+["Spider","Zombie","Skeleton","Cow"],0],
+
+["کدام موجود با انفجار معروف است؟",
+["Creeper","Slime","Bat","Pig"],0],
+
+["کدام ماده برای ساخت Netherite Ingot لازم است؟",
+["Netherite Scrap + Gold","Diamond + Gold","Iron + Quartz","Obsidian + Gold"],0],
+
+["Ancient Debris در کجا پیدا می‌شود؟",
+["Nether","End","Overworld","Stronghold"],0],
+
+["کدام ابزار برای استخراج Obsidian مناسب است؟",
+["Diamond Pickaxe یا بهتر","Iron Axe","Stone Shovel","Wood Pickaxe"],0],
+
+["کدام Villager با Lectern مرتبط است؟",
+["Librarian","Farmer","Butcher","Fisherman"],0],
+
+["کدام Villager با Composter مرتبط است؟",
+["Farmer","Librarian","Armorer","Fisherman"],0],
+
+["کدام بلوک برای Villager ماهیگیر استفاده می‌شود؟",
+["Barrel","Lectern","Composter","Smoker"],0],
+
+["کدام Villager با Smithing Table مرتبط است؟",
+["Toolsmith","Farmer","Librarian","Butcher"],0],
+
+["کدام آیتم برای ساخت Shield لازم است؟",
+["Iron Ingot + Planks","Gold + Stone","Diamond + Wood","Iron Block + Glass"],0],
+
+["کدام Enchantment روی Trident باعث برگشت آن می‌شود؟",
+["Loyalty","Sharpness","Power","Flame"],0],
+
+["کدام Enchantment با Riptide ناسازگار است؟",
+["Loyalty","Unbreaking","Mending","Impaling"],0],
+
+["کدام Enchantment سرعت حرکت در آب را افزایش می‌دهد؟",
+["Depth Strider","Feather Falling","Respiration","Power"],0],
+
+["Respiration روی کدام قطعه قرار می‌گیرد؟",
+["Helmet","Boots","Chestplate","Leggings"],0],
+
+["Aqua Affinity چه کاری انجام می‌دهد؟",
+["افزایش سرعت شکستن زیر آب","افزایش آسیب","کاهش سقوط","افزایش سرعت دویدن"],0],
+
+["کدام موجود از Blaze Rod استفاده/دراپ می‌کند؟",
+["Blaze","Ghast","Piglin","Hoglin"],0],
+
+["کدام آیتم برای ساخت Brewing Stand لازم است؟",
+["Blaze Rod","Iron Ingot","Gold Ingot","Quartz"],0],
+
+["کدام ماده برای Awkward Potion لازم است؟",
+["Nether Wart","Sugar","Golden Carrot","Spider Eye"],0],
+
+["کدام Potion با Fermented Spider Eye و Night Vision ساخته می‌شود؟",
+["Invisibility","Strength","Harming","Fire Resistance"],0],
+
+["کدام موجود در Ocean Monument پیدا می‌شود؟",
+["Guardian","Evoker","Vindicator","Ravager"],0],
+
+["کدام باس در Ocean Monument وجود دارد؟",
+["Elder Guardian","Wither","Warden","Ender Dragon"],0],
+
+["Heart of the Sea معمولاً در کجا پیدا می‌شود؟",
+["Buried Treasure","End City","Stronghold","Mansion"],0],
+
+["کدام آیتم محل آخرین مرگ را پیدا می‌کند؟",
+["Recovery Compass","Compass","Clock","Spyglass"],0],
+
+["Recovery Compass با چه چیزی ساخته می‌شود؟",
+["Echo Shards + Compass","Diamond + Compass","Quartz + Compass","Amethyst + Compass"],0],
+
+["Echo Shard در کجا پیدا می‌شود؟",
+["Ancient City","Village","Nether Fortress","Ocean Monument"],0],
+
+["کدام موجود Totem of Undying می‌اندازد؟",
+["Evoker","Vindicator","Pillager","Ravager"],0],
+
+["Totem of Undying چه زمانی فعال می‌شود؟",
+["وقتی بازیکن در دست داشتن آن بمیرد","وقتی روی زمین باشد","وقتی بازیکن بخوابد","وقتی وارد Nether شود"],0],
+
+["Evoker معمولاً در کدام سازه پیدا می‌شود؟",
+["Woodland Mansion","Stronghold","Village","Desert Temple"],0],
+
+["کدام دشمن توسط Evoker احضار می‌شود؟",
+["Vex","Blaze","Ghast","Slime"],0],
+
+["کدام سازه محل End Portal است؟",
+["Stronghold","Village","Mansion","Monument"],0],
+
+["کدام آیتم Stronghold را پیدا می‌کند؟",
+["Eye of Ender","Compass","Clock","Spyglass"],0],
+
+["کدام باس در The End قرار دارد؟",
+["Ender Dragon","Wither","Warden","Elder Guardian"],0],
+
+["End Crystal چه کاربرد مهمی دارد؟",
+["احیای Ender Dragon","ساخت Beacon","ساخت Elytra","ساخت Nether Portal"],0],
+
+["Dragon's Breath برای چه چیزی کاربرد دارد؟",
+["ساخت/جمع‌آوری ماده مربوط به Potion","ساخت شمشیر","ساخت زره","ساخت Portal"],0],
+
+["کدام موجود در Nether پرواز می‌کند؟",
+["Ghast","Piglin","Hoglin","Strider"],0],
+
+["کدام موجود روی Lava راه می‌رود؟",
+["Strider","Piglin","Hoglin","Ghast"],0],
+
+["برای کنترل Strider چه چیزی استفاده می‌شود؟",
+["Warped Fungus on a Stick","Carrot on a Stick","Fishing Rod","Lead"],0],
+
+["کدام موجود با Warped Fungus جذب می‌شود؟",
+["Strider","Piglin","Ghast","Skeleton"],0],
+
+["کدام بلوک باعث کند شدن بازیکن می‌شود؟",
+["Soul Sand","Stone","Glass","Dirt"],0],
+
+["Soul Speed روی کدام قطعه اعمال می‌شود؟",
+["Boots","Helmet","Sword","Chestplate"],0],
+
+["Respawn Anchor در کجا کاربرد اصلی دارد؟",
+["Nether","End","Overworld","Stronghold"],0],
+
+["Respawn Anchor با چه چیزی شارژ می‌شود؟",
+["Glowstone","Redstone","Coal","Quartz"],0],
+
+["Lodestone Compass به چه چیزی متصل می‌شود؟",
+["Lodestone","Beacon","End Crystal","Respawn Anchor"],0],
+
+["Spyglass با چه موادی ساخته می‌شود؟",
+["Copper + Amethyst Shard","Iron + Glass","Gold + Quartz","Diamond + Glass"],0],
+
+["Amethyst Geode دارای کدام ماده است؟",
+["Amethyst","Ancient Debris","Sculk","Purpur"],0],
+
+["کدام آیتم از Amethyst Cluster به دست می‌آید؟",
+["Amethyst Shard","Echo Shard","Quartz","Diamond"],0],
+
+["کدام موجود می‌تواند آیتم مشابه آیتم داده‌شده را جمع کند؟",
+["Allay","Vex","Bat","Cat"],0],
+
+["Allay با چه چیزی می‌تواند کار کند؟",
+["آیتمی که به آن داده شده","Emerald","Diamond","Nether Star"],0],
+
+["کدام موجود از Skeleton تبدیل می‌شود؟",
+["Stray در شرایط مناسب","Creeper","Zombie","Spider"],0],
+
+["کدام موجود می‌تواند در روز آتش بگیرد؟",
+["Zombie","Creeper","Spider","Enderman"],0],
+
+["کدام موجود می‌تواند تبدیل به Drowned شود؟",
+["Zombie","Skeleton","Spider","Creeper"],0],
+
+["کدام حیوان با Wheat پرورش پیدا می‌کند؟",
+["Cow","Pig","Chicken","Rabbit"],0],
+
+["کدام حیوان با Seeds پرورش پیدا می‌کند؟",
+["Chicken","Cow","Pig","Horse"],0],
+
+["کدام حیوان با Carrot پرورش پیدا می‌کند؟",
+["Pig","Cow","Sheep","Chicken"],0],
+
+["کدام حیوان با Bone اهلی می‌شود؟",
+["Wolf","Cat","Horse","Fox"],0],
+
+["کدام حیوان با Raw Fish اهلی می‌شود؟",
+["Cat","Wolf","Horse","Cow"],0],
+
+["کدام حیوان معمولاً با سقوط زیاد آسیب کمتری می‌بیند؟",
+["Chicken","Cow","Pig","Sheep"],0],
+
+["کدام موجود با ضربه می‌تواند بازیکن را پرتاب کند؟",
+["Goat","Cow","Pig","Sheep"],0],
+
+["کدام ابزار برای ساخت Furnace لازم است؟",
+["Cobblestone","Iron","Wood","Stone Bricks"],0],
+
+["Blast Furnace برای چه کاری مناسب‌تر است؟",
+["ذوب سریع‌تر بعضی مواد معدنی و فلزات","پخت غذا","ساخت Potion","ساخت Portal"],0],
+
+["Smoker بیشتر برای چه کاری استفاده می‌شود؟",
+["پخت غذا","ذوب Ore","ساخت ابزار","ساخت Potion"],0],
+
+["کدام بلوک برای ساخت Anvil استفاده می‌شود؟",
+["Iron Blocks + Iron Ingots","Gold + Stone","Diamond + Iron","Quartz + Iron"],0],
+
+["کدام بلوک تغییرات جلوی خود را تشخیص می‌دهد؟",
+["Observer","Hopper","Piston","Chest"],0],
+
+["کدام بلوک آیتم‌ها را انتقال می‌دهد؟",
+["Hopper","Observer","Piston","Repeater"],0],
+
+["کدام بلوک با Redstone کار می‌کند و نور می‌دهد؟",
+["Redstone Lamp","Dirt","Glass","Sand"],0],
+
+["کدام ماده برای ساخت Piston لازم است؟",
+["Wood + Cobblestone + Iron + Redstone","Diamond + Iron","Quartz + Gold","Obsidian + Iron"],0],
+
+["کدام Enchantment حداکثر سطح رایج V دارد؟",
+["Sharpness","Fortune","Power","هر سه"],3],
+
+["کدام Enchantment روی Bow استفاده می‌شود؟",
+["Power","Sharpness","Efficiency","Fortune"],0],
+
+["Flame روی کدام سلاح استفاده می‌شود؟",
+["Bow","Sword","Shield","Trident"],0],
+
+["Quick Charge مربوط به چیست؟",
+["Crossbow","Bow","Trident","Sword"],0],
+
+["Multishot مربوط به چیست؟",
+["Crossbow","Bow","Trident","Shield"],0],
+
+["Piercing مربوط به چیست؟",
+["Crossbow","Bow","Sword","Axe"],0],
+
+["کدام بلوک برای ساخت Lantern لازم است؟",
+["Iron Nugget + Torch","Gold Nugget + Torch","Diamond + Torch","Quartz + Torch"],0],
+
+["کدام بلوک برای ساخت Cartography Table لازم است؟",
+["Paper + Planks","Paper + Iron","Leather + Paper","Map + Iron"],0],
+
+["کدام آیتم زمان روز را نشان می‌دهد؟",
+["Clock","Compass","Map","Spyglass"],0],
+
+["کدام آیتم جهت را نشان می‌دهد؟",
+["Compass","Clock","Map","Spyglass"],0],
+
+["کدام آیتم برای پیدا کردن Treasure استفاده می‌شود؟",
+["Treasure Map","Compass","Clock","Spyglass"],0],
+
+["کدام بلوک در برابر انفجار بسیار مقاوم است؟",
+["Obsidian","Dirt","Wood","Glass"],0],
+
+["کدام بلوک نور زیادی تولید می‌کند؟",
+["Glowstone","Stone","Dirt","Clay"],0],
+
+["کدام آیتم برای ساخت Beacon مهم است؟",
+["Glass + Obsidian + Nether Star","Iron + Diamond","Gold + Quartz","Emerald + Glass"],0],
+
+["حداکثر سطح Fortune چند است؟",
+["III","II","IV","V"],0],
+
+["حداکثر سطح Looting چند است؟",
+["III","II","IV","V"],0],
+
+["کدام Enchantment باعث آتش گرفتن دشمن با شمشیر می‌شود؟",
+["Fire Aspect","Flame","Fire Protection","Burning"],0],
+
+["کدام Enchantment برای کاهش آسیب انفجار تخصصی است؟",
+["Blast Protection","Fire Protection","Projectile Protection","Protection"],0],
+
+["کدام Enchantment برای آسیب تیر تخصصی است؟",
+["Projectile Protection","Blast Protection","Power","Knockback"],0],
+
+["کدام آیتم برای ساخت Conduit لازم است؟",
+["Heart of the Sea","Nether Star","Dragon Egg","Echo Shard"],0],
+
+["Conduit بیشتر چه مزیتی می‌دهد؟",
+["قدرت‌های خاص زیر آب","پرواز","دید در شب دائمی","Teleport"],0],
+
+["کدام موجود در Woodland Mansion خطرناک است؟",
+["Vindicator","Cow","Pig","Sheep"],0],
+
+["کدام موجود Ravager است؟",
+["یک دشمن بزرگ در Raid","یک حیوان خانگی","یک موجود Nether","یک باس End"],0],
+
+["کدام رویداد شامل Pillager و Ravager است؟",
+["Raid","End Fight","Nether Raid","Village War"],0],
+
+["کدام آیتم برای ساخت End Portal Frame در Survival ساخته نمی‌شود؟",
+["End Portal Frame","Obsidian","Eye of Ender","هیچ‌کدام"],0],
+
+["کدام بُعد دارای End City است؟",
+["The End","Nether","Overworld","Deep Dark"],0],
+
+["کدام بُعد دارای Nether Fortress است؟",
+["Nether","End","Overworld","Deep Dark"],0],
+
+["کدام ماده برای ساخت Nether Portal لازم است؟",
+["Obsidian","Iron","Stone","Blackstone"],0],
+
+["کدام آیتم Nether Portal را روشن می‌کند؟",
+["Flint and Steel","Torch","Redstone","Fire Charge فقط"],0],
+
+["کدام آیتم برای ساخت Enchanting Table لازم است؟",
+["Diamond + Obsidian + Book","Iron + Gold + Book","Emerald + Stone","Netherite + Book"],0],
+
+["برای ساخت کامل یک کتابخانه Enchanting معمولاً چند Bookshelf لازم است؟",
+["15","10","20","30"],0],
+
+["کدام بلوک برای ساخت Enchanting Table استفاده می‌شود؟",
+["Obsidian","Stone","Blackstone","Deepslate"],0],
+
+["کدام ماده برای ساخت Book لازم است؟",
+["Leather + Paper","Iron + Paper","Wood + Paper","String + Paper"],0],
+
+["کدام ماده برای ساخت Paper استفاده می‌شود؟",
+["Sugar Cane","Wheat","Bamboo","Leaves"],0],
+
+["کدام گیاه برای ساخت Paper استفاده می‌شود؟",
+["Sugar Cane","Cactus","Bamboo","Kelp"],0],
+
+["کدام آیتم برای ساخت Map استفاده می‌شود؟",
+["Paper + Compass","Paper + Clock","Paper + Gold","Paper + Iron"],0],
+
+["کدام Enchantment باعث افزایش عمر ابزار می‌شود؟",
+["Unbreaking","Sharpness","Fortune","Power"],0],
+
+["کدام Enchantment به تعمیر ابزار با XP کمک می‌کند؟",
+["Mending","Repair","Fixing","Durability"],0],
+
+["کدام Enchantment باعث افزایش تعداد بعضی Dropها می‌شود؟",
+["Looting","Sharpness","Knockback","Fire Aspect"],0],
+
+["کدام Enchantment روی Pickaxe برای افزایش Drop بعضی Oreها استفاده می‌شود؟",
+["Fortune","Looting","Power","Flame"],0],
+
+["کدام Enchantment سرعت شکستن بلوک‌ها را افزایش می‌دهد؟",
+["Efficiency","Fortune","Haste","Speed"],0],
+
+["کدام Beacon Effect سرعت استخراج را افزایش می‌دهد؟",
+["Haste","Speed","Jump Boost","Strength"],0],
+
+["کدام Effect سرعت حرکت را زیاد می‌کند؟",
+["Speed","Haste","Strength","Resistance"],0],
+
+["کدام Effect آسیب حمله را افزایش می‌دهد؟",
+["Strength","Power","Attack","Damage"],0],
+
+["کدام Effect مقاومت در برابر آسیب می‌دهد؟",
+["Resistance","Protection","Shield","Armor"],0],
+
+["کدام Potion در برابر آتش مقاومت می‌دهد؟",
+["Fire Resistance","Water Breathing","Night Vision","Regeneration"],0],
+
+["برای Fire Resistance کدام ماده اصلی استفاده می‌شود؟",
+["Magma Cream","Blaze Rod","Gold","Lava Bucket"],0],
+
+["کدام موجود می‌تواند داخل آب شنا کند و در آن زندگی کند؟",
+["Axolotl","Cow","Sheep","Chicken"],0],
+
+["Axolotl معمولاً با چه چیزی تکثیر می‌شود؟",
+["Tropical Fish در سطل","Cod","Salmon","Wheat"],0],
+
+["کدام موجود در Deep Dark بسیار خطرناک است؟",
+["Warden","Zombie","Creeper","Spider"],0],
+
+["Warden بیشتر با چه حسی بازیکن را پیدا می‌کند؟",
+["لرزش و بو/حواس حسی","فقط دید","فقط نور","فقط صدا از دور"],0],
+
+["کدام بلوک در Deep Dark با لرزش مرتبط است؟",
+["Sculk Sensor","Diamond Block","Beacon","Quartz"],0],
+
+["کدام آیتم در Ancient City ارزشمند است؟",
+["Echo Shard","Nether Star","Dragon Breath","Totem"],0],
+
+["کدام بلوک برای ساخت Sculk Catalyst شناخته شده است؟",
+["Sculk Catalyst","Sculk Core","Dark Stone","Echo Block"],0],
+
+["کدام موجود می‌تواند با استفاده از یک وسیله خاص در هوا حرکت کند؟",
+["بازیکن با Elytra","Cow","Zombie","Pig"],0],
+
+["Elytra با کدام آیتم قابل تعمیر است؟",
+["Phantom Membrane","Leather","Feather","String"],0],
+
+["Phantom معمولاً پس از چه چیزی ظاهر می‌شود؟",
+["چند شب نخوابیدن","باران","ورود به Nether","خوردن غذا"],0],
+
+["کدام آیتم برای اهلی کردن Horse کاربرد اصلی دارد؟",
+["ابتدا سوار شدن و رام کردن","Bone","Fish","Sugar فقط"],0],
+
+["کدام حیوان می‌تواند Chest حمل کند؟",
+["Donkey","Cow","Sheep","Pig"],0],
+
+["کدام حیوان با Chest قابل استفاده برای حمل وسایل است؟",
+["Llama","Chicken","Cow","Rabbit"],0],
+
+["کدام آیتم برای Lead استفاده می‌شود؟",
+["کشیدن و بستن برخی موجودات","ساخت Potion","ساخت Portal","Enchant"],0],
+
+["Lead معمولاً با چه چیزی ساخته می‌شود؟",
+["String + Slimeball","Leather + Iron","String + Gold","Slime + Iron"],0],
+
+["کدام موجود Slimeball می‌تواند بیندازد؟",
+["Slime","Spider","Creeper","Witch"],0],
+
+["Slime معمولاً در کدام مکان خاص می‌تواند ظاهر شود؟",
+["Slime Chunk","Stronghold","End City","Village فقط"],0],
+
+["کدام موجود Gunpowder می‌اندازد؟",
+["Creeper","Zombie","Cow","Pig"],0],
+
+["Gunpowder برای ساخت چه چیزی کاربرد دارد؟",
+["Firework / TNT","Shield","Anvil","Elytra"],0],
+
+["کدام آیتم برای ساخت TNT لازم است؟",
+["Gunpowder + Sand","Iron + Sand","Coal + Sand","Redstone + Sand"],0],
+
+["کدام آیتم برای Firework Rocket لازم است؟",
+["Paper + Gunpowder","Paper + Iron","Stick + Gunpowder","Glass + Gunpowder"],0],
+
+["کدام ماده رنگ‌های مختلف به Firework می‌دهد؟",
+["Dye","Quartz","Iron","Coal"],0],
+
+["کدام بلوک برای ساخت Banner استفاده می‌شود؟",
+["Wool + Stick","Paper + Stick","Leather + Stick","Wood + Stick"],0],
+
+["کدام آیتم برای تغییر طرح Banner کاربرد دارد؟",
+["Loom","Anvil","Stonecutter","Grindstone"],0],
+
+["کدام بلوک برای ساخت Loom استفاده می‌شود؟",
+["String + Planks","Wool + Iron","Paper + Wood","Leather + String"],0],
+
+["کدام آیتم برای حذف Enchantment استفاده می‌شود؟",
+["Grindstone","Anvil","Stonecutter","Furnace"],0],
+
+["کدام بلوک برای برش سنگ استفاده می‌شود؟",
+["Stonecutter","Grindstone","Anvil","Smithing Table"],0],
+
+["کدام ابزار برای ساخت/استفاده از Smithing Table لازم نیست؟",
+["Stone","Iron","Diamond","Netherite"],0],
+
+["کدام آیتم در Smithing Table برای ارتقای تجهیزات Netherite کاربرد دارد؟",
+["Netherite Upgrade Template","Diamond Template","Nether Star","Ancient Core"],0],
+
+["کدام ساختار برای پیدا کردن Netherite Upgrade Template مهم است؟",
+["Bastion Remnant","Village","Stronghold","Ocean Monument"],0],
+
+["Piglin معمولاً به چه چیزی علاقه دارد؟",
+["Gold","Diamond","Iron","Emerald"],0],
+
+["پوشیدن حداقل یک قطعه زره طلایی چه فایده‌ای مقابل Piglin دارد؟",
+["کمک می‌کند به‌طور عادی خشمگین نشود","آن را اهلی می‌کند","به آن آسیب می‌زند","باعث فرار آن می‌شود"],0],
+
+["کدام موجود با باز کردن Chest ممکن است عصبانی شود؟",
+["Piglin","Cow","Sheep","Axolotl"],0],
+
+["کدام موجود در Bastion Remnant زیاد دیده می‌شود؟",
+["Piglin","Villager","Guardian","Warden"],0],
+
+["Bastion Remnant در کجا قرار دارد؟",
+["Nether","End","Overworld","Deep Dark"],0],
+
+["کدام موجود Hoglin است؟",
+["موجودی در Nether که می‌تواند حمله کند","موجود End","باس Overworld","Villager"],0],
+
+["کدام Fungus برای جلوگیری/دور کردن Hoglin کاربرد دارد؟",
+["Warped Fungus","Crimson Fungus","Mushroom","Brown Mushroom"],0],
+
+["کدام موجود Zombie Piglin است؟",
+["موجود Nether که معمولاً خنثی است مگر تحریک شود","باس Nether","Villager","موجود End"],0],
+
+["کدام ماده برای ساخت Chain کاربرد دارد؟",
+["Iron Nuggets + Iron Ingot","Gold + Iron","Copper + Iron","Quartz + Iron"],0],
+
+["کدام بلوک برای ساخت Campfire استفاده می‌شود؟",
+["Logs + Stick + Coal/Charcoal","Stone + Coal","Iron + Wood","Sand + Stick"],0],
+
+["Campfire می‌تواند چه کاری انجام دهد؟",
+["پخت بعضی غذاها بدون Fuel معمولی","ساخت Potion","ساخت Portal","Enchant"],0],
+
+["کدام آیتم برای ساخت Chest معمولی لازم است؟",
+["Planks","Iron","Stone","Gold"],0],
+
+["کدام بلوک از ترکیب دو Chest ساخته می‌شود؟",
+["Large Chest","Double Chest","Mega Chest","Big Chest"],0],
+
+["کدام آیتم برای ساخت Barrel استفاده می‌شود؟",
+["Planks + Slabs","Iron + Wood","Chest + Wood","Stone + Wood"],0],
+
+["کدام بلوک فضای ذخیره‌سازی دارد؟",
+["Chest","Dirt","Glass","Torch"],0],
+
+["کدام بلوک می‌تواند Shulker Box را نگه دارد و قابل حمل باشد؟",
+["Shulker Box","Chest","Barrel","Furnace"],0],
+
+["مزیت Shulker Box نسبت به Chest چیست؟",
+["با شکستن، محتویاتش حفظ می‌شود","بیشتر منفجر می‌شود","نور تولید می‌کند","خودکار آیتم می‌سازد"],0],
+
+["کدام ماده برای ساخت Shulker Box لازم است؟",
+["Shulker Shell + Chest","Ender Pearl + Chest","Purpur + Chest","Diamond + Chest"],0],
+
+["Shulker Shell از کجا می‌آید؟",
+["Shulker","Enderman","Ender Dragon","Vex"],0],
+
+["کدام موجود در End City قرار دارد و گلوله‌ای شلیک می‌کند که می‌تواند بازیکن را شناور کند؟",
+["Shulker","Ghast","Blaze","Vex"],0],
+
+["کدام Effect توسط Shulker ایجاد می‌شود؟",
+["Levitation","Poison","Wither","Blindness"],0],
+
+["کدام آیتم برای ساخت Ender Chest لازم است؟",
+["Obsidian + Eye of Ender","Obsidian + Diamond","Ender Pearl + Obsidian","Purpur + Eye"],0],
+
+["مزیت Ender Chest چیست؟",
+["موجودی شخصی مشترک بین Ender Chestها","ذخیره آیتم برای همه بازیکنان","انفجار نمی‌کند","خودکار آیتم می‌سازد"],0],
+
+["کدام بلوک با قرار گرفتن کنار آب و Lava می‌تواند Obsidian ایجاد کند؟",
+["آب روی Lava Source","Lava روی Lava","Water روی Stone","Rain روی Lava"],0],
+
+["کدام ماده با Lava و Water می‌تواند Cobblestone بسازد؟",
+["Water + flowing Lava","Water + Obsidian","Ice + Lava","Snow + Lava"],0],
+
+["کدام آیتم برای ساخت Bucket لازم است؟",
+["Iron Ingots","Gold","Copper","Stone"],0],
+
+["Bucket می‌تواند چه چیزی را حمل کند؟",
+["Water و Lava و بعضی مایعات","فقط Water","فقط Lava","فقط Milk"],0],
+
+["Milk Bucket چه کاری می‌کند؟",
+["Effectهای Potion را پاک می‌کند","Health را کامل می‌کند","XP می‌دهد","Armor می‌دهد"],0],
+
+["کدام حیوان Milk می‌دهد؟",
+["Cow","Sheep","Pig","Horse"],0],
+
+["کدام موجود تخم می‌گذارد؟",
+["Chicken","Cow","Pig","Horse"],0],
+
+["کدام آیتم برای ساخت Cake استفاده می‌شود؟",
+["Milk + Sugar + Egg + Wheat","Milk + Gold","Wheat + Diamond","Egg + Iron"],0],
+
+["کدام ماده برای ساخت Bread لازم است؟",
+["Wheat","Sugar","Potato","Carrot"],0],
+
+["کدام غذا می‌تواند بازیکن را مسموم کند؟",
+["Rotten Flesh","Bread","Steak","Golden Apple"],0],
+
+["Golden Apple از چه چیزی ساخته می‌شود؟",
+["Apple + Gold Ingots","Apple + Gold Nuggets","Apple + Diamond","Apple + Emerald"],0],
+
+["Enchanted Golden Apple چه نام معروفی دارد؟",
+["Notch Apple","God Apple","Golden Core","Dragon Apple"],0],
+
+["کدام غذا Saturation بالایی دارد؟",
+["Golden Carrot","Cookie","Melon","Bread"],0],
+
+["کدام آیتم برای Night Vision استفاده می‌شود؟",
+["Golden Carrot","Golden Apple","Carrot","Glowstone"],0],
+
+["کدام Potion سرعت را افزایش می‌دهد؟",
+["Swiftness","Strength","Regeneration","Harming"],0],
+
+["کدام ماده برای Swiftness Potion استفاده می‌شود؟",
+["Sugar","Rabbit Foot","Magma Cream","Blaze Powder"],0],
+
+["کدام Potion قدرت حمله را افزایش می‌دهد؟",
+["Strength","Swiftness","Harming","Poison"],0],
+
+["کدام ماده برای Strength Potion استفاده می‌شود؟",
+["Blaze Powder","Sugar","Magma Cream","Spider Eye"],0],
+
+["کدام Potion باعث آسیب مستقیم به موجود می‌شود؟",
+["Harming","Healing","Strength","Night Vision"],0],
+
+["کدام ماده برای تبدیل Healing به Harming کاربرد دارد؟",
+["Fermented Spider Eye","Sugar","Magma Cream","Blaze Powder"],0],
+
+["کدام Potion می‌تواند سلامتی را بازیابی کند؟",
+["Healing","Poison","Harming","Weakness"],0],
+
+["کدام ماده برای Healing Potion مهم است؟",
+["Glistering Melon Slice","Golden Carrot","Sugar","Rabbit Foot"],0],
+
+["کدام Potion سرعت سقوط را کاهش می‌دهد؟",
+["Slow Falling","Slowness","Feather","Resistance"],0],
+
+["کدام ماده برای Slow Falling استفاده می‌شود؟",
+["Phantom Membrane","Feather","Sugar","Rabbit Foot"],0],
+
+["کدام Potion باعث Poison می‌شود؟",
+["Poison","Harming","Weakness","Slowness"],0],
+
+["کدام ماده برای Poison Potion استفاده می‌شود؟",
+["Spider Eye","Fermented Spider Eye","Sugar","Magma Cream"],0],
+
+["کدام موجود Spider Eye می‌اندازد؟",
+["Spider","Creeper","Zombie","Skeleton"],0],
+
+["کدام موجود String می‌اندازد؟",
+["Spider","Cow","Pig","Zombie"],0],
+
+["کدام آیتم برای ساخت Fishing Rod لازم است؟",
+["Stick + String","Iron + String","Wood + Leather","Stick + Leather"],0],
+
+["کدام آیتم برای ساخت Bow لازم است؟",
+["Stick + String","Iron + String","Wood + String","Leather + Stick"],0],
+
+["کدام آیتم برای ساخت Arrow لازم است؟",
+["Flint + Stick + Feather","Iron + Stick","Stone + Feather","Coal + Stick"],0],
+
+["Flint معمولاً از شکستن چه چیزی به دست می‌آید؟",
+["Gravel","Sand","Stone","Dirt"],0],
+
+["کدام آیتم برای ساخت Torch لازم است؟",
+["Stick + Coal/Charcoal","Stick + Iron","Coal + Stone","Wood + Iron"],0],
+
+["کدام بلوک نور زیادی می‌دهد و در Nether هم پیدا می‌شود؟",
+["Glowstone","Stone","Netherrack","Soul Sand"],0],
+
+["کدام بلوک در Nether بسیار رایج است؟",
+["Netherrack","Dirt","Granite","Sand"],0],
+
+["کدام ماده در Nether برای ساخت Glass-like blocks کاربرد دارد؟",
+["Quartz","Diamond","Iron","Emerald"],0],
+
+["Nether Quartz Ore در کجا پیدا می‌شود؟",
+["Nether","End","Overworld","Ancient City"],0],
+
+["کدام Ore ارزشمند و کمیاب در Overworld است؟",
+["Diamond","Coal","Copper","Iron"],0],
+
+["Diamond Ore در لایه‌های عمیق Overworld بیشتر دیده می‌شود؟",
+["بله","خیر، فقط سطح زمین","فقط Nether","فقط End"],0],
+
+["کدام Ore برای ساخت Armor و Tools معمولی استفاده می‌شود؟",
+["Iron","Dirt","Clay","Sand"],0],
+
+["کدام Ore برای ساخت Redstone Componentها استفاده می‌شود؟",
+["Redstone Ore","Coal Ore","Copper Ore","Quartz Ore"],0],
+
+["کدام Ore برای ساخت Emerald استفاده می‌شود؟",
+["Emerald Ore","Diamond Ore","Gold Ore","Copper Ore"],0],
+
+["Emerald بیشتر برای چه چیزی استفاده می‌شود؟",
+["Trade با Villager","ساخت Sword","ساخت Portal","ساخت Potion"],0],
+
+["کدام Villager معمولاً Emerald در ازای Crop می‌دهد؟",
+["Farmer","Librarian","Armorer","Butcher"],0],
+
+["کدام آیتم برای Trading با Villager کاربرد اصلی دارد؟",
+["Emerald","Diamond","Iron Block","Quartz"],0],
+
+["کدام روستا در Desert ممکن است ساخته شود؟",
+["Desert Village","Jungle Village","Nether Village","End Village"],0],
+
+["کدام سازه در Desert پیدا می‌شود؟",
+["Desert Pyramid","Ocean Monument","Woodland Mansion","Ancient City"],0],
+
+["در مرکز Desert Pyramid چه خطری وجود دارد؟",
+["TNT Trap","Lava Boss","Creeper Spawner","Warden"],0],
+
+["کدام سازه در Jungle می‌تواند پیدا شود؟",
+["Jungle Temple","Ocean Monument","Mansion","Bastion"],0],
+
+["کدام سازه در Ocean پیدا می‌شود؟",
+["Shipwreck","Village","Mansion","Stronghold"],0],
+
+["Shipwreck می‌تواند چه چیزی داشته باشد؟",
+["Treasure Map","End Portal","Nether Star","Elytra"],0],
+
+["کدام سازه در Taiga می‌تواند ساخته شود؟",
+["Taiga Village","Desert Temple","Ocean Monument","Bastion"],0],
+
+["کدام سازه دارای Illagerها و Totem است؟",
+["Woodland Mansion","Village","Stronghold","Shipwreck"],0],
+
+["کدام سازه دارای Guardian است؟",
+["Ocean Monument","Stronghold","Mansion","Temple"],0],
+
+["کدام سازه دارای Shulker است؟",
+["End City","Village","Bastion","Fortress"],0],
+
+["کدام سازه دارای Blaze است؟",
+["Nether Fortress","Bastion","End City","Ancient City"],0],
+
+["کدام سازه برای پیدا کردن Wither Skeleton مهم است؟",
+["Nether Fortress","Village","Stronghold","Monument"],0],
+
+["Wither Skeleton چه چیزی می‌تواند بیندازد؟",
+["Wither Skeleton Skull","Nether Star","Dragon Egg","Echo Shard"],0],
+
+["برای احضار Wither چند Wither Skeleton Skull لازم است؟",
+["3","2","4","5"],0],
+
+["برای احضار Wither از چه بلوکی استفاده می‌شود؟",
+["Soul Sand/Soul Soil","Netherrack","Blackstone","Obsidian"],0],
+
+["Wither چه نوع باس است؟",
+["Undead Boss","Aquatic Boss","End Boss","Villager Boss"],0],
+
+["کدام باس با Nether Star مرتبط است؟",
+["Wither","Ender Dragon","Warden","Elder Guardian"],0],
+
+["کدام باس Dragon Egg می‌دهد؟",
+["Ender Dragon","Wither","Warden","Ravager"],0],
+
+["Dragon Egg معمولاً کجا ظاهر می‌شود؟",
+["بالای خروجی End Portal پس از شکست Dragon","Nether","Stronghold","End City"],0],
+
+["کدام آیتم برای ساخت Respawn Anchor استفاده نمی‌شود؟",
+["Glowstone","Crying Obsidian","Diamond","هیچ‌کدام"],0],
+
+["Crying Obsidian بیشتر در چه چیزی دیده می‌شود؟",
+["Ruined Portal","Village","Stronghold","End City"],0],
+
+["Ruined Portal در کجاها می‌تواند ظاهر شود؟",
+["Overworld و Nether","فقط End","فقط Ocean","فقط Ancient City"],0],
+
+["کدام آیتم می‌تواند Ruined Portal را روشن کند؟",
+["Flint and Steel","Compass","Torch","Redstone"],0],
+
+["کدام بلوک برای ساخت Netherite تجهیزات استفاده می‌شود؟",
+["Smithing Table","Enchanting Table","Anvil","Grindstone"],0],
+
+["کدام Template برای ارتقای Netherite استفاده می‌شود؟",
+["Netherite Upgrade","Armor Trim","Diamond Upgrade","Ancient Upgrade"],0],
+
+["Armor Trim برای چه کاری است؟",
+["تزئین زره","افزایش Health","افزایش Damage","Enchant خودکار"],0],
+
+["Trim Smithing Templateها قابل تکثیر هستند؟",
+["بله، با مواد مشخص","خیر، هرگز","فقط با Diamond","فقط در Nether"],0],
+
+["کدام ماده می‌تواند رنگ Trim را تعیین کند؟",
+["مواد مختلف مانند Gold یا Diamond","فقط Iron","فقط Wood","فقط Redstone"],0],
+
+["کدام بلوک در Ancient City برای تزئین بسیار رایج است؟",
+["Deepslate","Sand","Quartz","Purpur"],0],
+
+["Deep Dark بیشتر در چه عمقی پیدا می‌شود؟",
+["زیر زمین عمیق","روی کوه","در Nether","روی Ocean"],0],
+
+["کدام موجود می‌تواند بدون دید مستقیم خطرناک باشد و با صدا/لرزش واکنش نشان دهد؟",
+["Warden","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای جلوگیری از فعال شدن بعضی Sculk Sensorها کاربرد دارد؟",
+["Wool","Iron","Glass","Stone"],0],
+
+["Wool در Ancient City چه کاربردی دارد؟",
+["کاهش انتقال بعضی لرزش‌ها","ساخت Portal","ساخت Potion","ساخت Diamond"],0],
+
+["کدام بلوک در Redstone می‌تواند سیگنال را تقویت کند؟",
+["Repeater","Chest","Furnace","Piston"],0],
+
+["Comparator برای چه چیزی می‌تواند استفاده شود؟",
+["خواندن/مقایسه قدرت سیگنال","ساخت Armor","پخت غذا","ساخت Portal"],0],
+
+["کدام آیتم می‌تواند Redstone Signal تولید کند؟",
+["Lever","Stick","Leather","Feather"],0],
+
+["کدام بلوک با Lever قابل فعال شدن است؟",
+["Redstone Lamp","Dirt","Sand","Glass"],0],
+
+["کدام ابزار برای استخراج سریع‌تر چوب مناسب است؟",
+["Axe","Pickaxe","Shovel","Hoe"],0],
+
+["کدام ابزار برای خاک و Sand مناسب‌تر است؟",
+["Shovel","Axe","Pickaxe","Sword"],0],
+
+["کدام ابزار برای Crop و بعضی بلوک‌های گیاهی استفاده می‌شود؟",
+["Hoe","Axe","Sword","Pickaxe"],0],
+
+["کدام ابزار برای سنگ مناسب است؟",
+["Pickaxe","Axe","Hoe","Shovel"],0],
+
+["کدام ابزار بیشترین کاربرد را در مبارزه دارد؟",
+["Sword","Hoe","Shovel","Pickaxe"],0],
+
+["کدام ابزار در مبارزه نیز می‌تواند آسیب زیادی بزند؟",
+["Axe","Hoe","Shovel","Shears"],0],
+
+["Shears بیشتر برای چه کاری استفاده می‌شود؟",
+["جمع‌آوری بعضی بلوک‌های گیاهی و پشم","ساخت Diamond","Enchant","ساخت Potion"],0],
+
+["کدام آیتم برای گرفتن Honey از Bee Nest استفاده می‌شود؟",
+["Shears","Sword","Axe","Bucket فقط"],0],
+
+["برای گرفتن Honey بدون عصبانی کردن زنبورها چه چیزی کمک می‌کند؟",
+["Campfire","Torch","Lava","Redstone"],0],
+
+["Honey Bottle چه کاری می‌تواند انجام دهد؟",
+["رفع Poison و تغذیه","ساخت Diamond","ساخت Netherite","Enchant"],0],
+
+["Bee می‌تواند کجا زندگی کند؟",
+["Bee Nest / Beehive","Stronghold","End City","Bastion"],0],
+
+["Bee با چه چیزی تکثیر می‌شود؟",
+["Flower","Wheat","Seeds","Sugar"],0],
+
+["کدام موجود می‌تواند با گل‌ها ارتباط داشته باشد؟",
+["Bee","Cow","Pig","Zombie"],0],
+
+["کدام بلوک محل مصنوعی زنبورهاست؟",
+["Beehive","Bee Box","Honey Chest","Hive Block"],0],
+
+["کدام ماده برای ساخت Beehive استفاده می‌شود؟",
+["Honeycomb + Planks","Honey Bottle + Wood","Wax + Iron","Flower + Wood"],0],
+
+["Honeycomb از کجا به دست می‌آید؟",
+["Bee Nest/Beehive","Chest","Village","Mansion"],0],
+
+["کدام بلوک از Honeycomb ساخته می‌شود؟",
+["Honeycomb Block","Honey Stone","Honey Brick","Honey Glass"],0],
+
+["کدام بلوک لغزنده است؟",
+["Honey Block","Stone","Dirt","Iron"],0],
+
+["Slime Block و Honey Block در Redstone برای چه چیزی مشهورند؟",
+["حرکت دادن ساختارها و ماشین‌ها","پخت غذا","ساخت Potion","ساخت Portal"],0],
+
+["کدام موجود در جنگل می‌تواند روی درختان زندگی کند؟",
+["Parrot","Cow","Pig","Axolotl"],0],
+
+["Parrot با چه چیزی اهلی می‌شود؟",
+["Seeds","Wheat","Fish","Bone"],0],
+
+["کدام موجود می‌تواند صداهای موجودات دیگر را تقلید کند؟",
+["Parrot","Cat","Wolf","Fox"],0],
+
+["کدام موجود در Snow Biome پیدا می‌شود و می‌تواند دنبال بازیکن راه برود؟",
+["Goat","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای جلوگیری از یخ‌زدگی آب به کار می‌رود؟",
+["Torch / Light","Stone","Dirt","Sand"],0],
+
+["کدام بلوک وقتی زیرش Soul Sand باشد می‌تواند Bubble Column ایجاد کند؟",
+["Water","Lava","Ice","Honey"],0],
+
+["Soul Sand Bubble Column چه کاری می‌کند؟",
+["بازیکن را به بالا می‌برد","بازیکن را می‌کشد","بازیکن را نامرئی می‌کند","بازیکن را Teleport می‌کند"],0],
+
+["Magma Block در Bubble Column چه کاری می‌کند؟",
+["بازیکن را به پایین می‌کشد","بازیکن را بالا می‌برد","بازیکن را نامرئی می‌کند","هیچ کاری"],0],
+
+["کدام بلوک در زیر آب نور می‌دهد؟",
+["Sea Lantern","Stone","Dirt","Sand"],0],
+
+["Sea Lantern از کجا به دست می‌آید؟",
+["Ocean Monument","Village","Nether Fortress","End City"],0],
+
+["Prismarine بیشتر با کدام سازه مرتبط است؟",
+["Ocean Monument","Stronghold","Mansion","Bastion"],0],
+
+["کدام موجود از Ocean Monument محافظت می‌کند؟",
+["Guardian","Vindicator","Pillager","Evoker"],0],
+
+["کدام Effect توسط Elder Guardian ایجاد می‌شود؟",
+["Mining Fatigue","Poison","Wither","Slowness"],0],
+
+["برای ساخت Milk Bucket چه چیزی لازم است؟",
+["Bucket + Cow","Iron + Cow","Bucket + Wheat","Bucket + Goat"],0],
+
+["کدام موجود می‌تواند شیر بدهد؟",
+["Cow","Pig","Chicken","Rabbit"],0],
+
+["کدام حیوان پشم می‌دهد؟",
+["Sheep","Cow","Pig","Chicken"],0],
+
+["Shears برای Sheep چه کاری می‌کند؟",
+["پشم جمع می‌کند","آن را می‌کشد","آن را اهلی می‌کند","آن را نامرئی می‌کند"],0],
+
+["کدام رنگ از Dyeها از Bone Meal ساخته می‌شود؟",
+["White","Black","Blue","Red"],0],
+
+["کدام ماده برای Black Dye استفاده می‌شود؟",
+["Ink Sac","Bone Meal","Lapis","Cactus"],0],
+
+["کدام ماده برای Green Dye استفاده می‌شود؟",
+["Cactus","Rose","Lapis","Ink Sac"],0],
+
+["کدام ماده برای Blue Dye استفاده می‌شود؟",
+["Lapis Lazuli","Cactus","Ink Sac","Bone Meal"],0],
+
+["کدام ماده برای Red Dye استفاده می‌شود؟",
+["Poppy/Red Flower","Lapis","Cactus","Ink Sac"],0],
+
+["کدام ماده برای Purple Dye ساخته می‌شود؟",
+["Red + Blue Dye","Green + White","Black + Yellow","Blue + White"],0],
+
+["کدام آیتم برای رنگ کردن Leather Armor استفاده می‌شود؟",
+["Dye","Iron","Gold","Quartz"],0],
+
+["کدام بلوک برای ساخت Banner Pattern استفاده می‌شود؟",
+["Loom","Anvil","Grindstone","Furnace"],0],
+
+["کدام آیتم برای ساخت Sign استفاده می‌شود؟",
+["Planks + Stick","Iron + Stick","Stone + Stick","Paper + Stick"],0],
+
+["کدام بلوک برای ساخت Bookcase استفاده می‌شود؟",
+["Bookshelves","Books","Wood only","Paper"],0],
+
+["Bookshelf از چه چیزی ساخته می‌شود؟",
+["Books + Planks","Paper + Planks","Leather + Planks","Books + Stone"],0],
+
+["کدام آیتم برای Enchant کردن نیاز است؟",
+["Experience Levels","Emerald فقط","Diamond فقط","Gold فقط"],0],
+
+["Enchanting Table چه چیزی مصرف می‌کند؟",
+["XP و Lapis Lazuli","Emerald و Gold","Diamond و XP","Coal و Iron"],0],
+
+["Lapis Lazuli بیشتر در چه کاری استفاده می‌شود؟",
+["Enchanting","ساخت Portal","ساخت Netherite","ساخت Elytra"],0],
+
+["کدام ماده برای ساخت Diamond Pickaxe لازم است؟",
+["3 Diamond + 2 Sticks","2 Diamond + 3 Sticks","5 Diamond","3 Diamond + Iron"],0],
+
+["کدام ابزار می‌تواند Obsidian را استخراج کند؟",
+["Diamond/Netherite Pickaxe","Wood Pickaxe","Stone Pickaxe","Gold Axe"],0],
+
+["کدام Pickaxe برای Diamond Ore مناسب است؟",
+["Iron یا بهتر","Stone","Wood","Gold Axe"],0],
+
+["کدام Ore را می‌توان با Stone Pickaxe استخراج کرد؟",
+["Iron Ore","Diamond Ore","Gold Ore","Emerald Ore"],0],
+
+["کدام Ore نیازمند Iron Pickaxe یا بهتر است؟",
+["Diamond Ore","Coal Ore","Stone","Copper"],0],
+
+["کدام ماده برای ساخت Gold Armor استفاده می‌شود؟",
+["Gold Ingots","Gold Nuggets","Gold Blocks","Gold Ore"],0],
+
+["کدام Armor در برابر Piglin کمک می‌کند؟",
+["Gold Armor","Iron Armor","Leather Armor","Chainmail فقط"],0],
+
+["کدام Armor بهترین سطح پایه را در Survival دارد؟",
+["Netherite","Diamond","Iron","Gold"],0],
+
+["Netherite Armor نسبت به Diamond چه ویژگی مهمی دارد؟",
+["قوی‌تر و مقاوم‌تر است","ضعیف‌تر است","فقط زیباتر است","فقط ضدآب است"],0],
+
+["کدام آیتم برای ساخت Netherite Armor به Diamond Armor نیاز دارد؟",
+["Netherite Upgrade Template + Netherite Ingot","Gold فقط","Iron فقط","Nether Star"],0],
+
+["کدام ماده باعث Knockback کمتر در Netherite می‌شود؟",
+["ویژگی Knockback Resistance","Gold","Iron","Obsidian"],0],
+
+["کدام غذا بیشترین کاربرد برای پر کردن Hunger دارد؟",
+["Steak","Cookie","Melon Slice","Sweet Berries"],0],
+
+["کدام غذا معمولاً Saturation بالاتری دارد؟",
+["Golden Carrot","Cookie","Bread","Melon"],0],
+
+["کدام غذا می‌تواند اثر خاصی داشته باشد؟",
+["Golden Apple","Bread","Potato","Carrot"],0],
+
+["کدام آیتم هنگام خوردن می‌تواند Absorption بدهد؟",
+["Golden Apple","Bread","Steak","Cookie"],0],
+
+["کدام Effect از Golden Apple می‌تواند حاصل شود؟",
+["Absorption","Mining Fatigue","Levitation","Conduit Power فقط"],0],
+
+["کدام آیتم برای خواب استفاده می‌شود؟",
+["Bed","Chest","Boat","Campfire"],0],
+
+["Bed در Nether چه اتفاقی می‌تواند ایجاد کند؟",
+["انفجار","Portal","Snow","هیچ اتفاقی"],0],
+
+["Bed در End چه اتفاقی می‌تواند ایجاد کند؟",
+["انفجار","آب","Portal","هیچ اتفاقی"],0],
+
+["کدام آیتم Spawn Point را تنظیم می‌کند؟",
+["Bed","Chest","Compass","Anchor فقط"],0],
+
+["Respawn Anchor برای چه کاری در Nether استفاده می‌شود؟",
+["تنظیم Spawn","ساخت Portal","ساخت Beacon","Enchant"],0],
+
+["کدام آیتم می‌تواند با Lodestone Compass کار کند؟",
+["Lodestone","Bed","Beacon","Chest"],0],
+
+["کدام بلوک در Village برای ساخت مسیرهای خاص استفاده می‌شود؟",
+["Path Block","Dirt Path","Grass Path","همه موارد بسته به نسخه"],3],
+
+["کدام موجود می‌تواند زنگ Village را به صدا درآورد؟",
+["بازیکن","فقط Villager","فقط Iron Golem","هیچ‌کس"],0],
+
+["Bell در Village چه کاربردی دارد؟",
+["علامت/هشدار و جمع شدن Villagerها","ساخت Iron","ساخت Portal","Enchant"],0],
+
+["Iron Golem معمولاً از Village محافظت می‌کند؟",
+["بله","خیر","فقط در Nether","فقط در End"],0],
+
+["Iron Golem را می‌توان با چه ساختاری ساخت؟",
+["Iron Blocks + Carved Pumpkin","Iron + Diamond","Iron + Emerald","Stone + Pumpkin"],0],
+
+["Snow Golem با چه چیزی ساخته می‌شود؟",
+["Snow Blocks + Carved Pumpkin","Snow + Iron","Ice + Pumpkin","Snow + Diamond"],0],
+
+["Snow Golem بیشتر چه چیزی پرتاب می‌کند؟",
+["Snowballs","Ice Balls","Arrows","Fireballs"],0],
+
+["کدام موجود معمولاً دشمن Snow Golem است؟",
+["Blaze","Cow","Chicken","Sheep"],0],
+
+["کدام موجود با Pumpkin روی سر ممکن است از Enderman جلوگیری کند؟",
+["Enderman","Creeper","Zombie","Spider"],0],
+
+["Carved Pumpkin چگونه ساخته می‌شود؟",
+["با Shears روی Pumpkin","با Axe","با Sword","با Furnace"],0],
+
+["کدام بلوک برای ساخت Pumpkin Pie استفاده می‌شود؟",
+["Pumpkin + Sugar + Egg","Pumpkin + Wheat","Pumpkin + Milk","Pumpkin + Gold"],0],
+
+["کدام گیاه در Swamp برای ساخت خاصی کاربرد دارد؟",
+["Sugar Cane","Cactus","Bamboo","Kelp"],0],
+
+["کدام گیاه در Desert می‌تواند پیدا شود؟",
+["Cactus","Sugar Cane","Bamboo","Kelp"],0],
+
+["کدام گیاه برای ساخت Bamboo Wood استفاده می‌شود؟",
+["Bamboo","Sugar Cane","Cactus","Kelp"],0],
+
+["Bamboo بیشتر در کدام Biome دیده می‌شود؟",
+["Jungle","Desert","Ice Plains","Nether"],0],
+
+["کدام بلوک برای ساخت Scaffolding استفاده می‌شود؟",
+["Bamboo + String","Wood + String","Iron + Bamboo","Bamboo + Wool"],0],
+
+["Scaffolding برای چه کاری کاربرد دارد؟",
+["ساخت سریع سازه و بالا رفتن","Enchant","Potion","Mining"],0],
+
+["کدام آیتم برای ساخت Campfire Soul استفاده می‌شود؟",
+["Soul Sand/Soul Soil","Glowstone","Quartz","Blackstone"],0],
+
+["Soul Campfire چه ویژگی دارد؟",
+["نور و شعله آبی","شعله قرمز","بدون نور","انفجار"],0],
+
+["کدام ماده برای ساخت Blue Fire مرتبط است؟",
+["Soul Soil/Soul Sand","Water","Ice","Blue Wool"],0],
+
+["کدام آیتم می‌تواند رنگ چراغ را در Soul Fire ایجاد کند؟",
+["Soul Sand/Soul Soil","Lapis","Blue Dye","Water"],0],
+
+["کدام بلوک می‌تواند آب را منجمد کند؟",
+["در شرایط مناسب Ice","Stone","Glass","Dirt"],0],
+
+["Frost Walker روی کدام قطعه است؟",
+["Boots","Helmet","Chestplate","Leggings"],0],
+
+["Frost Walker چه کاری می‌کند؟",
+["یخ کردن آب زیر پا","راه رفتن روی Lava","پرواز","دویدن سریع"],0],
+
+["کدام Enchantment با Frost Walker ناسازگار است؟",
+["Depth Strider","Protection","Unbreaking","Mending"],0],
+
+["کدام Enchantment باعث برگشت Trident می‌شود؟",
+["Loyalty","Riptide","Channeling","Impaling"],0],
+
+["Channeling چه کاری می‌تواند انجام دهد؟",
+["در شرایط مناسب رعد و برق احضار کند","آتش روشن کند","آب را منجمد کند","بازیکن را Heal کند"],0],
+
+["Impaling روی چه سلاحی است؟",
+["Trident","Sword","Bow","Crossbow"],0],
+
+["کدام Enchantment آسیب Trident را علیه موجودات خاص افزایش می‌دهد؟",
+["Impaling","Sharpness","Power","Smite"],0],
+
+["Smite برای چه نوع دشمنانی مناسب است؟",
+["Undead","Arthropods","Aquatic فقط","Villagers"],0],
+
+["Bane of Arthropods برای چه موجوداتی است؟",
+["Spider و موجودات Arthropod","Zombie","Skeleton","Piglin"],0],
+
+["Knockback چه کاری می‌کند؟",
+["دشمن را بیشتر عقب می‌راند","Damage را دو برابر می‌کند","Armor می‌دهد","سرعت بازیکن را زیاد می‌کند"],0],
+
+["Sweeping Edge مربوط به چیست؟",
+["آسیب حمله Sweep شمشیر","Bow","Trident","Shield"],0],
+
+["Shield می‌تواند در برابر چه چیزی مفید باشد؟",
+["برخی حملات و پرتابه‌ها","فقط Lava","فقط Fall Damage","هیچ‌چیز"],0],
+
+["کدام ماده برای ساخت Shield به کار می‌رود؟",
+["Iron + Planks","Diamond + Wood","Gold + Wood","Stone + Iron"],0],
+
+["کدام آیتم برای ساخت Armor Stand استفاده می‌شود؟",
+["Sticks + Stone Slab","Iron + Wood","Leather + Stick","Stone + Iron"],0],
+
+["Armor Stand برای چه کاری است؟",
+["نمایش زره","Enchant","ساخت Armor","ذخیره XP"],0],
+
+["کدام آیتم برای ساخت Item Frame لازم است؟",
+["Stick + Leather","Wood + Glass","Iron + Leather","Paper + Stick"],0],
+
+["Item Frame برای چه کاری است؟",
+["نمایش آیتم","ذخیره XP","ساخت Potion","ساخت Portal"],0],
+
+["Glow Item Frame چه مزیتی دارد؟",
+["آیتم را روشن‌تر/درخشان نمایش می‌دهد","آیتم را تکثیر می‌کند","آیتم را Enchant می‌کند","آیتم را می‌خورد"],0],
+
+["کدام آیتم برای Glow Item Frame استفاده می‌شود؟",
+["Glow Ink Sac","Glowstone","Torch","Amethyst"],0],
+
+["Glow Ink Sac از کدام موجود می‌آید؟",
+["Glow Squid","Squid","Guardian","Axolotl"],0],
+
+["کدام موجود در آب زندگی می‌کند و Ink Sac می‌اندازد؟",
+["Squid","Cow","Bat","Chicken"],0],
+
+["کدام موجود می‌تواند روی زمین و آب حرکت کند؟",
+["Frog","Squid","Fish","Guardian"],0],
+
+["Frog با چه چیزی می‌تواند تکثیر شود؟",
+["Slimeball","Wheat","Seeds","Fish"],0],
+
+["Frog در کدام مکان می‌تواند پیدا شود؟",
+["Swamp/Mangrove Swamp","Desert","Nether","End"],0],
+
+["Froglight توسط چه چیزی مرتبط است؟",
+["Frog و Magma Cube interaction","Warden","Ghast","Guardian"],0],
+
+["Mangrove Swamp دارای چه درختی است؟",
+["Mangrove","Oak","Spruce","Jungle"],0],
+
+["کدام حیوان در Mangrove Swamp دیده می‌شود؟",
+["Frog","Polar Bear","Goat","Rabbit"],0],
+
+["کدام ماده از Mangrove Propagule به دست می‌آید؟",
+["Mangrove Tree","Oak","Bamboo","Birch"],0],
+
+["کدام Biome در Nether دارای قارچ‌های Crimson است؟",
+["Crimson Forest","Warped Forest","Soul Sand Valley","Basalt Deltas"],0],
+
+["کدام Biome در Nether آبی‌رنگ‌تر است؟",
+["Warped Forest","Crimson Forest","Soul Sand Valley","Basalt Deltas"],0],
+
+["Basalt Deltas دارای چه بلوکی است؟",
+["Basalt","Grass","Sand","Prismarine"],0],
+
+["کدام موجود در Warped Forest کمتر از بعضی Nether Biomeها دیده می‌شود؟",
+["Enderman","Piglin","Cow","Guardian"],0],
+
+["کدام موجود در Soul Sand Valley زیاد دیده می‌شود؟",
+["Skeleton","Cow","Pig","Villager"],0],
+
+["کدام Biome Nether دارای Soul Soil است؟",
+["Soul Sand Valley","Crimson Forest","Warped Forest","Basalt Deltas"],0],
+
+["کدام ساختار Nether دارای Piglin و گنج‌های مختلف است؟",
+["Bastion Remnant","Village","End City","Stronghold"],0],
+
+["کدام آیتم می‌تواند در Bastion بسیار ارزشمند باشد؟",
+["Ancient Debris/Gold","Dragon Egg","Elytra","Totem"],0],
+
+["کدام موجود با Netherite/Gold ارتباط دارد؟",
+["Piglin","Cow","Chicken","Villager"],0],
+
+["Piglin Brute چه ویژگی دارد؟",
+["خطرناک‌تر و معمولاً خصمانه است","اهلی می‌شود","فقط در Overworld است","پرواز می‌کند"],0],
+
+["کدام موجود می‌تواند در Nether سوار Strider شود؟",
+["Zombie Piglin/Piglin در شرایط مناسب","Cow","Villager","Guardian"],0],
+
+["کدام آیتم برای عبور از Lava با Strider استفاده می‌شود؟",
+["Warped Fungus on a Stick","Boat","Elytra","Lead"],0],
+
+["کدام وسیله در Lava قابل استفاده است؟",
+["Strider","Boat","Minecart","Horse"],0],
+
+["کدام موجود در Lava نمی‌سوزد؟",
+["Strider","Cow","Chicken","Sheep"],0],
+
+["کدام بلوک در Nether Portal دیده می‌شود؟",
+["Obsidian","Purpur","End Stone","Prismarine"],0],
+
+["کدام بلوک در End بسیار رایج است؟",
+["End Stone","Netherrack","Blackstone","Quartz"],0],
+
+["کدام بلوک در End City رایج است؟",
+["Purpur","Netherrack","Quartz","Prismarine"],0],
+
+["کدام موجود در End City پرواز نمی‌کند اما خطرناک است؟",
+["Shulker","Cow","Pig","Chicken"],0],
+
+["کدام آیتم برای شناور کردن بازیکن توسط Shulker استفاده می‌شود؟",
+["Levitation Effect","Potion","Arrow","Pearl"],0],
+
+["کدام آیتم برای ساخت Ender Pearl استفاده نمی‌شود؟",
+["هیچ آیتمی؛ Ender Pearl Drop است","Diamond","Gold","Quartz"],0],
+
+["Ender Pearl از کدام موجود می‌تواند به دست آید؟",
+["Enderman","Warden","Ghast","Blaze"],0],
+
+["Ender Pearl برای چه کاری کاربرد دارد؟",
+["Teleport","Enchant","Potion","ساخت Sword"],0],
+
+["کدام آیتم با Ender Pearl و Blaze Powder ساخته می‌شود؟",
+["Eye of Ender","End Crystal","End Rod","End Stone"],0],
+
+["End Rod در کجا دیده می‌شود؟",
+["End City","Village","Nether Fortress","Stronghold"],0],
+
+["End Rod نور تولید می‌کند؟",
+["بله","خیر","فقط در Nether","فقط هنگام باران"],0],
+
+["کدام بلوک در End City برای ساخت استفاده شده است؟",
+["Purpur","Quartz","Blackstone","Netherrack"],0],
+
+["کدام آیتم برای ساخت Purple Dye استفاده می‌شود؟",
+["Red + Blue","Green + Red","Yellow + Blue","White + Black"],0],
+
+["کدام ماده برای ساخت Magenta Dye می‌تواند استفاده شود؟",
+["Purple + Pink/Red+Blue combinations","Black + White","Green + Blue","Brown + White"],0],
+
+["کدام آیتم برای ساخت Glass Pane استفاده می‌شود؟",
+["Glass","Sand + Iron","Quartz","Ice"],0],
+
+["Glass از چه چیزی ساخته می‌شود؟",
+["Sand در Furnace","Stone در Furnace","Clay در Furnace","Dirt در Furnace"],0],
+
+["کدام بلوک از Clay ساخته می‌شود؟",
+["Terracotta","Glass","Stone","Quartz"],0],
+
+["Terracotta را می‌توان با چه چیزی رنگ کرد؟",
+["Dye","Iron","Gold","Quartz"],0],
+
+["Concrete Powder با چه چیزی به Concrete تبدیل می‌شود؟",
+["آب","Lava","Fire","Snow"],0],
+
+["Concrete Powder از چه چیزی ساخته می‌شود؟",
+["Sand + Gravel + Dye","Stone + Dye","Clay + Dye","Glass + Dye"],0],
+
+["کدام بلوک برای ساخت Brick استفاده می‌شود؟",
+["Brick","Stone","Iron","Clay فقط"],0],
+
+["Brick از چه چیزی ساخته می‌شود؟",
+["Clay Ball پخته‌شده","Stone","Sand","Mud"],0],
+
+["Mud می‌تواند با چه چیزی تبدیل به Packed Mud شود؟",
+["Wheat","Sugar","Sand","Clay"],0],
+
+["Mud Brick از چه چیزی ساخته می‌شود؟",
+["Packed Mud","Stone","Clay","Sand"],0],
+
+["کدام بلوک در Mangrove Swamp زیاد دیده می‌شود؟",
+["Mud","Quartz","Snow","Prismarine"],0],
+
+["کدام ماده برای ساخت Mud استفاده می‌شود؟",
+["Water روی Dirt","Water روی Stone","Lava روی Dirt","Rain روی Sand"],0],
+
+["کدام آیتم برای ساخت Packed Ice استفاده می‌شود؟",
+["Ice","Snow","Water","Blue Ice"],0],
+
+["Blue Ice نسبت به Packed Ice چه ویژگی دارد؟",
+["لغزنده‌تر است","گرم‌تر است","نور می‌دهد","در Nether ساخته می‌شود"],0],
+
+["کدام وسیله روی Ice بسیار سریع حرکت می‌کند؟",
+["Boat","Horse","Minecart","Pig"],0],
+
+["کدام بلوک برای ساخت Beacon Base استفاده می‌شود؟",
+["Iron/Gold/Emerald/Diamond/Netherite Blocks","Stone فقط","Dirt","Glass"],0],
+
+["Beacon می‌تواند چند Effect اصلی انتخابی داشته باشد؟",
+["بسته به سطح و انتخاب بازیکن","هیچ","فقط Speed","فقط Haste"],0],
+
+["کدام آیتم Beacon را فعال می‌کند؟",
+["Nether Star","Diamond","Gold","Emerald"],0],
+
+["کدام بلوک می‌تواند Beacon را بپوشاند ولی نور آن عبور می‌کند؟",
+["Glass","Stone","Dirt","Obsidian"],0],
+
+["کدام آیتم برای ساخت Glass استفاده می‌شود؟",
+["Sand","Gravel","Clay","Stone"],0],
+
+["کدام Ore در Deep Slate شکل متفاوتی دارد؟",
+["Deepslate Diamond Ore","Grass Ore","Wood Ore","Glass Ore"],0],
+
+["Deepslate در چه عمقی بیشتر دیده می‌شود؟",
+["عمق‌های پایین‌تر Overworld","Nether","End","سطح آسمان"],0],
+
+["کدام بلوک جایگزین Stone در عمق‌های پایین است؟",
+["Deepslate","Blackstone","Basalt","End Stone"],0],
+
+["Blackstone بیشتر در کجا پیدا می‌شود؟",
+["Nether","Overworld","End","Ocean"],0],
+
+["Basalt بیشتر در کجا پیدا می‌شود؟",
+["Nether","End","Village","Stronghold"],0],
+
+["Polished Blackstone در کجا ساخته/پیدا می‌شود؟",
+["Nether","End City","Ocean","Village"],0],
+
+["کدام آیتم برای ساخت Lodestone استفاده می‌شود؟",
+["Netherite Ingot + Chiseled Stone Bricks","Diamond + Stone","Gold + Stone","Iron + Quartz"],0],
+
+["Lodestone برای چه چیزی کاربرد دارد؟",
+["لنگر کردن Compass","ساخت Portal","Enchant","ساخت Armor"],0],
+
+["کدام آیتم برای ساخت Compass لازم است؟",
+["Iron + Redstone","Gold + Redstone","Copper + Redstone","Diamond + Redstone"],0],
+
+["Compass معمولی در Nether چه رفتاری دارد؟",
+["می‌تواند سرگردان شود/جهت مشخص Overworld را نمی‌دهد","همیشه شمال را نشان می‌دهد","به End اشاره می‌کند","کار نمی‌کند ولی ثابت است"],0],
+
+["Clock در Nether چه مشکلی دارد؟",
+["زمان روز را درست نشان نمی‌دهد","می‌شکند","منفجر می‌شود","به Compass تبدیل می‌شود"],0],
+
+["کدام آیتم برای پیدا کردن خانه در Overworld مناسب است؟",
+["Compass/Lodestone Compass","Clock فقط","Torch","Shield"],0],
+
+["کدام آیتم برای ذخیره Spawn در Nether ساخته شده است؟",
+["Respawn Anchor","Bed","Lodestone","Beacon"],0],
+
+["کدام ماده برای ساخت Respawn Anchor لازم است؟",
+["Crying Obsidian + Glowstone","Obsidian + Diamond","Gold + Glowstone","Blackstone + Quartz"],0],
+
+["Crying Obsidian را می‌توان در چه چیزی پیدا کرد؟",
+["Ruined Portal و Bastion/Chestها بسته به نسخه","Village","End City","Stronghold"],0],
+
+["کدام بلوک برای ساخت Portal End استفاده نمی‌شود؟",
+["Obsidian","End Portal Frame","Eye of Ender","هیچ‌کدام"],0],
+
+["End Portal Frame در Survival به‌طور معمول ساخته می‌شود؟",
+["خیر","بله با Obsidian","بله با Diamond","بله با Stone"],0],
+
+["کدام آیتم داخل End Portal Frame قرار می‌گیرد؟",
+["Eye of Ender","Ender Pearl","Dragon Breath","Nether Star"],0],
+
+["کدام شرط برای فعال شدن End Portal لازم است؟",
+["تمام Frameهای لازم Eye داشته باشند","یک Eye کافی است","Obsidian لازم است","Beacon لازم است"],0],
+
+["کدام باس پس از شکست Ender Dragon دوباره قابل احضار است؟",
+["Ender Dragon","Warden","Guardian","Ravager"],0],
+
+["برای احضای دوباره Ender Dragon چه چیزی لازم است؟",
+["End Crystals","Nether Stars","Eyes of Ender","Dragon Eggs"],0],
+
+["چند End Crystal برای احیای Dragon لازم است؟",
+["4","2","6","8"],0],
+
+["کدام آیتم پس از Dragon Fight می‌تواند روی Portal ظاهر شود؟",
+["Dragon Egg","Elytra","Totem","Nether Star"],0],
+
+["کدام سازه پس از Dragon Fight با End Gateway قابل دسترسی است؟",
+["Outer End Islands","Nether","Stronghold","Village"],0],
+
+["End Gateway برای چه چیزی مفید است؟",
+["رسیدن به Outer End Islands","رفتن به Nether","ساخت Portal","Teleport به Village"],0],
+
+["کدام آیتم برای End Gateway پرتاب می‌شود؟",
+["Ender Pearl","Eye of Ender","Snowball","Arrow"],0],
+
+["کدام موجود می‌تواند در End City روی دیوار باشد؟",
+["Shulker","Spider","Zombie","Creeper"],0],
+
+["کدام آیتم از Shulker می‌تواند به دست آید؟",
+["Shulker Shell","Ender Eye","Purpur Core","Dragon Scale"],0],
+
+["کدام بلوک برای ساخت Shulker Box استفاده می‌شود؟",
+["Chest + Shulker Shell","Chest + Purpur","Chest + Ender Pearl","Chest + Diamond"],0],
+
+["Shulker Box وقتی شکسته شود چه اتفاقی برای محتویاتش می‌افتد؟",
+["حفظ می‌شوند","از بین می‌روند","به XP تبدیل می‌شوند","به Chest تبدیل می‌شوند"],0],
+
+["کدام آیتم برای ساخت Chest Minecart لازم است؟",
+["Minecart + Chest","Chest + Iron Block","Minecart + Wood","Chest + Rails"],0],
+
+["Minecart روی چه چیزی حرکت می‌کند؟",
+["Rails","Stone","Ice","Wood"],0],
+
+["Powered Rail با چه چیزی فعال می‌شود؟",
+["Redstone","Coal فقط","Iron","Gold"],0],
+
+["Activator Rail چه کاری می‌تواند انجام دهد؟",
+["فعال‌کردن بعضی رفتارهای Minecart","سرعت دادن به بازیکن","ساخت Portal","Enchant"],0],
+
+["Detector Rail چه چیزی را تشخیص می‌دهد؟",
+["Minecart روی Rail","Player","Redstone فقط","Water"],0],
+
+["کدام آیتم برای ساخت Rail لازم است؟",
+["Iron + Stick","Gold + Stick","Copper + Stick","Stone + Stick"],0],
+
+["کدام Rail برای سرعت دادن به Minecart استفاده می‌شود؟",
+["Powered Rail","Detector Rail","Activator Rail","Normal Rail"],0],
+
+["کدام آیتم برای ساخت Boat لازم است؟",
+["Planks","Iron","Stick","Leather"],0],
+
+["Boat روی چه چیزی حرکت می‌کند؟",
+["Water","Lava","Snow","Soul Sand"],0],
+
+["کدام حیوان می‌تواند داخل Boat قرار بگیرد؟",
+["بسیاری از موجودات","فقط Fish","فقط Cow","فقط Villager"],0],
+
+["کدام وسیله برای جابه‌جایی Villager کاربرد دارد؟",
+["Boat/Minecart","Shield","Elytra فقط","Fishing Rod"],0],
+
+["کدام آیتم Villager را نمی‌تواند مستقیم Teleport کند؟",
+["Boat","Minecart","Walking","Elytra"],0],
+
+["کدام بلوک برای تبدیل Zombie Villager به Villager استفاده می‌شود؟",
+["Weakness + Golden Apple","Strength + Apple","Healing + Gold","Night Vision + Apple"],0],
+
+["برای درمان Zombie Villager ابتدا چه Effectی لازم است؟",
+["Weakness","Strength","Speed","Fire Resistance"],0],
+
+["کدام آیتم Zombie Villager را درمان می‌کند؟",
+["Golden Apple","Apple","Golden Carrot","Enchanted Apple"],0],
+
+["کدام Villager تخفیف‌های خوبی پس از درمان می‌تواند داشته باشد؟",
+["Zombie Villager درمان‌شده","Cow","Pig","Wandering Trader"],0],
+
+["Wandering Trader معمولاً چه چیزی دارد؟",
+["Tradeهای خاص","End Portal","Nether Star","Elytra"],0],
+
+["Wandering Trader معمولاً چه حیواناتی همراه خود دارد؟",
+["Llama","Cow","Horse","Goat"],0],
+
+["کدام حیوان را می‌توان با Lead کشید؟",
+["Llama","Fish","Squid","Bat"],0],
+
+["Llama می‌تواند چه چیزی حمل کند؟",
+["Chest","Ender Chest","Shulker Box","Beacon"],0],
+
+["کدام آیتم برای تزئین Llama استفاده می‌شود؟",
+["Carpet","Banner فقط","Leather Armor","Iron Armor"],0],
+
+["کدام موجود می‌تواند Carpet روی خود داشته باشد؟",
+["Llama","Cow","Pig","Chicken"],0],
+
+["کدام حیوان با Golden Carrot یا Golden Apple پرورش داده می‌شود؟",
+["Horse/Donkey","Cow","Pig","Sheep"],0],
+
+["کدام موجود در Nether تخم‌گذاری طبیعی دارد؟",
+["Hoglin","Cow","Chicken","Horse"],0],
+
+["Hoglin با کدام قارچ از خود دور می‌شود؟",
+["Warped Fungus","Crimson Fungus","Brown Mushroom","Red Mushroom"],0],
+
+["کدام موجود با Crimson Fungus پرورش پیدا می‌کند؟",
+["Hoglin","Strider","Piglin","Ghast"],0],
+
+["Strider با چه چیزی پرورش پیدا می‌کند؟",
+["Warped Fungus","Crimson Fungus","Wheat","Carrot"],0],
+
+["کدام موجود در Nether می‌تواند به Piglin تبدیل شود؟",
+["Zombie Pigman/Zombified Piglin","Cow","Horse","Villager"],0],
+
+["کدام آیتم برای ساخت Fire Charge استفاده می‌شود؟",
+["Gunpowder + Blaze Powder + Coal","Iron + Coal","Gold + Blaze","Quartz + Coal"],0],
+
+["Fire Charge چه کاری می‌کند؟",
+["آتش ایجاد می‌کند","Portal می‌سازد","Potion می‌سازد","Enchant می‌کند"],0],
+
+["کدام آیتم می‌تواند TNT را روشن کند؟",
+["Flint and Steel / Fire","Compass","Map","Stick"],0],
+
+["کدام ماده برای ساخت Firework Star استفاده می‌شود؟",
+["Gunpowder + Dye","Paper + Dye","Iron + Dye","Glass + Dye"],0],
+
+["Firework Rocket با Elytra چه کاربردی دارد؟",
+["افزایش سرعت پرواز","افزایش Armor","Heal","Teleport"],0],
+
+["کدام آیتم برای پرواز با Elytra در Survival بسیار مهم است؟",
+["Firework Rocket","Snowball","Arrow","Ender Pearl"],0],
+
+["کدام Potion برای مقابله با سقوط در پرواز Elytra مفید است؟",
+["Slow Falling","Strength","Harming","Poison"],0],
+
+["کدام آیتم Phantom را دور نگه می‌دارد؟",
+["خوابیدن منظم","Torch","Shield","Milk"],0],
+
+["کدام موجود با خوابیدن بازیکن دوباره ظاهر نمی‌شود؟",
+["Phantom","Creeper","Zombie","Spider"],0],
+
+["کدام موجود در Night می‌تواند روی بازیکن بدون خواب ظاهر شود؟",
+["Phantom","Warden","Guardian","Ravager"],0],
+
+["کدام موجود در Snowy Biome می‌تواند تخم‌گذاری کند؟",
+["Chicken","Cow","Pig","Axolotl"],0],
+
+["کدام آیتم برای ساخت Snow Block لازم است؟",
+["Snowballs","Ice","Water","White Dye"],0],
+
+["کدام موجود Snowball پرتاب می‌کند؟",
+["Snow Golem","Blaze","Ghast","Skeleton"],0],
+
+["Snowball روی بعضی دشمنان آسیب کمی یا خاص دارد؟",
+["بله","خیر، هیچ‌وقت اثر ندارد","فقط روی Cow","فقط روی Villager"],0],
+
+["کدام آیتم برای ساخت Arrow of Tipped Potion استفاده می‌شود؟",
+["Potion + Arrows","Potion + Sticks","Potion + Feathers","Potion + Flint"],0],
+
+["کدام آیتم برای ساخت Spectral Arrow استفاده می‌شود؟",
+["Glowstone Dust + Arrow","Amethyst + Arrow","Quartz + Arrow","Glow Ink + Arrow"],0],
+
+["Spectral Arrow چه اثری دارد؟",
+["Glowing Effect","Poison","Fire","Slowness"],0],
+
+["کدام موجود Glowing Effect را می‌تواند به بازیکن بدهد؟",
+["Spectral Arrow","Cow","Pig","Chicken"],0],
+
+["کدام Potion برای Weakness استفاده می‌شود؟",
+["Weakness Potion","Harming","Strength","Night Vision"],0],
+
+["Weakness برای درمان Zombie Villager مهم است؟",
+["بله","خیر","فقط برای Warden","فقط در Nether"],0],
+
+["کدام ماده برای Weakness Potion کاربرد دارد؟",
+["Fermented Spider Eye","Sugar","Blaze Powder","Magma Cream"],0],
+
+["کدام Potion می‌تواند Slowness ایجاد کند؟",
+["Slowness Potion","Speed Potion","Strength","Healing"],0],
+
+["کدام ماده برای Slowness Potion استفاده می‌شود؟",
+["Sugar + Fermented Spider Eye","Rabbit Foot","Magma Cream","Blaze Powder"],0],
+
+["کدام Effect باعث کندی حرکت می‌شود؟",
+["Slowness","Speed","Haste","Strength"],0],
+
+["کدام Effect باعث سرعت بیشتر می‌شود؟",
+["Speed","Slowness","Mining Fatigue","Weakness"],0],
+
+["کدام Effect استخراج را کند می‌کند؟",
+["Mining Fatigue","Haste","Slowness","Weakness"],0],
+
+["Guardian بیشتر چه نوع موجودی است؟",
+["Aquatic hostile mob","Undead","Nether mob","End mob"],0],
+
+["Guardian چه حمله‌ای دارد؟",
+["لیزر","Fireball","Arrow","Explosion"],0],
+
+["Elder Guardian چه تفاوتی دارد؟",
+["بزرگ‌تر و قوی‌تر است","پرواز می‌کند","در Nether است","نامرئی است"],0],
+
+["کدام سازه Guardian دارد؟",
+["Ocean Monument","Village","Stronghold","Mansion"],0],
+
+["کدام بلوک برای ساخت Conduit Power لازم است؟",
+["Conduit + Prismarine frame","Beacon + Iron","End Crystal + Quartz","Nether Star"],0],
+
+["کدام ماده برای ساخت Conduit لازم است؟",
+["Nautilus Shell + Heart of the Sea","Diamond + Heart","Prismarine + Heart","Gold + Heart"],0],
+
+["Nautilus Shell را می‌توان از کجا گرفت؟",
+["Fishing/Drowned/Trading بسته به روش","End City","Warden","Blaze"],0],
+
+["Drowned ممکن است چه آیتمی بیندازد؟",
+["Trident","Elytra","Nether Star","Totem"],0],
+
+["کدام موجود می‌تواند Trident داشته باشد؟",
+["Drowned","Zombie","Cow","Spider"],0],
+
+["Trident را می‌توان با چه Enchantmentهایی خاص کرد؟",
+["Loyalty/Riptide/Channeling و...","Sharpness فقط","Power فقط","Flame فقط"],0],
+
+["کدام آیتم برای تعمیر Trident در Anvil استفاده می‌شود؟",
+["Trident دیگر/مواد مناسب بسته به روش","Iron","Diamond فقط","Stick"],0],
+
+["کدام موجود ممکن است Trident پرتاب کند؟",
+["Drowned","Zombie","Skeleton","Piglin"],0],
+
+["کدام موجود زیر آب در Ocean می‌تواند دیده شود؟",
+["Drowned","Witch","Evoker","Vindicator"],0],
+
+["کدام موجود Zombie در آب به Drowned تبدیل می‌شود؟",
+["Zombie","Skeleton","Creeper","Spider"],0],
+
+["کدام موجود Skeleton در Snow Biome می‌تواند به Stray تبدیل شود؟",
+["Skeleton","Zombie","Creeper","Spider"],0],
+
+["Stray چه نوع موجودی است؟",
+["نوعی Skeleton","نوعی Zombie","نوعی Spider","نوعی Creeper"],0],
+
+["Stray چه نوع تیر خاصی می‌تواند استفاده کند؟",
+["Slowness Arrow","Poison Arrow","Fire Arrow","Harming Arrow"],0],
+
+["Skeleton چه آیتمی می‌اندازد؟",
+["Bone","Iron","Leather","Gold"],0],
+
+["Bone برای چه چیزی کاربرد دارد؟",
+["Bone Meal و اهلی کردن Wolf","ساخت Diamond","ساخت Netherite","ساخت Portal"],0],
+
+["Bone Meal برای چه کاری کاربرد دارد؟",
+["رشد سریع گیاهان در موارد مناسب","Enchant","ساخت Portal","ساخت Elytra"],0],
+
+["کدام موجود ممکن است Bow داشته باشد؟",
+["Skeleton","Cow","Pig","Sheep"],0],
+
+["کدام موجود معمولاً Bow ندارد؟",
+["Cow","Skeleton","Pillager","Stray"],0],
+
+["Pillager از چه سلاحی استفاده می‌کند؟",
+["Crossbow","Bow","Sword","Trident"],0],
+
+["Pillager به چه رویدادی مرتبط است؟",
+["Raid","Dragon Fight","End City","Nether Portal"],0],
+
+["کدام دشمن Crossbow دارد؟",
+["Pillager","Skeleton","Zombie","Spider"],0],
+
+["Vindicator چه سلاحی دارد؟",
+["Axe","Bow","Crossbow","Trident"],0],
+
+["Evoker چه چیزی احضار می‌کند؟",
+["Vex","Ravager","Guardian","Warden"],0],
+
+["Ravager در چه رویدادی ظاهر می‌شود؟",
+["Raid","Dragon Fight","Nether Event","Ocean Event"],0],
+
+["کدام موجود می‌تواند در Raid سوار Ravager باشد؟",
+["Illagerها در شرایط خاص","Cow","Villager","Chicken"],0],
+
+["کدام سازه محل اصلی Pillager Outpost است؟",
+["Pillager Outpost","Stronghold","Mansion","Bastion"],0],
+
+["Pillager Outpost در کدام بُعد است؟",
+["Overworld","Nether","End","Deep Dark"],0],
+
+["Bad Omen به چه چیزی مربوط است؟",
+["شروع Raid در شرایط مناسب","Ender Dragon","Nether Portal","Warden"],0],
+
+["کدام آیتم/رویداد در نسخه‌های جدید برای Raid متفاوت شده است؟",
+["Ominous Bottle و Bad Omen","Dragon Egg","Nether Star","Elytra"],0],
+
+["کدام مورد در Minecraft می‌تواند یک Challenge هفتگی را جذاب کند؟",
+["سؤال‌های جدید و جدول برندگان","حذف همه بازیکنان","فقط یک سؤال","بدون امتیاز"],0],
+
+["در مسابقه AmirCraft چند سؤال وجود دارد؟",
+["100","50","75","150"],0]
+
+];
+
+
+/* =========================================================
+   اطمینان از 100 سؤال
+========================================================= */
+
+let quizQuestions=questions.slice(0,100);
+
+
+/* =========================================================
+   SHUFFLE OPTIONS
+========================================================= */
+
+function shuffleQuestion(q){
+
+    const arr=q[1].map((text,index)=>({
+        text:text,
+        correct:index===q[2]
+    }));
+
+    for(let i=arr.length-1;i>0;i--){
+
+        const j=Math.floor(Math.random()*(i+1));
+
+        [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+
+    return {
+        q:q[0],
+        options:arr.map(x=>x.text),
+        answer:arr.findIndex(x=>x.correct)
+    };
 }
+
+quizQuestions=quizQuestions.map(shuffleQuestion);
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let current=0;
+let score=0;
+let answered=false;
+
+const registerSection=document.getElementById("registerSection");
+const quizSection=document.getElementById("quizSection");
+const resultSection=document.getElementById("resultSection");
+
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const feedbackEl=document.getElementById("feedback");
+const scoreEl=document.getElementById("score");
+const progressEl=document.getElementById("progress");
+const questionNumberEl=document.getElementById("questionNumber");
+const nextButton=document.getElementById("nextButton");
+const quizCard=document.getElementById("quizCard");
+
+
+/* =========================================================
+   WEEK KEY
+========================================================= */
+
+function getWeekKey(){
+
+    const now=new Date();
+
+    const firstDay=new Date(now.getFullYear(),0,1);
+
+    const dayOfYear=
+        Math.floor((now-firstDay)/86400000);
+
+    const week=Math.ceil(
+        (dayOfYear+firstDay.getDay()+1)/7
+    );
+
+    return `${now.getFullYear()}-${week}`;
+}
+
+const WEEK_KEY=getWeekKey();
+
+
+function alreadyPlayed(){ return false; }
+
+
+/* =========================================================
+   GO REGISTER
+========================================================= */
+
+function goRegister(){
+
+    const status=getContestStatus();
+
+    if(status==="friday" || status==="saturday"){
+
+        showPopup(
+            "⛔ مسابقه بسته است",
+            status==="friday"
+            ?
+            "مهلت شرکت در چالش این هفته تمام شده است. شنبه برندگان اعلام می‌شوند."
+            :
+            "امروز روز اعلام برندگان است. چالش هفته جدید بعد از شروع هفته فعال خواهد شد."
+        );
+
+        return;
+    }
+
+    if(alreadyPlayed()){
+
+        showPopup(
+            "⛔ قبلاً شرکت کرده‌ای!",
+            "طبق قوانین، هر نفر فقط یک بار در چالش این هفته می‌تواند شرکت کند."
+        );
+
+        return;
+    }
+
+    registerSection.scrollIntoView({
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+document.getElementById("proofImage")
+.addEventListener("change",function(){
+
+    const file=this.files[0];
+
+    const preview=document.getElementById("preview");
+
+    if(!file)return;
+
+    if(!file.type.startsWith("image/")){
+
+        showPopup(
+            "⚠️ فایل نامعتبر",
+            "لطفاً یک تصویر انتخاب کنید."
+        );
+
+        this.value="";
+        return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+
+        preview.src=e.target.result;
+
+        preview.style.display="block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+function startQuiz(){
+    current=0; score=0; answered=false;
+    registerSection.style.display="none";
+    quizSection.style.display="block";
+    quizSection.scrollIntoView({behavior:"smooth"});
+    loadQuestion();
+    createExplosion("start");
+    setTimeout(()=>showPopup("🧪 حالت نمایشی فعال شد","این آزمون فقط برای آزمایش است؛ اطلاعات شخصی، امتیاز یا نتیجه‌ای به سرور ارسال نمی‌شود."),300);
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
 
 function loadQuestion(){
 
@@ -1653,59 +3450,19 @@ function nextQuestion(){
 ========================================================= */
 
 function finishQuiz(){
-
     quizSection.style.display="none";
-
     resultSection.style.display="block";
-
-    document.getElementById(
-        "finalScore"
-    ).textContent=score;
-
+    document.getElementById("finalScore").textContent=score;
     let message="";
-
-    if(score>=90){
-
-        message=
-        "🔥 فوق‌العاده! تو واقعاً یک ماینکرافت پلیر حرفه‌ای هستی!";
-
-    }else if(score>=75){
-
-        message=
-        "💎 عالی بود! اطلاعات ماینکرافتی خیلی خوبی داری.";
-
-    }else if(score>=60){
-
-        message=
-        "🟩 خوب بود! عملکردت واقعاً قابل قبول بود.";
-
-    }else if(score>=40){
-
-        message=
-        "⛏️ بد نبود! ولی هنوز رازهای زیادی از Minecraft باقی مانده.";
-
-    }else{
-
-        message=
-        "🌱 تازه اول راهی! تمرین کن و هفته بعد دوباره بدرخش.";
-    }
-
-    document.getElementById(
-        "resultMessage"
-    ).innerHTML=
-    `${message}<br><br>
-    امتیاز نهایی تو:
-    <strong>${score} از 100</strong>
-    <br>
-    این نتیجه فقط نمایشی است و در جایی ثبت یا ارسال نمی‌شود.
-    <br><br>
-    🏆 نتایج نهایی و برندگان شنبه اعلام می‌شوند.`;
-
+    if(score>=90) message="🔥 فوق‌العاده! تو واقعاً یک ماینکرافت پلیر حرفه‌ای هستی!";
+    else if(score>=75) message="💎 عالی بود! اطلاعات ماینکرافتی خیلی خوبی داری.";
+    else if(score>=60) message="🟩 خوب بود! عملکردت واقعاً قابل قبول بود.";
+    else if(score>=40) message="⛏️ بد نبود! ولی هنوز رازهای زیادی از Minecraft باقی مانده.";
+    else message="🌱 تازه اول راهی! تمرین کن و هفته بعد دوباره بدرخش.";
+    document.getElementById("resultMessage").innerHTML=
+      `${message}<br><br>امتیاز نمایشی: <strong>${score} از 100</strong><br>این نتیجه فقط نمایشی است و در جایی ثبت یا ارسال نمی‌شود.`;
     createExplosion("finish");
-
-    resultSection.scrollIntoView({
-        behavior:"smooth"
-    });
+    resultSection.scrollIntoView({behavior:"smooth"});
 }
 
 
@@ -1741,10 +3498,7 @@ function closePopup(){
 ========================================================= */
 
 function copyRubika(){
-    showPopup(
-        "🧪 نسخه نمایشی",
-        "این بخش فقط نمایشی است و هیچ شناسه یا اطلاعات تماسی کپی نمی‌شود."
-    );
+    showPopup("🧪 نسخه نمایشی","این بخش فقط نمایشی است و هیچ شناسه یا اطلاعات تماسی کپی نمی‌شود.");
 }
 
 
