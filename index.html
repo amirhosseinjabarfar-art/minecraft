@@ -1913,22 +1913,6 @@ e=>{
    REFRESH PROTECTION
 ========================================================= */
 
-window.addEventListener(
-"beforeunload",
-e=>{
-
-    if(
-        quizSection.style.display==="block" &&
-        !alreadyPlayed()
-    ){
-
-        e.preventDefault();
-        e.returnValue="";
-    }
-
-});
-
-
 /* =========================================================
    INITIALIZATION
 ========================================================= */
